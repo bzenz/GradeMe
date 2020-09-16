@@ -28,7 +28,7 @@ Schüler:
    * Übersicht Semesternoten (Alle Noten innerhalb des Semesters Test ETC Inc.)
       * Separierung Klassenarbeiten und Tests (Visuelle Kennzeichnung)
       * Bei Klick:
-         * Öffnen einer Übersichtstabelle mit näheren Details u. Notizen vom Lehrer
+         * Öffnen einer Übersichtstabelle mit näheren Details u. Notizen vom Lehrer und Verlinkung zur Aufgabe
       * Fachspezifische kommunikation
    * Notenstatistik für Fach
 * Abmelden
@@ -80,18 +80,18 @@ Schülers sichtbar werden! (UX)
 
 
 
-            * Ankündigungen erstellen 
+            * Ankündigungen erstellen
                * Titel
                * Inhalt
                * Anhang
 
 
-         * Aufgabenübersicht 
+         * Aufgabenübersicht
             * Feed
                * Sortierbar (IMPL)
                   * Abgelaufen / Laufend
                   * Bewertet / Unbewertet
-                  * Trennlinie 
+                  * Trennlinie
                * Aufgaben
                   * Termin Ändern
                      * Benachrichtigung an Schüler + Vermerk (UX)
@@ -101,7 +101,7 @@ Schülers sichtbar werden! (UX)
                         * Schülernoten
                         * liste für Punkte
                         * Notiz
-                        * Automatische Berechnung der Note (UX) 
+                        * Automatische Berechnung der Note (UX)
                      * Unbenotet
                         * Checkliste für Abgaben
                         * Speichern in Schülerübersicht
@@ -109,14 +109,14 @@ Schülers sichtbar werden! (UX)
 
          * Schülerübersicht
             * Schüler
-               * Noten 
+               * Noten
                   * Aufgabennoten
                   * Noten können verändert werden
                * Notizen
                * Lehrernotizen
                * Statistik?
                * Nicht abgegebene Hausaufgaben
-               * Noten verändern/revidieren 
+               * Noten verändern/revidieren
 
 
 
@@ -139,7 +139,7 @@ Administrator kann Klassen erstellen
 … kann Accounts für alles Anlegen (Lehrer Schüler)
 … kann Rollen verwalten
 … kann Stundenplan einstellen
-… 
+…
 
 
 
