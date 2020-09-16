@@ -1,0 +1,13 @@
+Standup 23.9.2020
+
+[] Flol fragt nach, ob wir Zugriff aud einen Server von nem Kumpel bekommen
+-> [] Flol fragt nach wenn sein Kumpel ausm Urlaub kommt
+
+[] Flol & Robin React native einrichten
+
+[] Flol & Robin wollen Redux & ReduxForm einrichten
+
+[X] Benito macht sich Gedanken, welche Technologie wir zur Kommunikation zwischen Frontend & Backend verwenden
+-> [] Es scheint auf websockets hinauszulaufen, Benito prüft Kompatibilität mit Keycloak
+
+[] Vortrag vorbereiten
