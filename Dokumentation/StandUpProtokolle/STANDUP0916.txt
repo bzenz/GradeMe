@@ -1,0 +1,16 @@
+Standup 16.9.2020
+
+[X] Benito macht sich Gedanken, welche Technologie wir zur Kommunikation zwischen Frontend & Backend verwenden
+-> [] Es scheint auf websockets hinauszulaufen, Benito prüft Kompatibilität mit Keycloak
+
+UX ausarbeitung durch Pictogramme anschaulich machen
+	[X] Kevin
+	-> Kevin hat angefangen und eine Farbpalette erstellt, er arbeitet weiter daran
+	-> Wir nehmen den Stand als Vorlage für die Implementierung
+
+[] Flol fragt nach, ob wir Zugriff aud einen Server von nem Kumpel bekommen
+-> [] Flol fragt nach wenn sein Kumpel ausm Urlaub kommt
+
+[] Flol & Robin wollen Redux & ReduxForm einrichten
+
+[X] Flol beliest sich zu React native
