@@ -1,3 +1,4 @@
+BENITOLINI
 Eingang
     Motivation
         Schulsystem (insbesondere Klassenbuch) ist intransparent
@@ -21,7 +22,8 @@ Einführung
         Ursprüngliche Idee:
             Noten transparent machen, indem online eingetragen
             Notenanalyse bereitstellen um Lernerfolge zu optimieren
-
+_________________
+FLOL
         Mom: Klassenbuch wird verwendet um Hausaufgaben, Tests, vergessene Hausaufgaben, Fehlzeiten und Noten festzuhalten
         Wir wollen Klassenbuch digitalisieren, sodass Schüler und Lehrer die sie betreffenden Daten einsehen können
         Bringt:
@@ -29,7 +31,9 @@ Einführung
         ->mehr Transparenz
         ->bequemere Handhabung
         ->weitere Features wie: Stundenplan, Vertretungsplan, Ankündigungen
-
+        PRODUKTSTRUKTUR
+_____________
+RHOE
 Hauptteil
     IRGENDWO activity Diagramm einbauen
     WAS: digitales verbessertes Klassenbuch
@@ -49,11 +53,11 @@ Hauptteil
             deshalb Schulen als (fast) erste Bildungsinstanz
             der Kinder in der Pflicht mit der Digitalisierung
             mitzugehen um die Kinder an die Nutzung von digitalen Tools zu gewöhnen
-
+_______________
     Vielleicht wollen wir auf Datenschutz achten
     Wir müssen halt noch nachdenken
 
-
+KEVIIII
 Ausgang
     Fazit:
     Ausblick:
