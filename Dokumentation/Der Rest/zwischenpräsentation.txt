@@ -1,0 +1,63 @@
+Eingang
+    Motivation
+        Schulsystem (insbesondere Klassenbuch) ist intransparent
+        Schüler kennt seine Kompetenzen nur begrenzt
+        keinen Überblick & schnelle Einsicht über Noten
+        nur manche Lehrer geben Zwischenstände
+        Notenmitschrift von Schülern meist unzureichend
+        generell Prozesse in Schule nicht digitalisiert genug (z.b. HA) und damit ineffizient
+        insbesondere in aktueller Krise aufgefallen
+     -> Deshalb transparentes Tool zur Notenübersicht und Schulorganisation benötigt
+
+     Titel des Vortrags und Teammitglieder
+        GradeMe - Die Chance der Digitalisierung des Schulsystems
+        RHoe, KMor, FLem, BZen
+
+     Agenda
+        yeet delet kommt wenn wirs ausgearbeitet haben
+
+Einführung
+    Hintergründe & Grundlagen
+        Ursprüngliche Idee:
+            Noten transparent machen, indem online eingetragen
+            Notenanalyse bereitstellen um Lernerfolge zu optimieren
+
+        Mom: Klassenbuch wird verwendet um Hausaufgaben, Tests, vergessene Hausaufgaben, Fehlzeiten und Noten festzuhalten
+        Wir wollen Klassenbuch digitalisieren, sodass Schüler und Lehrer die sie betreffenden Daten einsehen können
+        Bringt:
+        ->schnelleren Zugriff auf Informationen
+        ->mehr Transparenz
+        ->bequemere Handhabung
+        ->weitere Features wie: Stundenplan, Vertretungsplan, Ankündigungen
+
+Hauptteil
+    IRGENDWO activity Diagramm einbauen
+    WAS: digitales verbessertes Klassenbuch
+    WIE: Grafik zeigen und erläutern (Produktstruktur PNG)
+    WER: Schüler, Lehrer, (Admins, Schulleiter)
+    WANN: Immer verfügbar, wenn Schüler etwas wissen will, oder Lehrer etwas mitteilen will
+    WOZU: bessere transparentere Kommunikation
+    WOMIT:
+        Nutzung: Smartphone / Webapp
+        Implementierung: React-Native-Frontend (mit Redux), NodeJS-Backend (mit Passport JS als auth-Tool), Kommunikation über REST Schnittstelle & Socket IO, 3xpr3§§ für Routing, SQLite DB
+    WARUM: Klassenbuch nicht gut weil:
+            -> Umfeld wird immer digitaler, aber Schule entwickelt sich nicht mit
+            -> Schüler, Behörden usw werden digitaler (digital natives sind am start)
+            -> Digitalisierung schafft synchronität & weniger Fehleranfälligkeit
+            -> und andere o.g. Vorteile
+            -> Gesellschaft im Umbruch der Digitalisierung,
+            deshalb Schulen als (fast) erste Bildungsinstanz
+            der Kinder in der Pflicht mit der Digitalisierung
+            mitzugehen um die Kinder an die Nutzung von digitalen Tools zu gewöhnen
+
+    Vielleicht wollen wir auf Datenschutz achten
+    Wir müssen halt noch nachdenken
+
+
+Ausgang
+    Fazit:
+    Ausblick:
+        Datenschutz für diese Anwendung wichtig, da sensitive, personenbezogene Daten geschützt werden müssen, da es mittelbare Daten sind
+        Deployment ist interessant: Schule muss sich darauf einlassen, es benötigt einen Admin und weitere Infrastruktur an der Schule; Lehrer müssen mitziehen
+    Programmausführung: Kevin zeigt UI
+
