@@ -30,9 +30,6 @@
     "@babel/core": "~7.9.0",
     "babel-jest": "~25.2.6",
     "expo-cli": "^3.27.8",
-    "gulp": "^4.0.2",
-    "gulp-inline-source": "^4.0.0",
-    "gulp-replace": "^1.0.0",
     "jest": "~25.2.6",
     "react-test-renderer": "~16.11.0",
     "rimraf": "^3.0.2"
