@@ -1,18 +1,5 @@
-Standup 23.9.2020
+Standup vorgezogen auf 29.09.
 
-[X] Flol fragt nach, ob wir Zugriff aud einen Server von nem Kumpel bekommen
- -> Der Typ schaut mal obs Funktioniert
-
-[X] Flol & Robin React native einrichten
-[X] Benito hat den Export gemacht
-
-[] Flol & Robin wollen Redux & ReduxForm einrichten
-[X] Redux eingerichtet
-erstma kein reduxform
-
-Wir benutzen kein Keycloak sondern Passport js
-
-[X] Vortrag vorbereiten
 
 [] Benito will mal mit Jonathan telefonieren
 [] Flol merged den PullRQ von Benito
