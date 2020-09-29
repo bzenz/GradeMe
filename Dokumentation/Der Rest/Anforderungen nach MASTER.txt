@@ -1,0 +1,38 @@
+GradeMe muss einem Nutzer die Möglichkeit bieten, sich anzumelden.
+GradeMe muss einem Nutzer die Möglichkeit bieten, die Noten, für deren Einsicht er berechtigt ist, einzusehen.
+
+GradeMe muss einem Schüler die Möglichkeit bieten, seine Aufgaben einzusehen.
+GradeMe muss einem Schüler die Möglichkeit bieten, seine Fächer einzusehen.
+
+GradeMe muss einem Lehrer die Möglichkeit bieten eine Aufgabe anzulegen.
+Wenn er eine Aufgabe angelegt hat, muss GradeMe einem Lehrer die Möglichkeit bieten diese Aufgabe zu bearbeiten.
+Wenn er eine Aufgabe angelegt hat, muss GradeMe dem Lehrer die Möglichkeit bieten, die entsprechenden Noten einzutragen.
+
+----------
+
+Wenn ein Lehrer eine Note einträgt, sollte GradeMe die Statistiken neu berechnen.
+GradeMe sollte einem Nutzer die Möglichkeit bieten, die Statistiken, für deren Einsicht er berechtigt ist, einzusehen.
+
+Solange ein Nutzer angemeldet ist, sollte GradeMe dem Nutzer die Möglichkeit bieten seinen Stundenplan einzusehen.
+
+GradeMe sollte einem Lehrer die Möglichkeit bieten Anwesenheiten zu erfassen.
+
+GradeMe sollte einem Lehrer die Möglichkeit bieten, eine Ankündigung zu schreiben.
+Wenn ein Lehrer eine Ankündigung gesendet hat, sollte GradeMe allen betroffenen Schülern eine Push-Nachricht anzeigen.
+
+---------
+
+GradeMe wird einem Administrator die Möglichkeit bieten, die Nutzer zu organisieren.
+GradeMe wird einem Administrator die Möglichkeit bieten, den Stundenplan zu bearbeiten.
+GradeMe wird einem Administrator die Möglichkeit bieten, Nutzern Rollen zuzuordnen.
+Bei Stundenplanänderungen wird GradeMe die Änderung anzeigen.
+Bei Stundenplanänderungen wird GradeMe den betroffenen Nutzern eine Push-Nachricht anzeigen.
+
+Glossar:
+Organisieren - das Anlegen & löschen von Nutzern, sowie das oranisieren der Nutzer in Kursen
+Stundenplan bearbeiten - das Anlegen und Verändern von Stundenplänen
+Nutzer - eine natürliche Person
+Lehrer - ein Nutzer mit der Rolle Lehrer
+Schüler - ein Nutzer mit der Rolle Schüler
+Statistiken - Diagramme, welche auf Basis von Noten erstellt werden
+Ankündigungen - Von Lehrern erstellte Nachricht, welche eine bestimmte Zielgruppe informieren soll
