@@ -1,6 +1,6 @@
 const { exec } = require('child_process');
 const move = require('./utils/move');
-const rimraf = require('rimraf')
+const rimraf = require('rimraf');
 
 const buildReactApp = () => 
 {
@@ -19,7 +19,7 @@ const buildReactApp = () =>
         }
         console.log(`stdout: ${stdout}`);
 
-        console.log('React App was build')
+        console.log('React Native App was build');
         deleteOldClient();
 
     });
