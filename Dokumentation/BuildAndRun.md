@@ -27,8 +27,8 @@ Zum Ausführen `npm start` ausführen.
 ## FrontEnd in das BackEnd exportieren
 Der React-Ordner `FrontEnd` wird nicht in der Produktion verwendet. Stattdessen existiert der Ordner `BackEnd/client`, in dem das React-Projekt gebündelt und optimiert liegt.
 
-Um die aktuelle Version des FrontEnds zu bündeln und zu exportieren, muss nur die Datei `exportFrontEnd.js` im `FrontEnd` Ordner ausgeführt werden.
+Um die aktuelle Version des FrontEnds zu bündeln und zu exportieren, muss nur `npm run export` im `FrontEnd` Ordner ausgeführt werden. Dies führt die Datei `exportFrontEnd.js` aus.
 
 ```shell
-[GradeMe/FrontEnd]$> node exportFrontEnd.js
+[GradeMe/FrontEnd]$> npm run export
 ```
