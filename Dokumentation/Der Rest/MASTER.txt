@@ -1,38 +1,38 @@
-Immer muss GradeMe einem Nutzer die Möglichkeit bieten, sich anzumelden.
-Immer muss GradeMe einem Nutzer die Möglichkeit bieten, die Noten, für deren Einsicht er berechtigt ist, einzusehen.
+Immer muss GradeMe einem Nutzer die MÃ¶glichkeit bieten, sich anzumelden.
+Immer muss GradeMe einem Nutzer die MÃ¶glichkeit bieten, die Noten, fÃ¼r deren Einsicht er berechtigt ist, einzusehen.
 
-Immer muss GradeMe einem Schüler die Möglichkeit bieten, seine Aufgaben einzusehen.
-Immer muss GradeMe einem Schüler die Möglichkeit bieten, seine Fächer einzusehen.
+Immer muss GradeMe einem SchÃ¼ler die MÃ¶glichkeit bieten, seine Aufgaben einzusehen.
+Immer muss GradeMe einem SchÃ¼ler die MÃ¶glichkeit bieten, seine FÃ¤cher einzusehen.
 
-Immer muss GradeMe einem Lehrer die Möglichkeit bieten eine Aufgabe anzulegen.
-Wenn er eine Aufgabe angelegt hat, muss GradeMe einem Lehrer die Möglichkeit bieten diese Aufgabe zu bearbeiten.
-Wenn er eine Aufgabe angelegt hat, muss GradeMe dem Lehrer die Möglichkeit bieten, die entsprechenden Noten einzutragen.
+Immer muss GradeMe einem Lehrer die MÃ¶glichkeit bieten eine Aufgabe anzulegen.
+Wenn er eine Aufgabe angelegt hat, muss GradeMe einem Lehrer die MÃ¶glichkeit bieten diese Aufgabe zu bearbeiten.
+Wenn er eine Aufgabe angelegt hat, muss GradeMe dem Lehrer die MÃ¶glichkeit bieten, die entsprechenden Noten einzutragen.
 
 ----------
 
-Wenn ein Lehrer eine Note einträgt, sollte GradeMe die Statistiken neu berechnen.
-Immer sollte GradeMe einem Nutzer die Möglichkeit bieten, die Statistiken, für deren Einsicht er berechtigt ist, einzusehen.
+Wenn ein Lehrer eine Note eintrÃ¤gt, sollte GradeMe die Statistiken neu berechnen.
+Immer sollte GradeMe einem Nutzer die MÃ¶glichkeit bieten, die Statistiken, fÃ¼r deren Einsicht er berechtigt ist, einzusehen.
 
-Solange ein Nutzer angemeldet ist, sollte GradeMe dem Nutzer die Möglichkeit bieten seinen Stundenplan einzusehen.
+Solange ein Nutzer angemeldet ist, sollte GradeMe dem Nutzer die MÃ¶glichkeit bieten seinen Stundenplan einzusehen.
 
-Immer sollte GradeMe einem Lehrer die Möglichkeit bieten Anwesenheiten zu erfassen.
+Immer sollte GradeMe einem Lehrer die Mï¿½glichkeit bieten, Anwesenheiten zu erfassen.
 
-Immer sollte GradeMe einem Lehrer die Möglichkeit bieten, eine Ankündigung zu schreiben.
-Wenn ein Lehrer eine Ankündigung gesendet hat, sollte GradeMe allen betroffenen Schülern eine Push-Nachricht anzeigen.
+Immer sollte GradeMe einem Lehrer die MÃ¶glichkeit bieten, eine AnkÃ¼ndigung zu schreiben.
+Wenn ein Lehrer eine AnkÃ¼ndigung gesendet hat, sollte GradeMe allen betroffenen SchÃ¼lern eine Push-Nachricht anzeigen.
 
 ---------
 
-Immer wird GradeMe einem Administrator die Möglichkeit bieten, die Nutzer zu organisieren.
-Immer wird GradeMe einem Administrator die Möglichkeit bieten, den Stundenplan zu bearbeiten.
-Immer wird GradeMe einem Administrator die Möglichkeit bieten, Nutzern Rollen zuzuordnen.
-Bei Stundenplanänderungen wird GradeMe die Änderung anzeigen.
-Bei Stundenplanänderungen wird GradeMe den betroffenen Nutzern eine Push-Nachricht anzeigen.
+Immer wird GradeMe einem Administrator die MÃ¶glichkeit bieten, die Nutzer zu organisieren.
+Immer wird GradeMe einem Administrator die MÃ¶glichkeit bieten, den Stundenplan zu bearbeiten.
+Immer wird GradeMe einem Administrator die MÃ¶glichkeit bieten, Nutzern Rollen zuzuordnen.
+Bei StundenplanÃ¤nderungen wird GradeMe die Ã„nderung anzeigen.
+Bei StundenplanÃ¤nderungen wird GradeMe den betroffenen Nutzern eine Push-Nachricht anzeigen.
 
 Glossar:
-Organisieren - das Anlegen & löschen von Nutzern, sowie das oranisieren der Nutzer in Kursen
-Stundenplan bearbeiten - das Anlegen und Verändern von Stundenplänen
-Nutzer - eine natürliche Person
+Organisieren - das Anlegen & lÃ¶schen von Nutzern, sowie das oranisieren der Nutzer in Kursen
+Stundenplan bearbeiten - das Anlegen und VerÃ¤ndern von StundenplÃ¤nen
+Nutzer - eine natÃ¼rliche Person
 Lehrer - ein Nutzer mit der Rolle Lehrer
-Schüler - ein Nutzer mit der Rolle Schüler
+SchÃ¼ler - ein Nutzer mit der Rolle SchÃ¼ler
 Statistiken - Diagramme, welche auf Basis von Noten erstellt werden
-Ankündigungen - Von Lehrern erstellte Nachricht, welche eine bestimmte Zielgruppe informieren soll
+AnkÃ¼ndigungen - Von Lehrern erstellte Nachricht, welche eine bestimmte Zielgruppe informieren soll
