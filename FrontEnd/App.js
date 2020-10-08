@@ -4,17 +4,34 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import testReducer from './src/reducers/testreducer';
+//import  { Schuelersicht }  from './src/views/Studentenview.js';
+import  Schuelersicht  from './src/views/Schuelersicht.js';
 
 let store = createStore(combineReducers({testReducer}));
 
 class App extends React.Component {
   render() {
-    return (
-        <View style={styles.container}>
-          <Text>YEET</Text>
-          <StatusBar style="auto"/>
+    if(false) {
+        return (
+            <View style={styles.container}>
+              <Text>schueler</Text>
+              <StatusBar style="auto"/>
+            </View>
+        );
+    } else if(true) {
+        return (
+            <View>
+                <Schuelersicht />
+            </View>
+        )
+    } else {
+        <View>
+            <Text> Login </Text>
         </View>
-    );
+    }
+
+
+
   };
 }
 
