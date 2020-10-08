@@ -1,0 +1,38 @@
+
+/api
+-   /auth
+-   -   /login (name, password) => 
+
+-   /user
+-   -   /create (vorname, name, password, rolle) => userId (generiert aus vorn, name & evtl. nr)
+-   -   /delete (userId) => 
+-   -   /getAll
+-   -   -   /forCourse (courseId) => [{userId, vorname, name, rolle}]
+
+-   /admin
+-   -   /create (name, password) => adminId (generiert aus name & evtl. nr)
+-   -   /delete (adminId) => 
+
+-   /task
+-   -   /create (title, description, course, deadline, graded) => taskId
+-   -   /edit (taskId, title?, description?, course?, deadline?, graded?) =>
+-   -   /getAll
+-   -   -   /forCourse (courseId) => [{taskId, title, description, course, deadline, graded}] (nach deadline sortiert)
+-   -   -   /forUser (userId) => [{taskId, title, description, course, deadline, graded}] (nach deadline sortiert)
+
+-   /evaluation
+-   -   /evaluateTask (taskId, users: [
+            {userId, evalutation (bool/grade), annotation}
+        ]) =>
+-   -   getAll
+-   -   -   /forUser (userId) => {userId, evaluations: [{ taskId, evaluation, annotation, course }]
+
+- /course
+-  - /create (year, subjectId) => taskId
+-  - /getAll
+-  -  - /forUser (userId) => [{courseId, year, subjectId, subjectName}]
+
+-   /subject
+-  -    /create (name) => subjectId
+-  -    /delete (subjectId) =>
+5
