@@ -1,3 +1,5 @@
+const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt');
+
 // TODO: load users from database (and implement password hashing & salting)
 const users = 
 {
@@ -15,13 +17,9 @@ const users =
 
 const findUserById = id => 
 {
-    return Object.values(users).find(user => user.id === id);
+    return users[id];
 };
-const findUserByName = name => 
-{
-    return users[name];
-};
-const saveUser = user => users[user.name] = user;
+const saveUser = user => users[user.id] = user;
 
 const bcrypt = require('bcryptjs'),
     passport = require('passport'),
@@ -38,14 +36,14 @@ passport.deserializeUser((id, done) =>
     done(null, user);
 });
 
-passport.use(new LocalStrategy({usernameField: 'name'}, (name, password, done) => 
+passport.use(new LocalStrategy({usernameField: 'id'}, (id, password, done) => 
 {
-    const user = findUserByName(name);
+    const user = findUserById(id);
     if (!user) 
     {
         // neuen nutzer erstellen
         const newUser = {
-            id: name,
+            id,
             password,
         };
         bcrypt.genSalt(10, (err, salt) => 
@@ -71,5 +69,16 @@ passport.use(new LocalStrategy({usernameField: 'name'}, (name, password, done) =
         });
     }
 }));
+
+passport.use(new JWTStrategy(
+    {
+        secretOrKey: 'TOP_SECRET',
+        jwtFromRequest: ExtractJwt.fromBodyField('request_token'),
+    },
+    (token, done) => 
+    {
+        done(null, token.user);
+    }
+));
 
 module.exports = passport;
