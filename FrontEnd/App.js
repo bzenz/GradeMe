@@ -1,28 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
-import testReducer from './src/reducers/testreducer';
+import { Provider, connect } from 'react-redux';
+import { createStore } from 'redux';
+import loginReducer from './src/reducers/loginReducer';
+import LoginScreen from "./src/components/LoginScreen";
+import {combineReducers, install } from 'redux-loop';
 
-let store = createStore(combineReducers({testReducer}));
+
+const reducer = combineReducers({
+  loginReducer,
+})
+
+const store = createStore(reducer, install());
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
+    console.log("ja");
     return (
-        <View style={styles.container}>
-          <Text>YEET</Text>
+      <View style={styles.container}>
+          {this.props.loggedIn ?
+              <Text>{`Hallo ${this.props.userId}, willkommen in der ${this.props.role === "student" ? "Schülerübersicht" : "Lehrerübersicht"}!`}</Text>
+              : <LoginScreen />}
           <StatusBar style="auto"/>
-        </View>
+      </View>
     );
   };
 }
+const ConnectedApp = connect(
+    (state)=>({
+      loggedIn: state.loginReducer.loggedIn,
+      userId: state.loginReducer.userId,
+      role: state.loginReducer.role
+    }),
+    null
+)(App);
 
 export default class MyApp extends React.Component {
   render(){
     return(
         <Provider store={store}>
-           <App />
+            <ConnectedApp />
         </Provider>
     )
   }
