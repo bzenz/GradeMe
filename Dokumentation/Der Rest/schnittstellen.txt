@@ -1,7 +1,7 @@
 
 /api
 -   /auth
--   -   /login (name, password) => 
+-   -   /login (name, password) => {userId, rolle}
 
 -   /user
 -   -   /create (vorname, name, password, rolle) => userId (generiert aus vorn, name & evtl. nr)
