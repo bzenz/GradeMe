@@ -1,0 +1,37 @@
+
+
+[-] Benito will mal mit Jonathan telefonieren
+-> Benito hat inzwischen ne VM am Start, yay
+[X] Flol merged den PullRQ von Benito
+
+[X] Benito macht user authentication
+-> Benito will noch token erstellen, der nach anmeldung für anfragen genutzt werden soll -> aber später
+[X] Kevin macht Design final (Material Design)
+-> [] Kevin möchte Template für Standartansicht (Navigationsbar) implementieren (Issue: default ui anpassen)
+[] Flol bastelt schonmal n Loginscreen
+-> fast fertig
+[] Robin bastelt ne Schüleransicht
+-> Kevi, wir warten ;)
+
+Tagesagenda:
+Auswerten von Tasks
+    Jede Aufgabe im Feed hat zwei Knöpfe:
+        -Bearbeiten
+        -Auswerten
+    Im Auswertungsmodus hat man eine Liste der Schüler mit Namen und input zum Eintragen der Auswertung & ein Input für Anmerkungen
+
+Viewing Grades Oberfläche
+    Der Dev der sich ransetzt macht so wie er denkt
+
+API Schnittstellen
+    Dokumentation erstellt
+
+Hauptfunktionen:
+-Login
+-Schüleransicht
+    -Kann Aufgaben einsehen
+    -Kann Noten einsehen
+-Lehreransicht
+    -Aufgaben stellen
+    -Aufgaben bearbeiten
+    -AUfgaben auswerten
