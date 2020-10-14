@@ -25,7 +25,26 @@ const bcrypt = require('bcryptjs'),
     passport = require('passport'),
     { Strategy: LocalStrategy } = require('passport-local');
 
-passport.serializeUser((user, done) =>
+const register = (id, password, done) => 
+{
+    // neuen nutzer erstellen
+    const newUser = {
+        id,
+        password,
+    };
+    bcrypt.genSalt(10, (err, salt) => 
+    {
+        bcrypt.hash(newUser.password, salt, (err, hash) => 
+        {
+            if (err) throw err;
+            newUser.password = hash;
+            saveUser(newUser);
+            return done(null, newUser);
+        });
+    });
+};
+
+passport.serializeUser((user, done) => 
 {
     done(null, user.id);
 });
@@ -39,35 +58,18 @@ passport.deserializeUser((id, done) =>
 passport.use(new LocalStrategy({usernameField: 'userId'}, (id, password, done) =>
 {
     const user = findUserById(id);
-    if (!user)
-    {
-        // neuen nutzer erstellen
-        const newUser = {
-            id,
-            password,
-        };
-        bcrypt.genSalt(10, (err, salt) =>
-        {
-            bcrypt.hash(newUser.password, salt, (err, hash) =>
-            {
-                if (err) throw err;
-                newUser.password = hash;
-                saveUser(newUser);
-                return done(null, newUser);
-            });
-        });
-    }
-    else
+    if (user) 
     {
         // passwort match?
         bcrypt.compare(password, user.password, (err, isMatch) =>
         {
             if (err) throw err;
-
+            
             if (isMatch) return done(null, user);
-            return done(null, false, { message: 'Falsches Passwort!' });
+            return done(null, false, { message: 'Name oder Passwort falsch!' });
         });
     }
+    else return done(null, false, { message: 'Name oder Passwort falsch!' });
 }));
 
 passport.use(new JWTStrategy(
