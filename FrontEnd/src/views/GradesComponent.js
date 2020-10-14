@@ -13,6 +13,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
+import Box from "@material-ui/core/Box";
+import {SERVER} from "../../index";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,6 +39,12 @@ function GradesAccordions() {
         {id:2, grade:4, annotation: "du bist zu hässlich", course: "Mathe"},
         {id:3, grade:6, annotation: "ich mag deine fresse nicht", course: "Deutsch"},//API.getAllTasksofUser(user.getID, getRequestToken)
         {id:4, grade:1, annotation: "Du bist zu krass für diese Klasse", course: "Deutsch"}];
+
+    const response = fetch(
+        SERVER + "/api/evaluation/getAll/forUser"
+    )
+
+    console.log(response);
 
     const groupBy = key => array =>
         array.reduce((objectsByKeyValue, obj) => {
@@ -84,6 +92,11 @@ function GradesAccordions() {
 
     return(
         <div>
+            <Box p={4} bgcolor="background.paper" align="center">
+                <Typography variant="h3" align="center" color="primary">
+                    Notenübersicht
+                </Typography>
+            </Box>
         {accordionList}
         </div>
         )
