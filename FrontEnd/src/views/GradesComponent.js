@@ -41,7 +41,8 @@ function GradesAccordions() {
         {id:4, grade:1, annotation: "Du bist zu krass für diese Klasse", course: "Deutsch"}];
 
     const response = fetch(
-        SERVER + "/api/evaluation/getAll/forUser"
+        SERVER + "/api/evaluation/getAll/forUser",
+        {}
     )
 
     console.log(response);

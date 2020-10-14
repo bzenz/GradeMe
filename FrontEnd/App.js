@@ -1,36 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import testReducer from './src/reducers/testreducer';
-//import  { Schuelersicht }  from './src/views/Studentenview.js';
-import  Schuelersicht  from './src/views/Schuelersicht.js';
+import SchuelerHauptmenue from "./src/views/Schueler_Hauptmenue";
 
 let store = createStore(combineReducers({testReducer}));
 
 class App extends React.Component {
   render() {
-    if(false) {
-        return (
-            <View style={styles.container}>
-              <Text>schueler</Text>
-              <StatusBar style="auto"/>
-            </View>
-        );
-    } else if(true) {
-        return (
-            <View>
-                <Schuelersicht />
-            </View>
-        )
-    } else {
-        <View>
-            <Text> Login </Text>
-        </View>
-    }
-
-
+      return (
+          <View style={styles.container}>
+            <SchuelerHauptmenue />
+          </View>
+      )
 
   };
 }
