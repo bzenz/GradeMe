@@ -1,0 +1,38 @@
+
+/api
+-   /auth
+-   -   /login POST (userId, password) => {userId, rolle, request_token}
+-   -   /woAmI GET (request_token) => {userId, vorname, name}
+
+-   /user
+-   -   /create POST (vorname, name, password, rolle, request_token) => userId (generiert aus vorn, name & evtl. nr)
+-   -   /delete POST (userId, request_token) => deletedUserId
+-   -   /getAll
+-   -   -   /forCourse GET (courseId, request_token) => [{userId, vorname, name, rolle}]
+
+-   /admin
+-   -   /create POST (name, password, request_token) => adminId (generiert aus name & evtl. nr)
+-   -   /delete POST (adminId, request_token) => deletedAdminId
+
+-   /task
+-   -   /create POST (title, description, course, deadline, graded, request_token) => taskId
+-   -   /edit POST (taskId, request_token, title?, description?, course?, deadline?, graded?) => taskId
+-   -   /getAll
+-   -   -   /forCourse GET (courseId, request_token) => [{taskId, title, description, course, deadline, graded}] (nach deadline sortiert)
+-   -   -   /forUser GET (userId, request_token) => [{taskId, title, description, course, deadline, graded}] (nach deadline sortiert)
+
+-   /evaluation
+-   -   /evaluateTask POST (taskId, request_token, users: [
+            {userId, evalutation (bool/grade), annotation}
+        ]) => taskId
+-   -   getAll
+-   -   -   /forUser GET (userId, request_token) => [{ taskId, evaluation, annotation, course }]
+
+- /course
+-  - /create POST (year, subjectId, request_token) => courseId
+-  - /getAll
+-  -  - /forUser GET (userId, request_token) => [{courseId, year, subjectId, subjectName}]
+
+-   /subject
+-  -    /create POST (name, request_token) => subjectId
+-  -    /delete POST (subjectId, request_token) => deletedSubjectId
