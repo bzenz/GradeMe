@@ -32,3 +32,12 @@ Um die aktuelle Version des FrontEnds zu bündeln und zu exportieren, muss nur `
 ```shell
 [GradeMe/FrontEnd]$> npm run export
 ```
+
+# Datenbank
+[SQLite3](https://sqlite.org/index.html) wird als Datenbank verwendet. Zum Aufsetzen muss entweder SQL3 von der [Downloadseite](https://sqlite.org/download.html) oder über das Terminal heruntergeladen und installiert werden.
+```shell
+[GradeMe/DB]$> sudo apt install sqlite3
+```
+
+## Initialisierung
+## Testdaten
