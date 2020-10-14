@@ -23,7 +23,7 @@ class App extends React.Component {
     return (
       <View style={styles.container}>
           {this.props.loggedIn ?
-              <Text>{`Hallo ${this.props.userId}, willkommen in der ${this.props.role === "student" ? "Schülerübersicht" : "Lehrerübersicht"}!`}</Text>
+              <Text>{`Hallo ${this.props.userId}, willkommen in der ${this.props.role === "student" ? "Schülerübersicht" : "Lehrerübersicht"}! \n RQ-Token:${this.props.request_token}`}</Text>
               : <LoginScreen />}
           <StatusBar style="auto"/>
       </View>
@@ -34,7 +34,8 @@ const ConnectedApp = connect(
     (state)=>({
       loggedIn: state.loginReducer.loggedIn,
       userId: state.loginReducer.userId,
-      role: state.loginReducer.role
+      role: state.loginReducer.role,
+      request_token: state.loginReducer.request_token,
     }),
     null
 )(App);

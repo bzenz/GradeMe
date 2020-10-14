@@ -41,6 +41,7 @@ class LoginScreen extends React.Component {
                     value = {this.state.password}
                     onChange = {this.handlePasswordChange}
                     secureTextEntry
+                    onSubmitEditing = {this.handleSubmit}
                 />
                 <Button
                     title = "Einloggen"
