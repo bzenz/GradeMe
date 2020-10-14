@@ -19,7 +19,6 @@ class App extends React.Component {
     super(props);
   }
   render() {
-    console.log("ja");
     return (
       <View style={styles.container}>
           {this.props.loggedIn ?
