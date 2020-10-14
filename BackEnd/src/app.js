@@ -1,10 +1,11 @@
-
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 const passport = require('./passport/setup');
 const initRoutes = require('./routes/init');
 
+app.use(cors());
 // Bodyparser middleware, extended false does not allow nested payloads
 app.use(express.json());
 
