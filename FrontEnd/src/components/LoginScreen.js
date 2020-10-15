@@ -35,6 +35,7 @@ class LoginScreen extends React.Component {
                     placeholder = "Nutzername"
                     value = {this.state.username}
                     onChange = {this.handleUsernameChange}
+                    autoFocus
                 />
                 <TextInput
                     placeholder = "Passwort"
