@@ -31,7 +31,7 @@ createRoutes([
     },
     {
         path: '/getAll/forUser', 
-        method: 'get', 
+        method: 'post', 
         strategy: 'jwt',
         callback: (req, res, user) => 
         {
