@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
@@ -22,17 +22,19 @@ const useStyles = makeStyles((theme) => ({
     },
     accordion: {
         width: '100%',
+        minWidth: 650,
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
     table: {
-        minWidth: 650,
+
     }
 }));
 
 function GradesAccordions() {
+    const[allTasksOfUser, setAllTasksOfUser] = useState([]);
     const classes = useStyles();
     let allTasks =
         [{id:1, grade:2, annotation: "du bist zu dumm", course: "Mathe"},
@@ -40,12 +42,18 @@ function GradesAccordions() {
         {id:3, grade:6, annotation: "ich mag deine fresse nicht", course: "Deutsch"},//API.getAllTasksofUser(user.getID, getRequestToken)
         {id:4, grade:1, annotation: "Du bist zu krass für diese Klasse", course: "Deutsch"}];
 
-    const response = fetch(
-        SERVER + "/api/evaluation/getAll/forUser",
-        {}
-    )
-
-    console.log(response);
+    useEffect(() => {
+        fetch(SERVER + "/api/evaluation/getAll/forUser",
+            {
+                method: "POST",
+                body: {
+                    "userId": "BenitoZenz3",
+                    "request_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6InVzZXJPbmUifSwiaWF0IjoxNjAyMjQwMzUwfQ.l5RBMi8KcsUq6-jLBExQWHztJJ5QyuWerLsXo8p5kQc"
+                }
+            })
+            .then(response => response.json())
+            .then(data => setAllTasksOfUser(data))
+    }, [])
 
     const groupBy = key => array =>
         array.reduce((objectsByKeyValue, obj) => {
@@ -56,7 +64,8 @@ function GradesAccordions() {
 
     const groupByCourse = groupBy('course');
 
-    const tasksByCourse = groupByCourse(allTasks);
+
+    const tasksByCourse = groupByCourse(allTasksOfUser);
     let subjects = Object.entries(tasksByCourse);
 
     const accordionList = subjects.map((subject) =>
@@ -80,7 +89,7 @@ function GradesAccordions() {
                         <TableBody>
                             {subject[1].map((row) => (
                                 <TableRow>
-                                    <TableCell align="left">{row.grade}</TableCell>
+                                    <TableCell align="left">{row.evaluation}</TableCell>
                                     <TableCell align="right">{row.annotation}</TableCell>
                                 </TableRow>
                             ))}

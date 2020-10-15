@@ -36,10 +36,10 @@ createRoutes([
             let args;
             try 
             {  
-                args = extractArguments(req.body, 
+               /* args = extractArguments(req.body,
                 [
                     { key: 'userId', type: 'string' },
-                ]);
+                ]);*/
             }
             catch (err) 
             {
