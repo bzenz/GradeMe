@@ -4,12 +4,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { createStore } from 'redux';
 import loginReducer from './src/reducers/loginReducer';
+import teacherNavigationReducer from "./src/reducers/teacherNavigationReducer";
 import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
+import LehrerNavigation from "./src/components/teacher/Navigation";
 
 
 const reducer = combineReducers({
   loginReducer,
+  teacherNavigationReducer
 })
 
 const store = createStore(reducer, install());
@@ -18,12 +21,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
+    const appropriateNavigation = this.props.role === "student" ? <Text>Hallo Schüler</Text> : <LehrerNavigation />;
+    const loginScreenOrNavigation = this.props.loggedIn ? appropriateNavigation : <LoginScreen />;
     return (
       <View style={styles.container}>
-          {this.props.loggedIn ?
-              <Text>{`Hallo ${this.props.userId}, willkommen in der ${this.props.role === "student" ? "Schülerübersicht" : "Lehrerübersicht"}! \n RQ-Token:${this.props.request_token}`}</Text>
-              : <LoginScreen />}
+          {loginScreenOrNavigation}
           <StatusBar style="auto"/>
       </View>
     );
