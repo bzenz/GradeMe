@@ -26,7 +26,7 @@ createRoutes([
     },
     {
         path: '/woAmI', 
-        method: 'get', 
+        method: 'post', 
         strategy: 'jwt',
         callback: (req, res, user) => 
         {
