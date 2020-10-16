@@ -33,23 +33,21 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function GradesAccordions() {
+function GradesAccordions(props) {
     const[allTasksOfUser, setAllTasksOfUser] = useState([]);
     const classes = useStyles();
-    let allTasks =
-        [{id:1, grade:2, annotation: "du bist zu dumm", course: "Mathe"},
-        {id:2, grade:4, annotation: "du bist zu hässlich", course: "Mathe"},
-        {id:3, grade:6, annotation: "ich mag deine fresse nicht", course: "Deutsch"},//API.getAllTasksofUser(user.getID, getRequestToken)
-        {id:4, grade:1, annotation: "Du bist zu krass für diese Klasse", course: "Deutsch"}];
+
+    let requestBody = JSON.stringify({
+        userId: props.userId,
+        request_token: props.request_token
+    });
 
     useEffect(() => {
         fetch(SERVER + "/api/evaluation/getAll/forUser",
             {
-                method: "POST",
-                body: {
-                    "userId": "BenitoZenz3",
-                    "request_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6InVzZXJPbmUifSwiaWF0IjoxNjAyMjQwMzUwfQ.l5RBMi8KcsUq6-jLBExQWHztJJ5QyuWerLsXo8p5kQc"
-                }
+                "method": "POST",
+                "headers": {'Content-Type': 'application/json'},
+                "body": requestBody
             })
             .then(response => response.json())
             .then(data => setAllTasksOfUser(data))
@@ -63,7 +61,6 @@ function GradesAccordions() {
         }, {});
 
     const groupByCourse = groupBy('course');
-
 
     const tasksByCourse = groupByCourse(allTasksOfUser);
     let subjects = Object.entries(tasksByCourse);
@@ -112,4 +109,11 @@ function GradesAccordions() {
         )
 }
 
-export default connect (null)(GradesAccordions)
+const mapStateToProps = state => {
+    return {
+        userId: state.loginReducer.userId,
+        request_token: state.loginReducer.request_token,
+    }
+}
+
+export default connect (mapStateToProps)(GradesAccordions)

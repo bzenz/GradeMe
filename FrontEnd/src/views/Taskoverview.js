@@ -35,16 +35,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Taskoverview() {
+function Taskoverview(props) {
     const classes = useStyles();
     const[taskList, setTaskList] = useState([]);
-    let allTasks =
-        [{id:1, title:"Klassenarbeit", description: "sehr schwer", course: "Mathe", deadline: "21.12.2020", graded: true},
-            {id:1, title:"Kurvendisskusion", description: "easypeazy", course: "English", deadline: "1.1.2021", graded: false}];
 
+    let requestBody = JSON.stringify({
+        userId: props.userId,
+        request_token: props.request_token
+    });
 
     useEffect(() => {
-        fetch(SERVER + "/api/task/getAll/forUser")
+        fetch(SERVER + "/api/task/getAll/forUser",
+            {
+                "method": "POST",
+                "headers": {'Content-Type': 'application/json'},
+                "body": requestBody
+            })
             .then(response => response.json())
             .then(data => setTaskList(data))
     }, [])
@@ -83,4 +89,11 @@ function Taskoverview() {
     )
 }
 
-export default connect (null)(Taskoverview)
+const mapStateToProps = state => {
+    return {
+        userId: state.loginReducer.userId,
+        request_token: state.loginReducer.request_token,
+    }
+}
+
+export default connect (mapStateToProps)(Taskoverview)
