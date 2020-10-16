@@ -8,9 +8,14 @@ module.exports = (routes=[{path, method, strategy:'local', callback:(req, res, u
     for (const route of routes) {
         router[route.method](route.path, (req, res, next) => 
         {
+            passport.authenticate(route.strategy, {session: false}, (err, user, info) =>
+            {
+                if (err) return res.status(400).json({ errors: err });
 
-                route.callback(req, res, null);
+                if (!user) return res.status(400).json({ errors: info.message });
 
+                route.callback(req, res, user);
+            })(req, res, next);
         });
     }
 
