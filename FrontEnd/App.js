@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { createStore } from 'redux';
 import loginReducer from './src/reducers/loginReducer';
@@ -8,6 +8,7 @@ import teacherNavigationReducer from "./src/reducers/teacherNavigationReducer";
 import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
 import LehrerNavigation from "./src/components/teacher/Navigation";
+import SchuelerHauptmenue from "./src/views/Schueler_Hauptmenue";
 
 
 const reducer = combineReducers({
@@ -23,7 +24,7 @@ class App extends React.Component {
   }
 
   render() {
-    const appropriateNavigation = this.props.role === "student" ? <Text>Hallo Schüler</Text> : <LehrerNavigation />;
+    const appropriateNavigation = this.props.role === "student" ? <SchuelerHauptmenue /> : <LehrerNavigation />;
     const loginScreenOrNavigation = this.props.loggedIn ? appropriateNavigation : <LoginScreen />;
     return (
       <View style={styles.container}>
