@@ -11,7 +11,7 @@ export default function Timetable() {
                     Stundenplan
                 </Typography>
             </Box>
-            <img src={Stundenplan} alt="this is car image" />
+            <img src={Stundenplan} alt="Stundenplanmock" />
         </div>
     )
 }

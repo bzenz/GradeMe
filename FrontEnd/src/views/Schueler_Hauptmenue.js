@@ -21,7 +21,6 @@ import PeopleIcon from "@material-ui/icons/People";
 import GradesAccordions from "./GradesComponent";
 import Timetable from "./Timetable";
 import Taskoverview from "./Taskoverview";
-//import Taskoverview from "./Taskoverview";
 
 const drawerWidth = 340;
 

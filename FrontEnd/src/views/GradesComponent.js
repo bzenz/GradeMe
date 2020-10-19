@@ -60,9 +60,7 @@ function GradesAccordions(props) {
             return objectsByKeyValue;
         }, {});
 
-    const groupByCourse = groupBy('course');
-
-    const tasksByCourse = groupByCourse(allTasksOfUser);
+    const tasksByCourse = groupBy('course')(allTasksOfUser);
     let subjects = Object.entries(tasksByCourse);
 
     const accordionList = subjects.map((subject) =>

@@ -55,9 +55,6 @@ function Taskoverview(props) {
             .then(data => setTaskList(data))
     }, [])
 
-    const testdate = new Date(4444444).toJSON();
-    console.log(testdate.substring(0,10));
-
     const taskAccordionsList = taskList.map((task) =>
         <Accordion className={classes.accordion}>
             <AccordionSummary
