@@ -8,6 +8,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import {connect} from "react-redux";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
+import Button from "@material-ui/core/Button";
+import {showEvaluateTaskPage} from "../actions/teacherNavigationActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,25 +17,27 @@ const useStyles = makeStyles((theme) => ({
     },
     accordion: {
       width: '100%',
-      minWidth: 650,
+
     },
     accordionPrimaryHeading: {
-        width: '100%',
+        flexBasis: '40%',
     },
     accordionSecondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
         color: theme.palette.text.secondary,
-        width: '100%',
+        flexBasis: '20%',
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
         width: '100%',
     },
-    table: {
-        minWidth: 650,
+    button: {
+        backgroundColor: '#63a4ff',
+        flexBasis: '20%'
     }
 }));
+
 
 function Taskoverview(props) {
     const classes = useStyles();
@@ -43,6 +47,10 @@ function Taskoverview(props) {
         userId: props.userId,
         request_token: props.request_token
     });
+
+    function handleEvaluateTaskClick(taskTitle){
+        props.showEvaluateTaskPage(taskTitle);
+    }
 
     useEffect(() => {
         fetch(SERVER + "/api/task/getAll/forUser",
@@ -65,6 +73,11 @@ function Taskoverview(props) {
                 <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
                 <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
                 <Typography className={classes.accordionSecondaryHeading}>{task.deadline.substr(0, 10)}</Typography>
+                {props.role === "teacher"?
+                    <Button className={classes.button}
+                        onClick={() => handleEvaluateTaskClick(task.title)}>
+                        Aufgabe bewerten
+                    </Button> :null}
             </AccordionSummary>
             <AccordionDetails>
                 <Typography>
@@ -90,7 +103,8 @@ const mapStateToProps = state => {
     return {
         userId: state.loginReducer.userId,
         request_token: state.loginReducer.request_token,
+        role: state.loginReducer.role,
     }
 }
 
-export default connect (mapStateToProps)(Taskoverview)
+export default connect (mapStateToProps, {showEvaluateTaskPage})(Taskoverview)
