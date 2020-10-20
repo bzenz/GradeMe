@@ -9,6 +9,7 @@
 -   -   /delete POST (userId, request_token) => deletedUserId
 -   -   /getAll
 -   -   -   /forCourse POST (courseId, request_token) => [{userId, vorname, name, rolle}]
+-   -   -   /forTask POST (taskId, request_token) => [{userId, vorname, name, rolle, evaluation, annotation}]
 
 -   /admin
 -   -   /create POST (name, password, request_token) => adminId (generiert aus name & evtl. nr)
@@ -28,11 +29,11 @@
 -   -   getAll
 -   -   -   /forUser POST (userId, request_token) => [{ taskId, evaluation, annotation, course }]
 
-- /course
--  - /create POST (year, subjectId, request_token) => courseId
--  - /getAll
--  -  - /forUser POST (userId, request_token) => [{courseId, year, subjectId, subjectName}]
+-   /course
+-   -   /create POST (year, subjectId, request_token) => courseId
+-   -   /getAll
+-   -   -   /forUser POST (userId, request_token) => [{courseId, year, subjectId, subjectName}]
 
 -   /subject
--  -    /create POST (name, request_token) => subjectId
--  -    /delete POST (subjectId, request_token) => deletedSubjectId
+-   -   /create POST (name, request_token) => subjectId
+-   -   /delete POST (subjectId, request_token) => deletedSubjectId

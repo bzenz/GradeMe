@@ -18,10 +18,10 @@ Das FrontEnd ist ein node Projekt. Die Abhängigkeiten werden mit `npm install` 
 [GradeMe/FrontEnd]$> npm install
 ```
 
-Zum Ausführen `npm start` ausführen.
+Zum Ausführen `npm run web` ausführen.
 
 ```shell
-[GradeMe/FrontEnd]$> npm start
+[GradeMe/FrontEnd]$> npm run web
 ```
 
 ## FrontEnd in das BackEnd exportieren
@@ -31,4 +31,31 @@ Um die aktuelle Version des FrontEnds zu bündeln und zu exportieren, muss nur `
 
 ```shell
 [GradeMe/FrontEnd]$> npm run export
+```
+
+# Datenbank
+[SQLite3](https://sqlite.org/index.html) wird als Datenbank verwendet. Zum Aufsetzen muss entweder SQL3 von der [Downloadseite](https://sqlite.org/download.html) oder über das Terminal heruntergeladen und installiert werden.
+```shell
+[GradeMe/DB]$> sudo apt install sqlite3
+```
+
+## Initialisierung und Testdaten
+Im DB Ordner kann über `sqlite3 gradeMe.db` die Bearbeitung der Datenbank gestartet werden.
+```shell
+[GradeMe/DB]$> sqlite3 gradeMe.db
+```
+
+Über `.read init.sql` wird die Datenbank auf den Werkszustand zurückgesetzt.
+```shell
+sqlite> .read init.sql
+```
+
+Anschließend kann durch `.read createTestData.sql` die Datenbank mit Testdaten gefüllt werden. Dabei werden alle existierenden Daten überschrieben.
+```shell
+sqlite> .read createTestData.sql
+```
+
+Um die Bearbeitung der Datenbank zu beenden, muss nur `.exit` eingegeben werden.
+```shell
+sqlite> .exit
 ```
