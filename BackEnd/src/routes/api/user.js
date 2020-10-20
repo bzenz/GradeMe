@@ -78,5 +78,32 @@ createRoutes([
             ] );
         }
     },
+    {
+        path: '/getAll/forTask', 
+        method: 'post', 
+        strategy: 'jwt',
+        callback: (req, res, user) => 
+        {
+            let args;
+            try 
+            {  
+                args = extractArguments(req.body, 
+                [
+                    { key: 'taskId', type: 'number' },
+                ]);
+            }
+            catch (err) 
+            {
+                return res.status(400).json( {error: err.message} );
+            }
+            // TODO: get all users and corresponding evaluations for Task from DB
+            return res.status(200).json( [
+                {userId: 'kevinmorgenthaler', vorname: 'Kevin', name: 'Morgenthaler', rolle: 'student', evaluation: null, annotation: null},
+                {userId: 'florianlemnitzer', vorname: 'Florian', name: 'Lemnitzer', rolle: 'student', evaluation: null, annotation: null},
+                {userId: 'benitozenz', vorname: 'Benito', name: 'Zenz', rolle: 'teacher', evaluation: null, annotation: null},
+                {userId: 'robinhoentsch2', vorname: 'Robin', name: 'Hoentsch', rolle: 'student', evaluation: 1, annotation: 'Sauber wie immer, Robbi Rob. Echt gute Arbeit.'},
+            ] );
+        }
+    },
 ]);
 module.exports = userRouter;
