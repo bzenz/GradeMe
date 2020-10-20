@@ -12,7 +12,7 @@ CREATE TABLE Users
     LoginName   VARCHAR(32),
     Vorname     VARCHAR(16),
     Name        VARCHAR(16),
-    Type        INTEGER(1),
+    Type        VARCHAR(8),
     PwHash      VARCHAR(64)
 );
 
