@@ -8,7 +8,7 @@ export default (state = DEFAULT_STATE, action) => {
         case SWITCH_TO_CONTENT:
             return {...state, activeContent: action.newContentIdentifier};
         case SHOW_EVALUATE_TASK_PAGE:
-            return {...state, activeContent: SHOW_EVALUATE_TASK_PAGE, taskTitle: action.taskTitle}
+            return {...state, activeContent: SHOW_EVALUATE_TASK_PAGE, taskId: action.taskId, taskTitle: action.taskTitle}
         default:
             return state;
     }

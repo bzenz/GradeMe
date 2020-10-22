@@ -8,10 +8,10 @@ export function switchContent(newContentIdentifier){
     }
 }
 
-export function showEvaluateTaskPage(taskTitle) {
+export function showEvaluateTaskPage(taskId, taskTitle) {
     return {
         type: SHOW_EVALUATE_TASK_PAGE,
+        taskId: taskId,
         taskTitle: taskTitle,
-
     }
 }

@@ -48,8 +48,8 @@ function Taskoverview(props) {
         request_token: props.request_token
     });
 
-    function handleEvaluateTaskClick(taskTitle){
-        props.showEvaluateTaskPage(taskTitle);
+    function handleEvaluateTaskClick(taskId, taskTitle){
+        props.showEvaluateTaskPage(taskId, taskTitle);
     }
 
     useEffect(() => {
@@ -73,9 +73,9 @@ function Taskoverview(props) {
                 <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
                 <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
                 <Typography className={classes.accordionSecondaryHeading}>{task.deadline.substr(0, 10)}</Typography>
-                {props.role === "teacher"?
+                {props.role === "teacher" && task.graded?
                     <Button className={classes.button}
-                        onClick={() => handleEvaluateTaskClick(task.title)}>
+                        onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
                         Aufgabe bewerten
                     </Button> :null}
             </AccordionSummary>
