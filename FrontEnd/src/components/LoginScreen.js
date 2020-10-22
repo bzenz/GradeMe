@@ -1,56 +1,93 @@
-import React from 'react';
-import {KeyboardAvoidingView, TextInput, Button, Text} from "react-native";
+import React, {useState} from 'react';
+import {KeyboardAvoidingView, TextInput} from "react-native";
 import { connect } from 'react-redux';
 import { init } from '../actions/loginActions';
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Avatar from "@material-ui/core/Avatar";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 
-class LoginScreen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: "",
-            password: "",
-        };
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
+function LoginScreen(props) {
+    const classes = useStyles();
+    const[username, setUsername] = useState("");
+    const[password, setPassword] = useState("");
+
+    function handleUsernameChange(event){
+        setUsername(event.target.value);
     }
 
-    handleUsernameChange(event){
-        this.setState({username: event.target.value});
+    function handlePasswordChange(event){
+       setPassword(event.target.value);
     }
 
-    handlePasswordChange(event){
-        this.setState({password: event.target.value});
+    function handleSubmit(){
+        props.init(username, password);
     }
 
-    handleSubmit(){
-        this.props.init(this.state.username, this.state.password);
-    }
-
-    render() {
-        return(
-            <KeyboardAvoidingView>
-                <Text>GradeMe</Text>
-                <TextInput
-                    placeholder = "Nutzername"
-                    value = {this.state.username}
-                    onChange = {this.handleUsernameChange}
-                    autoFocus
-                />
-                <TextInput
-                    placeholder = "Passwort"
-                    value = {this.state.password}
-                    onChange = {this.handlePasswordChange}
-                    secureTextEntry
-                    onSubmitEditing = {this.handleSubmit}
-                />
-                <Button
-                    title = "Einloggen"
-                    onPress = {this.handleSubmit}
-                />
-            </KeyboardAvoidingView>
-        )
-    }
+    return (
+        <KeyboardAvoidingView>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        GradeMe
+                    </Typography>
+                    <form className={classes.form} noValidate>
+                        <TextInput
+                            style={{ height: "40%", borderColor: 'gray', borderWidth: 1, borderRadius: 5, width: "100%", marginBottom: "3%" }}
+                            placeholder = "Username"
+                            onChange={handleUsernameChange}
+                        />
+                        <TextInput
+                            style={{ height: "40%", borderColor: 'gray', borderWidth: 1, borderRadius: 5, width: "100%" }}
+                            placeholder = "Passwort"
+                            onChange={handlePasswordChange}
+                            onSubmitEditing = {handleSubmit}
+                            secureTextEntry
+                        />
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick = {handleSubmit}
+                        >
+                            Sign In
+                        </Button>
+                    </form>
+                </div>
+                <Box mt={8}>
+                </Box>
+            </Container>
+        </KeyboardAvoidingView>
+    );
 }
 
 export default connect(
