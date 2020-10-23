@@ -49,8 +49,10 @@ export default (state = DEFAULT_STATE, action) => {
                     args: [action.res]
                 })
             );
-        case RESPONSE_PARSED:
-            return {...state, userId: action.res.userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token};
+        case RESPONSE_PARSED: {
+            localStorage.setItem('user', action.res);
+            return {...state, userId: action.res.userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token}
+        }
         case LOGIN_POST_FAILED:
             alert("Netzwerkfehler");
             return{...state, attemptingLogin: false}

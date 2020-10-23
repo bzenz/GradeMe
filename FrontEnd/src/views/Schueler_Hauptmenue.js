@@ -21,6 +21,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import GradesAccordions from "./GradesComponent";
 import Timetable from "./Timetable";
 import Taskoverview from "./Taskoverview";
+import LogoutButton from "../components/LogoutButton";
 
 const drawerWidth = 340;
 
@@ -151,6 +152,7 @@ export default function SchuelerHauptmenue(){
                     <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
                         GradeMe
                     </Typography>
+                    <LogoutButton/>
                 </Toolbar>
             </AppBar>
             <Drawer

@@ -12,6 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { TeacherTabs } from './TeacherTabs';
 import { connect } from 'react-redux';
+import LogoutButton from "../LogoutButton";
 
 const drawerWidth = 340;
 
@@ -125,6 +126,7 @@ function Dashboard(props) {
                     <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
                         GradeMe
                     </Typography>
+                    <LogoutButton/>
                 </Toolbar>
             </AppBar>
             <Drawer
