@@ -62,7 +62,7 @@ function LoginScreen(props) {
                     <form className={classes.form} noValidate>
                         <TextInput
                             style={{ height: "40%", borderColor: 'gray', borderWidth: 1, borderRadius: 5, width: "100%", marginBottom: "3%" }}
-                            placeholder = "Username"
+                            placeholder = "Nutzername"
                             onChange={handleUsernameChange}
                         />
                         <TextInput
