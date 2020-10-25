@@ -15,7 +15,7 @@ createRoutes([
                 args = extractArguments(req.body, 
                 [
                     { key: 'year', type: 'number' },
-                    { key: 'subjectId', type: 'string' },
+                    { key: 'subjectId', type: 'number' },
                 ]);
             }
             catch (err) 
@@ -23,7 +23,7 @@ createRoutes([
                 return res.status(400).json( {error: err.message} );
             }
 
-            const id = args.year + args.subjectId + Math.ceil(Math.random()*3);
+            const id = Math.ceil(Math.random()*30);
 
             // TODO: create task and save in DB
             return res.status(200).json( { courseId: id } );
@@ -40,7 +40,7 @@ createRoutes([
             {  
                 args = extractArguments(req.body, 
                 [
-                    { key: 'userId', type: 'string' },
+                    { key: 'userId', type: 'number' },
                 ]);
             }
             catch (err) 
@@ -49,9 +49,9 @@ createRoutes([
             }
             // TODO: get all courses for user from DB
             return res.status(200).json( [
-                {courseId: '2019WI2', year: 2019, subjectId: 'WI', subjectName: 'Wirtschaft'},
-                {courseId: '2019EN1', year: 2019, subjectId: 'EN', subjectName: 'Englisch'},
-                {courseId: '2019DE1', year: 2019, subjectId: 'DE', subjectName: 'Deutsch'},
+                {courseId: 1, year: 2019, subjectId: 0, subjectName: 'Wirtschaft'},
+                {courseId: 2, year: 2019, subjectId: 1, subjectName: 'Englisch'},
+                {courseId: 4, year: 2019, subjectId: 3, subjectName: 'Deutsch'},
             ] );
         }
     },

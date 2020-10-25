@@ -22,7 +22,7 @@ createRoutes([
                 return res.status(400).json( {error: err.message} );
             }
 
-            const id = args.name.substring(0, 2).toUpperCase();
+            const id = Math.floor(Math.random()*15+5);
 
             // TODO: create subject and save in DB
             return res.status(200).json( { subjectId: id } );
@@ -39,7 +39,7 @@ createRoutes([
             {  
                 args = extractArguments(req.body, 
                 [
-                    { key: 'subjectId', type: 'string' },
+                    { key: 'subjectId', type: 'number' },
                 ]);
             }
             catch (err) 
