@@ -10,9 +10,11 @@ import List from '@material-ui/core/List';
 import { connect } from "react-redux";
 import {switchContent} from "../../actions/teacherNavigationActions";
 
-export const COURSE_OVERVIEW_IDENTIFIER = "COURSE_OVERVIEW";
+export const SUBJECT_OVERVIEW_IDENTIFIER = "SUBJECT_OVERVIEW";
 export const TASK_OVERVIEW_IDENTIFIER = "TASK_OVERVIEW";
 export const SCHEDULE_IDENTIFIER = "SCHEDULE";
+export const COURSES_FOR_SUBJECT_IDENTIFIER = "COURSES_FOR_SUBJECT";
+export const COURSE_VIEW_IDENTIFIER = "COURSE_VIEW";
 
 class ListItemsComponent extends React.Component{
     constructor(props){
@@ -30,7 +32,8 @@ class ListItemsComponent extends React.Component{
     render() {
         return (
         <List>
-            <ListItem button onClick={this.handleSwitchContent(COURSE_OVERVIEW_IDENTIFIER)}>
+            <ListSubheader inset>Lehrernavigation</ListSubheader>
+            <ListItem button onClick={this.handleSwitchContent(SUBJECT_OVERVIEW_IDENTIFIER)}>
                 <ListItemIcon>
                     <ClassIcon/>
                 </ListItemIcon>
@@ -55,26 +58,26 @@ class ListItemsComponent extends React.Component{
 
 export const TeacherTabs = connect(null, {switchContent})(ListItemsComponent);
 
-export const secondaryListItems = (
+export const CourseTabs = (
     <div>
-        <ListSubheader inset>Saved reports</ListSubheader>
+        <ListSubheader inset>Kursnavigation</ListSubheader>
         <ListItem button>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Current month" />
+            <ListItemText primary="Aktion" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Last quarter" />
+            <ListItemText primary="Schülerübersicht" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Year-end sale" />
+            <ListItemText primary="Aufgabenübersicht" />
         </ListItem>
     </div>
 );

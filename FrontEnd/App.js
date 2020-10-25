@@ -9,11 +9,13 @@ import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
 import LehrerNavigation from "./src/components/teacher/Navigation";
 import SchuelerHauptmenue from "./src/views/Schueler_Hauptmenue";
+import subjectSelectReducer from "./src/reducers/subjectSelectReducer";
 import {loadUserData} from "./src/actions/loginActions";
 
 const reducer = combineReducers({
   loginReducer,
-  teacherNavigationReducer
+  teacherNavigationReducer,
+  subjectSelectReducer
 })
 
 const store = createStore(reducer, install());
