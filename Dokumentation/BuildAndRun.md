@@ -11,6 +11,13 @@ Zum Ausführen `npm start` ausführen.
 [GradeMe/BackEnd]$> npm start
 ```
 
+## Backend als ausführbare Datei exportieren
+Das Backend kann als ausführbare Datei exportiert werden. Dafür muss nur `npm run build` ausgeführt werden. Zuvor muss allerdings das Frontend exportiert worden sein (siehe Abschnitt "FrontEnd in das BackEnd exportieren").
+
+```shell
+[GradeMe/BackEnd]$> npm run build
+```
+
 # FrontEnd
 Das FrontEnd ist ein node Projekt. Die Abhängigkeiten werden mit `npm install` installiert.
 
