@@ -10,15 +10,19 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { TeacherTabs } from './TeacherTabs';
+import {TASK_OVERVIEW_IDENTIFIER, TeacherTabs} from './TeacherTabs';
 import { connect } from 'react-redux';
 import LogoutButton from "../LogoutButton";
+import Taskoverview from "../../views/Taskoverview";
+import EvaluateTaskPage from "./EvaluateTaskPage";
+import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
 
 const drawerWidth = 340;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        width: '60%',
     },
     toolbar: {
         background: '#004ba0',
@@ -107,6 +111,17 @@ function Dashboard(props) {
         setOpen(false);
     };
 
+    const renderContent = () => {
+        switch(props.activeContent) {
+            case TASK_OVERVIEW_IDENTIFIER:
+                return (<Taskoverview />)
+            case SHOW_EVALUATE_TASK_PAGE:
+                return (<EvaluateTaskPage />)
+            default:
+                return <div>{props.activeContent}</div>
+        }
+    }
+
     return (
 
         <div className={classes.root}>
@@ -148,7 +163,7 @@ function Dashboard(props) {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                <div>{props.activeContent}</div>
+                <div>{renderContent()}</div>
             </main>
         </div>
     );
