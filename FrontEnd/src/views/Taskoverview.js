@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
 import Button from "@material-ui/core/Button";
-import {showEvaluateTaskPage} from "../actions/teacherNavigationActions";
+import {SHOW_EVALUATE_TASK_PAGE, showEvaluateTaskPage, switchContent} from "../actions/teacherNavigationActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,6 +49,7 @@ function Taskoverview(props) {
     });
 
     function handleEvaluateTaskClick(taskId, taskTitle){
+        props.switchContent(SHOW_EVALUATE_TASK_PAGE);
         props.showEvaluateTaskPage(taskId, taskTitle);
     }
 
@@ -107,4 +108,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect (mapStateToProps, {showEvaluateTaskPage})(Taskoverview)
+export default connect (mapStateToProps, {showEvaluateTaskPage, switchContent})(Taskoverview)

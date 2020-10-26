@@ -86,37 +86,49 @@ function evaluateTaskPage(props) {
 
     let studentEvaluationDataArray = [];
 
+    function handleInputFieldChange(event, userId, inputFieldType) {
+        const value = event.target.value;
+        let studentDataFound = false;
+        studentEvaluationDataArray.forEach((studentData) => {
+            if(studentData.userId === userId) {
+                switch (inputFieldType) {
+                    case "grade": studentData.grade = value;
+                    break;
+                    case "annotation": studentData.annotation = value;
+                    break;
+                    default: {}
+                }
+                studentDataFound = true;
+            }
+        })
+        if(!studentDataFound) {
+            switch (inputFieldType) {
+                case "grade": {
+                    let grade = value;
+                    studentEvaluationDataArray.push({userId, grade});
+                    break;
+                }
+                case "annotation": {
+                    let annotation = value;
+                    studentEvaluationDataArray.push({userId, annotation});
+                    break;
+                }
+                default: {}
+            }
+        }
+    }
+
     //Funktion wird bei jedem Change des GradeInputField aufgerufen und versucht im studentEvaluationDataArray den
     //Schülerdatensatz per ID zu finden. Gibt es diesen bereits, wird der Wert geupdated.
     // Gibt es ihn nicht, wird ein neuer Datensatz mit der userId und der grade angelegt
-     function handleGradeInputFieldChange(event, userId)  {
-         const grade = event.target.value;
-         let studentDataFound = false;
-         studentEvaluationDataArray.forEach((studentData) => {
-            if(studentData.userId === userId) {
-                studentData.grade = grade;
-                studentDataFound = true;
-            }
-         })
-         if(!studentDataFound) {
-             studentEvaluationDataArray.push({userId, grade})
-         }
+     function handleGradeInputFieldChange(event, userId, )  {
+        handleInputFieldChange(event, userId, "grade");
     }
 
     //Gleiche Funtkionalität wie die handleGradeInputFieldChagne function, nur mit annotation diesmal.
     // Es ist also egal, womit man anfängt beim Eintragen
     function handleAnnotationInputFieldChange(event, userId) {
-        const annotation = event.target.value;
-        let studentDataFound = false;
-        studentEvaluationDataArray.forEach((studentData) => {
-            if(studentData.userId === userId) {
-                studentData.annotation = annotation;
-                studentDataFound = true;
-            }
-        })
-        if(!studentDataFound) {
-            studentEvaluationDataArray.push({userId, annotation})
-        }
+        handleInputFieldChange(event, userId, "annotation");
     }
 
     const studentGradePapers = studentsOfTask.map((schueler) =>
@@ -162,12 +174,10 @@ function evaluateTaskPage(props) {
 }
 const mapStateToProps = state => {
     return {
-        userId: state.loginReducer.userId,
         request_token: state.loginReducer.request_token,
         taskId: state.teacherNavigationReducer.taskId,
         taskTitle: state.teacherNavigationReducer.taskTitle,
     }
 }
-
 
 export default connect(mapStateToProps, {switchContent})(evaluateTaskPage)
