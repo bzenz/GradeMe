@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { createStore } from 'redux';
@@ -20,24 +20,19 @@ const store = createStore(reducer, install());
 
 function App(props) {
     props.loadUserData(localStorage.getItem("userId"), localStorage.getItem("role"), localStorage.getItem("request_token"))
-    const [update, setUpdate] = useState(false);
 
-    function handleUpdate() {
-        setUpdate(!update);
-    }
-
-    const appropriateNavigation = localStorage.getItem("role") === "student" ? <SchuelerHauptmenue handleLogout={handleUpdate} />: <LehrerNavigation handleLogout={handleUpdate} />;
+    const appropriateNavigation = localStorage.getItem("role") === "student" ? <SchuelerHauptmenue />: <LehrerNavigation />;
     if(localStorage.getItem("userId")) {
         return(
-            <div>
-                {appropriateNavigation}
-            </div>
+        <View style={styles.container}>
+            {appropriateNavigation}
+            <StatusBar style="auto"/>
+        </View>
         )
     }
     return (
       <View style={styles.container}>
-          <LoginScreen onSubmit={handleUpdate}>
-          </LoginScreen>
+          <LoginScreen />
           <StatusBar style="auto"/>
       </View>
     );

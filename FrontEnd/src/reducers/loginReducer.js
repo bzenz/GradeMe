@@ -3,7 +3,7 @@ import {
     RESPONSE_PARSED,
     LOGIN_POST_SUCCESSFULL,
     LOGIN_POST_FAILED,
-    LOAD_USER_DATA
+    LOAD_USER_DATA, LOGOUT_ACTION
 } from "../actions/loginActions";
 import { SERVER } from "../../index";
 import {loginPostFailed, loginPostSuccessfull, responseParsed} from "../actions/loginActions";
@@ -66,6 +66,8 @@ export default (state = DEFAULT_STATE, action) => {
             return{...state, attemptingLogin: false}
         case LOAD_USER_DATA:
             return{...state, userId: action.userId, role: action.role, request_token: action.request_token}
+        case LOGOUT_ACTION:
+            return{...state, loggedIn: false}
         default:
             return state;
     }

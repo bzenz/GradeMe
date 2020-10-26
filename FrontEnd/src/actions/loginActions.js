@@ -3,6 +3,7 @@ export const LOGIN_POST_SUCCESSFULL = "LOGIN_POST_SUCCESSFULL";
 export const LOGIN_POST_FAILED = "LOGIN_POST_FAILED";
 export const RESPONSE_PARSED = "RESPONSE_PARSED";
 export const LOAD_USER_DATA = "LOAD_USER_DATA";
+export const LOGOUT_ACTION = "LOGOUT_ACTION";
 
 export function init(username, password){
     return{
@@ -39,5 +40,11 @@ export function loadUserData(userId, role, request_token){
         userId,
         role,
         request_token,
+    }
+}
+
+export function logoutAction(){
+    return{
+        type: LOGOUT_ACTION,
     }
 }

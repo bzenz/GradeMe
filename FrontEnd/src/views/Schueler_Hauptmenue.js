@@ -114,7 +114,7 @@ function Communicationdashboard() {
     )
 }
 
-export default function SchuelerHauptmenue(props){
+export default function SchuelerHauptmenue(){
     const classes = useStyles();
     const[mainPanelContentType, setMainPanelContentType] = useState("");
     const [open, setOpen] = React.useState(true);
@@ -152,7 +152,7 @@ export default function SchuelerHauptmenue(props){
                     <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
                         GradeMe
                     </Typography>
-                    <LogoutButton handleLogout={props.handleLogout} />
+                    <LogoutButton />
                 </Toolbar>
             </AppBar>
             <Drawer

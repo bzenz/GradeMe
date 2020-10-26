@@ -125,7 +125,7 @@ function Dashboard(props) {
                     <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
                         GradeMe
                     </Typography>
-                    <LogoutButton handleLogout={props.handleLogout}/>
+                    <LogoutButton />
                 </Toolbar>
             </AppBar>
             <Drawer

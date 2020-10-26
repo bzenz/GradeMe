@@ -46,7 +46,6 @@ function LoginScreen(props) {
 
     function handleSubmit(){
         props.init(username, password);
-        props.onSubmit();
     }
 
     return (
@@ -80,7 +79,7 @@ function LoginScreen(props) {
                             className={classes.submit}
                             onClick = {handleSubmit}
                         >
-                            Sign In
+                            Anmelden
                         </Button>
                     </form>
                 </div>
