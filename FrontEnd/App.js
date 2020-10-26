@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { createStore } from 'redux';
@@ -9,6 +9,7 @@ import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
 import LehrerNavigation from "./src/components/teacher/Navigation";
 import SchuelerHauptmenue from "./src/views/Schueler_Hauptmenue";
+import {set} from "react-native-reanimated";
 
 
 const reducer = combineReducers({
@@ -18,21 +19,42 @@ const reducer = combineReducers({
 
 const store = createStore(reducer, install());
 
-class App extends React.Component {
-  constructor(props) {
+function App(props) {
+/*  constructor(props) {
     super(props);
-  }
+  }*/
+    const [user, setUser] = useState("");
+    const [update, setUpdate] = useState(false);
 
-  render() {
-    const appropriateNavigation = this.props.role === "student" ? <SchuelerHauptmenue /> : <LehrerNavigation />;
-    const loginScreenOrNavigation = this.props.loggedIn ? appropriateNavigation : <LoginScreen />;
+    function handleUpdate() {
+        setUpdate(!update);
+    }
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            const foundUser = loggedInUser;
+            setUser(foundUser);
+        }
+    }, []);
+
+
+    const appropriateNavigation = props.role === "student" ? <SchuelerHauptmenue /> : <LehrerNavigation />;
+    const loginScreenOrNavigation = props.loggedIn ? appropriateNavigation : <LoginScreen />;
+    if(user) {
+        return(
+            <div>
+                {appropriateNavigation}
+            </div>
+        )
+    }
     return (
       <View style={styles.container}>
-          {loginScreenOrNavigation}
+          <LoginScreen onSubmit={handleUpdate}>
+          </LoginScreen>
           <StatusBar style="auto"/>
       </View>
     );
-  };
+
 }
 const ConnectedApp = connect(
     (state)=>({

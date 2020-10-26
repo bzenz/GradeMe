@@ -5,7 +5,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 function LogoutButton() {
 
     function handleLogout(){
-        alert("logout")
+        localStorage.clear();
     }
 
     return (

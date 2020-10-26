@@ -50,7 +50,8 @@ export default (state = DEFAULT_STATE, action) => {
                 })
             );
         case RESPONSE_PARSED: {
-            localStorage.setItem('user', action.res);
+            localStorage.setItem('user', action.res.userId);
+
             return {...state, userId: action.res.userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token}
         }
         case LOGIN_POST_FAILED:

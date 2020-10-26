@@ -31,10 +31,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => ++value); // update the state to force render
+}
+
 function LoginScreen(props) {
     const classes = useStyles();
     const[username, setUsername] = useState("");
     const[password, setPassword] = useState("");
+    const[userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+
+    const forceUpdate = useForceUpdate();
 
     function handleUsernameChange(event){
         setUsername(event.target.value);
@@ -46,6 +54,8 @@ function LoginScreen(props) {
 
     function handleSubmit(){
         props.init(username, password);
+        setUserIsLoggedIn(true);
+        props.onSubmit();
     }
 
     return (
