@@ -9,7 +9,7 @@ import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
 import LehrerNavigation from "./src/components/teacher/Navigation";
 import SchuelerHauptmenue from "./src/views/Schueler_Hauptmenue";
-
+import {loadUserData} from "./src/actions/loginActions";
 
 const reducer = combineReducers({
   loginReducer,
@@ -18,21 +18,25 @@ const reducer = combineReducers({
 
 const store = createStore(reducer, install());
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+function App(props) {
+    props.loadUserData(localStorage.getItem("userId"), localStorage.getItem("role"), localStorage.getItem("request_token"))
 
-  render() {
-    const appropriateNavigation = this.props.role === "student" ? <SchuelerHauptmenue /> : <LehrerNavigation />;
-    const loginScreenOrNavigation = this.props.loggedIn ? appropriateNavigation : <LoginScreen />;
+    const appropriateNavigation = localStorage.getItem("role") === "student" ? <SchuelerHauptmenue />: <LehrerNavigation />;
+    if(localStorage.getItem("userId")) {
+        return(
+        <View style={styles.container}>
+            {appropriateNavigation}
+            <StatusBar style="auto"/>
+        </View>
+        )
+    }
     return (
       <View style={styles.container}>
-          {loginScreenOrNavigation}
+          <LoginScreen />
           <StatusBar style="auto"/>
       </View>
     );
-  };
+
 }
 const ConnectedApp = connect(
     (state)=>({
@@ -41,7 +45,7 @@ const ConnectedApp = connect(
       role: state.loginReducer.role,
       request_token: state.loginReducer.request_token,
     }),
-    null
+    { loadUserData }
 )(App);
 
 export default class MyApp extends React.Component {

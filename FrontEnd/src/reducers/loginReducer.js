@@ -1,4 +1,10 @@
-import {INIT, RESPONSE_PARSED, LOGIN_POST_SUCCESSFULL, LOGIN_POST_FAILED} from "../actions/loginActions";
+import {
+    INIT,
+    RESPONSE_PARSED,
+    LOGIN_POST_SUCCESSFULL,
+    LOGIN_POST_FAILED,
+    LOAD_USER_DATA, LOGOUT_ACTION
+} from "../actions/loginActions";
 import { SERVER } from "../../index";
 import {loginPostFailed, loginPostSuccessfull, responseParsed} from "../actions/loginActions";
 import { loop, Cmd } from 'redux-loop';
@@ -49,11 +55,19 @@ export default (state = DEFAULT_STATE, action) => {
                     args: [action.res]
                 })
             );
-        case RESPONSE_PARSED:
-            return {...state, userId: action.res.userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token};
+        case RESPONSE_PARSED: {
+            localStorage.setItem('userId', action.res.userId);
+            localStorage.setItem('role', action.res.rolle);
+            localStorage.setItem('request_token', action.res.request_token);
+            return {...state, userId: action.res.userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token}
+        }
         case LOGIN_POST_FAILED:
             alert("Netzwerkfehler");
             return{...state, attemptingLogin: false}
+        case LOAD_USER_DATA:
+            return{...state, userId: action.userId, role: action.role, request_token: action.request_token}
+        case LOGOUT_ACTION:
+            return{...state, loggedIn: false}
         default:
             return state;
     }

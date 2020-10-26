@@ -12,6 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {TASK_OVERVIEW_IDENTIFIER, TeacherTabs} from './TeacherTabs';
 import { connect } from 'react-redux';
+import LogoutButton from "../LogoutButton";
 import Taskoverview from "../../views/Taskoverview";
 import EvaluateTaskPage from "./EvaluateTaskPage";
 import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
@@ -109,7 +110,6 @@ function Dashboard(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     const renderContent = () => {
         switch(props.activeContent) {
@@ -140,6 +140,7 @@ function Dashboard(props) {
                     <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
                         GradeMe
                     </Typography>
+                    <LogoutButton />
                 </Toolbar>
             </AppBar>
             <Drawer
