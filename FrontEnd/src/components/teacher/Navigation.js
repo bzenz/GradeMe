@@ -106,7 +106,6 @@ function Dashboard(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     return (
 
@@ -126,7 +125,7 @@ function Dashboard(props) {
                     <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
                         GradeMe
                     </Typography>
-                    <LogoutButton/>
+                    <LogoutButton handleLogout={props.handleLogout}/>
                 </Toolbar>
             </AppBar>
             <Drawer

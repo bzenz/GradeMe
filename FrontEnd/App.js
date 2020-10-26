@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { createStore } from 'redux';
@@ -9,8 +9,7 @@ import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
 import LehrerNavigation from "./src/components/teacher/Navigation";
 import SchuelerHauptmenue from "./src/views/Schueler_Hauptmenue";
-import {set} from "react-native-reanimated";
-
+import {loadUserData} from "./src/actions/loginActions";
 
 const reducer = combineReducers({
   loginReducer,
@@ -20,27 +19,15 @@ const reducer = combineReducers({
 const store = createStore(reducer, install());
 
 function App(props) {
-/*  constructor(props) {
-    super(props);
-  }*/
-    const [user, setUser] = useState("");
+    props.loadUserData(localStorage.getItem("userId"), localStorage.getItem("role"), localStorage.getItem("request_token"))
     const [update, setUpdate] = useState(false);
 
     function handleUpdate() {
         setUpdate(!update);
     }
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
-            const foundUser = loggedInUser;
-            setUser(foundUser);
-        }
-    }, []);
 
-
-    const appropriateNavigation = props.role === "student" ? <SchuelerHauptmenue /> : <LehrerNavigation />;
-    const loginScreenOrNavigation = props.loggedIn ? appropriateNavigation : <LoginScreen />;
-    if(user) {
+    const appropriateNavigation = localStorage.getItem("role") === "student" ? <SchuelerHauptmenue handleLogout={handleUpdate} />: <LehrerNavigation handleLogout={handleUpdate} />;
+    if(localStorage.getItem("userId")) {
         return(
             <div>
                 {appropriateNavigation}
@@ -63,7 +50,7 @@ const ConnectedApp = connect(
       role: state.loginReducer.role,
       request_token: state.loginReducer.request_token,
     }),
-    null
+    { loadUserData }
 )(App);
 
 export default class MyApp extends React.Component {
