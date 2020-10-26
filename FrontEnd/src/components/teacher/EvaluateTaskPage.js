@@ -91,30 +91,12 @@ function evaluateTaskPage(props) {
         let studentDataFound = false;
         studentEvaluationDataArray.forEach((studentData) => {
             if(studentData.userId === userId) {
-                switch (inputFieldType) {
-                    case "grade": studentData.grade = value;
-                    break;
-                    case "annotation": studentData.annotation = value;
-                    break;
-                    default: {}
-                }
+                studentData[inputFieldType] = value;
                 studentDataFound = true;
             }
         })
         if(!studentDataFound) {
-            switch (inputFieldType) {
-                case "grade": {
-                    let grade = value;
-                    studentEvaluationDataArray.push({userId, grade});
-                    break;
-                }
-                case "annotation": {
-                    let annotation = value;
-                    studentEvaluationDataArray.push({userId, annotation});
-                    break;
-                }
-                default: {}
-            }
+            studentEvaluationDataArray.push({userId, [inputFieldType]: value});
         }
     }
 
