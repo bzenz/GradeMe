@@ -89,7 +89,7 @@ createRoutes([
             {  
                 args = extractArguments(req.body, 
                 [
-                    { key: 'taskId', type: 'number' },
+                    { key: 'taskId', type: 'string' },
                 ]);
             }
             catch (err) 
