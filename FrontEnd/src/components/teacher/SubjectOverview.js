@@ -38,7 +38,6 @@ function SubjectOverview(props) {
         function showSubject(){
             props.setSubject(subject);
             props.switchContent(COURSES_FOR_SUBJECT_IDENTIFIER);
-            console.log(props.state);
         }
         return showSubject;
     }
