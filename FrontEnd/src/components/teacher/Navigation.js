@@ -22,7 +22,6 @@ import EvaluateTaskPage from "./EvaluateTaskPage";
 import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
 
 
-
 function Dashboard(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
