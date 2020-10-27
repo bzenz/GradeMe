@@ -2,18 +2,18 @@ const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask } = require('../../db/getAllUsers');
 
-const userRouter = 
+const userRouter =
 createRoutes([
     {
-        path: '/create', 
-        method: 'post', 
-        strategy: 'jwt', 
-        callback: (req, res, user) => 
+        path: '/create',
+        method: 'post',
+        strategy: 'jwt',
+        callback: (req, res, user) =>
         {
             let args;
-            try 
-            {  
-                args = extractArguments(req.body, 
+            try
+            {
+                args = extractArguments(req.body,
                 [
                     { key: 'vorname', type: 'string' },
                     { key: 'name', type: 'string' },
@@ -21,7 +21,7 @@ createRoutes([
                     { key: 'rolle', type: 'string' },
                 ]);
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
@@ -33,20 +33,20 @@ createRoutes([
         }
     },
     {
-        path: '/delete', 
-        method: 'post', 
+        path: '/delete',
+        method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: (req, res, user) =>
         {
             let args;
-            try 
-            {  
-                args = extractArguments(req.body, 
+            try
+            {
+                args = extractArguments(req.body,
                 [
                     { key: 'userId', type: 'string' },
                 ]);
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
@@ -55,68 +55,68 @@ createRoutes([
         }
     },
     {
-        path: '/getAll/forCourse', 
-        method: 'post', 
+        path: '/getAll/forCourse',
+        method: 'post',
         strategy: 'jwt',
-        callback: async (req, res, user) => 
+        callback: async (req, res, user) =>
         {
             let args;
-            try 
-            {  
-                args = extractArguments(req.body, 
+            try
+            {
+                args = extractArguments(req.body,
                 [
                     { key: 'courseId', type: 'number' },
                 ]);
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
-            
+
             const users = await getAllUsersForCourse(args.courseId);
-            for (const i in users) 
+            for (const i in users)
             {
                 const user = users[i];
-                users[i] = 
+                users[i] =
                 {
                     userId: user.Id,
                     vorname: user.Vorname,
                     name: user.Name,
                     rolle: user.Type,
                 };
-            } 
-            
+            }
+
             return res.status(200).json( users );
         }
     },
     {
-        path: '/getAll/forTask', 
-        method: 'post', 
+        path: '/getAll/forTask',
+        method: 'post',
         strategy: 'jwt',
-        callback: async (req, res, user) => 
+        callback: async (req, res, user) =>
         {
             let args;
-            try 
-            {  
-                args = extractArguments(req.body, 
+            try
+            {
+                args = extractArguments(req.body,
                 [
-                    { key: 'taskId', type: 'string' },
+                    { key: 'taskId', type: 'number' },
                 ]);
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
-            
+
             const evaluatedUsers = await getAllEvaluatedUsersForTask(args.taskId);
             const users = await getAllUsersForTask(args.taskId);
-            
-            for (const i in users) 
+
+            for (const i in users)
             {
                 const user = users[i];
                 const evaluatedUser = evaluatedUsers.find(curUser => user.Id === curUser.Id);
-                
-                users[i] = 
+
+                users[i] =
                 {
                     userId: user.Id,
                     vorname: user.Vorname,
