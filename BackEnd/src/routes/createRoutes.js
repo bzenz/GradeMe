@@ -10,11 +10,19 @@ module.exports = (routes=[{path, method, strategy:'local', callback:(req, res, u
         {
             passport.authenticate(route.strategy, {session: false}, (err, user, info) =>
             {
-                if (err) return res.status(400).json({ errors: err });
+                try 
+                {
 
-                if (!user) return res.status(400).json({ errors: info.message });
-
-                route.callback(req, res, user);
+                    if (err) throw err;
+                    
+                    if (!user) throw new Error(info.message);
+                    
+                    route.callback(req, res, user);
+                } 
+                catch (err) 
+                {
+                    res.status(400).json({errors: err});
+                }
             })(req, res, next);
         });
     }

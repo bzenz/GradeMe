@@ -1,3 +1,5 @@
+const createTask = require('../../db/createTask');
+const { getAllTasksForCourse, getAllTasksForUser } = require('../../db/getAllTasks');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
@@ -7,30 +9,30 @@ createRoutes([
         path: '/create', 
         method: 'post', 
         strategy: 'jwt', 
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
-            let args;
             try 
             {
-                args = extractArguments(req.body, 
+                const args = extractArguments(req.body, 
                 [
                     { key: 'title', type: 'string' },
                     { key: 'description', type: 'string' },
-                    { key: 'course', type: 'string' }, // Note: password can't consist of only numbers using this method
+                    { key: 'course', type: 'number' }, // Note: password can't consist of only numbers using this method
                     { key: 'deadline', type: 'string' },
                     { key: 'graded', type: 'boolean' },
                 ]);
+                // TODO: check deadline is date
+                
+                const taskId = await createTask(
+                    args.title, args.description, args.deadline, args.course, args.graded
+                );
+                return res.status(200).json( { taskId } );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-
-            // TODO: check deadline is date
-            const id = args.title + args.course + Math.ceil(Math.random()*3);
-
-            // TODO: create task and save in DB
-            return res.status(200).json( { taskId: id } );
+                
         }
     },
     {
@@ -39,12 +41,11 @@ createRoutes([
         strategy: 'jwt', 
         callback: (req, res, user) => 
         {
-            let args;
             try 
             {
-                args = extractArguments(req.body, 
+                const args = extractArguments(req.body, 
                 [
-                    { key: 'taskId',        type: 'string' },
+                    { key: 'taskId',        type: 'number' },
                     { key: 'title',         type: 'string', optional: true },
                     { key: 'description',   type: 'string', optional: true },
                     { key: 'course',        type: 'string', optional: true }, // Note: password can't consist of only numbers using this method
@@ -66,52 +67,66 @@ createRoutes([
         path: '/getAll/forCourse', 
         method: 'post', 
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
-            let args;
             try 
             {  
-                args = extractArguments(req.body, 
+                const args = extractArguments(req.body, 
                 [
-                    { key: 'courseId', type: 'string' },
+                    { key: 'courseId', type: 'number' },
                 ]);
+
+                const tasks = await getAllTasksForCourse(args.courseId);
+                prepareTasks(tasks);
+                return res.status(200).json( tasks );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: get all tasks for course from DB (sorted by deadline)
-            return res.status(200).json( [
-                {taskId: 'Klausurvorbereitung2019WI111', title: 'Klausurvorbereitung', description: 'Bitte bereitet euch bis zu diesem Termin auf die Klausur vor.', course: '2019WI11', deadline: new Date().toJSON(), graded: false},
-                {taskId: 'Wirtschaftsklausur2019WI112', title: 'Wirtschaftsklausur', description: 'Wir schreiben über die EZB.', course: '2019WI11', deadline: new Date().toJSON(), graded: true},
-            ] );
         }
     },
     {
         path: '/getAll/forUser', 
         method: 'post', 
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
-            let args;
             try 
             {
-                args = extractArguments(req.body,
+                const args = extractArguments(req.body,
                 [
-                    { key: 'userId', type: 'string' },
+                    { key: 'userId', type: 'number' },
                 ]);
+
+                const tasks = await getAllTasksForUser(args.userId);
+                prepareTasks(tasks);
+                return res.status(200).json( tasks );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: get all tasks for user from DB (sorted by deadline)
-            return res.status(200).json( [
-                {taskId: 'Klausurvorbereitung2019WI111', title: 'Klausurvorbereitung', description: 'Bitte bereitet euch bis zu diesem Termin auf die Klausur vor.', course: '2019WI11', deadline: new Date().toJSON(), graded: false},
-                {taskId: 'Wirtschaftsklausur2019WI112', title: 'Wirtschaftsklausur', description: 'Wir schreiben über die EZB.', course: '2019WI11', deadline: new Date().toJSON(), graded: true},
-                {taskId: 'Deutsch Lieblingsbuch2019DE71', title: 'Deutsch Lieblingsbuch', description: 'Bitte bringt zur nächsten Stunde euer Lieblingsbuch mit. <3', course: '2019DE7', deadline: new Date().toJSON(), graded: false},
-            ] );
         }
     },
 ]);
+
+const prepareTasks = tasks => 
+{
+    for (const i in tasks) 
+    {
+        const task = tasks[i];
+        tasks[i] = 
+        {
+            taskId: task.Id, 
+            title: task.Title, 
+            description: task.Description, 
+            course: task.CourseId, 
+            deadline: task.Date, 
+            graded: Boolean(task.Graded),
+        };
+    }
+};
+
+
 module.exports = userRouter;

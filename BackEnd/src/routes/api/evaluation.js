@@ -1,3 +1,5 @@
+const evaluateTask = require('../../db/evaluateTask');
+const { getAllEvaluationsForUser } = require('../../db/getAllEvaluations');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
@@ -7,49 +9,59 @@ createRoutes([
         path: '/evaluateTask', 
         method: 'post', 
         strategy: 'jwt', 
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
-            let args;
             try 
             {
-                args = extractArguments(req.body, 
+                const args = extractArguments(req.body, 
                 [
-                    { key: 'taskId', type: 'string' },
+                    { key: 'taskId', type: 'number' },
                     { key: 'users', type: 'object' }, // TODO: check correct content of array
                 ]);
+
+               await evaluateTask(args.taskId, args.users);
+
+                return res.status(200).json( { taskId: args.taskId } );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-
-            // TODO: evaluate task and save in DB
-            return res.status(200).json( { taskId: args.taskId } );
         }
     },
     {
         path: '/getAll/forUser', 
         method: 'post', 
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
-            let args;
             try 
             {  
-                args = extractArguments(req.body,
-                    [
-                    { key: 'userId', type: 'string' },
-                    ]);
+                const args = extractArguments(req.body,
+                [
+                    { key: 'userId', type: 'number' },
+                ]);
+
+                const evaluations = await getAllEvaluationsForUser(args.userId);
+                
+                for (const i in evaluations) 
+                {
+                    const eval = evaluations[i];
+                    evaluations[i] = 
+                    {
+                        taskId: eval.TaskId,
+                        evaluation: eval.Graded ? eval.Evaluation : Boolean(eval.Evaluation),
+                        annotation: eval.Annotation,
+                        course: eval.CourseId,
+                    };
+                }
+                
+                return res.status(200).json( evaluations );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: get all evaluations for user from DB
-            return res.status(200).json( [
-                { taskId: 'abcmycourse3', evaluation: 6, annotation: 'gute Arbeit', course: 'mycourse'},
-                { taskId: 'klassenarbeit2019EN112', evaluation: 2, annotation: 'Einwandfreie Argumentation', course: '2019EN11'}
-            ] );
         }
     },
 ]);

@@ -1,5 +1,6 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
+const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask } = require('../../db/getAllUsers');
 
 const userRouter = 
 createRoutes([
@@ -57,32 +58,42 @@ createRoutes([
         path: '/getAll/forCourse', 
         method: 'post', 
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
             let args;
             try 
             {  
                 args = extractArguments(req.body, 
                 [
-                    { key: 'courseId', type: 'string' },
+                    { key: 'courseId', type: 'number' },
                 ]);
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: get all users for Course from DB
-            return res.status(200).json( [
-                {userId: 'BenitoZenz2', vorname: 'Benito', name: 'Zenz', rolle: 'teacher'},
-                {userId: 'RobinHoentsch1', vorname: 'Robin', name: 'Hoentsch', rolle: 'student'},
-            ] );
+            
+            const users = await getAllUsersForCourse(args.courseId);
+            for (const i in users) 
+            {
+                const user = users[i];
+                users[i] = 
+                {
+                    userId: user.Id,
+                    vorname: user.Vorname,
+                    name: user.Name,
+                    rolle: user.Type,
+                };
+            } 
+            
+            return res.status(200).json( users );
         }
     },
     {
         path: '/getAll/forTask', 
         method: 'post', 
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
             let args;
             try 
@@ -96,13 +107,27 @@ createRoutes([
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: get all users and corresponding evaluations for Task from DB
-            return res.status(200).json( [
-                {userId: 'kevinmorgenthaler', vorname: 'Kevin', name: 'Morgenthaler', rolle: 'student', evaluation: null, annotation: null},
-                {userId: 'florianlemnitzer', vorname: 'Florian', name: 'Lemnitzer', rolle: 'student', evaluation: null, annotation: null},
-                {userId: 'benitozenz', vorname: 'Benito', name: 'Zenz', rolle: 'teacher', evaluation: null, annotation: null},
-                {userId: 'robinhoentsch2', vorname: 'Robin', name: 'Hoentsch', rolle: 'student', evaluation: 1, annotation: 'Sauber wie immer, Robbi Rob. Echt gute Arbeit.'},
-            ] );
+            
+            const evaluatedUsers = await getAllEvaluatedUsersForTask(args.taskId);
+            const users = await getAllUsersForTask(args.taskId);
+            
+            for (const i in users) 
+            {
+                const user = users[i];
+                const evaluatedUser = evaluatedUsers.find(curUser => user.Id === curUser.Id);
+                
+                users[i] = 
+                {
+                    userId: user.Id,
+                    vorname: user.Vorname,
+                    name: user.Name,
+                    rolle: user.Type,
+                    evaluation: evaluatedUser ? evaluatedUser.Evaluation : null,
+                    annotation: evaluatedUser ? evaluatedUser.Annotation : null,
+                };
+            }
+
+            return res.status(200).json( users );
         }
     },
 ]);

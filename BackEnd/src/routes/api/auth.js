@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const createRoutes = require('../createRoutes');
+const { getUserById } = require('../../db/getUser');
 
 const authRouter = 
 createRoutes([
@@ -13,8 +14,8 @@ createRoutes([
                 {
                     if (err) return res.status(400).json({ errors: err });
 
-                    const userId = user.id;
-                    const rolle = user.id === 'userOne' ? 'teacher' : 'student';
+                    const userId = user.Id;
+                    const rolle = user.Type;
 
                     const body = { _id: userId };
                     const request_token = jwt.sign({ user: body }, 'TOP_SECRET');
@@ -28,10 +29,15 @@ createRoutes([
         path: '/woAmI', 
         method: 'post', 
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
-            // TODO: get vorname and name from DB
-            return res.status(200).json({ userId: user._id, vorname: "Max", name: "Mustermann" });
+            const userFromDB = await getUserById(user._id);
+
+            if (!userFromDB) return res.status(400).json({ errors: 'Benutzer nicht gefunden.' });
+
+            return res.status(200).json(
+                { userId: user._id, vorname: userFromDB.Vorname, name: userFromDB.Name }
+            );
         }
     },
 ]);
