@@ -22,6 +22,7 @@ import EvaluateTaskPage from "./EvaluateTaskPage";
 import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
 
 
+
 function Dashboard(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
@@ -31,6 +32,7 @@ function Dashboard(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     const renderContent = () => {
@@ -95,7 +97,7 @@ function Dashboard(props) {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                {renderContent()}
+                <div>{renderContent()}</div>
             </main>
         </div>
     );

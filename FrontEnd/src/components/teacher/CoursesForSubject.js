@@ -34,11 +34,11 @@ function CoursesForSubject(props){
     }, []);
 
     function handleCourseSelect(courseId){
-        function doSomething(){
+        function showCourse(){
             props.switchContent(COURSE_VIEW_IDENTIFIER);
             props.setCourse(courseId);
         }
-        return doSomething;
+        return showCourse;
     }
 
     const courseButtons =courses.map((course)=>

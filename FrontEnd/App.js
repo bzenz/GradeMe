@@ -21,7 +21,7 @@ const reducer = combineReducers({
 const store = createStore(reducer, install());
 
 function App(props) {
-    props.loadUserData(localStorage.getItem("userId"), localStorage.getItem("role"), localStorage.getItem("request_token"))
+    props.loadUserData(parseInt(localStorage.getItem("userId")), localStorage.getItem("role"), localStorage.getItem("request_token"))
 
     const appropriateNavigation = localStorage.getItem("role") === "student" ? <SchuelerHauptmenue />: <LehrerNavigation />;
     if(localStorage.getItem("userId")) {

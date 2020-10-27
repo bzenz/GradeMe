@@ -35,12 +35,12 @@ function SubjectOverview(props) {
     }, [])
 
     function handleSubjectSelect(subject) {
-        function doSomething(){
+        function showSubject(){
             props.setSubject(subject);
             props.switchContent(COURSES_FOR_SUBJECT_IDENTIFIER);
             console.log(props.state);
         }
-        return doSomething;
+        return showSubject;
     }
 
     const coursePapers =subjectsOfTeacher.map((subject)=>

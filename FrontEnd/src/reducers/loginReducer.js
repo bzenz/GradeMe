@@ -56,10 +56,11 @@ export default (state = DEFAULT_STATE, action) => {
                 })
             );
         case RESPONSE_PARSED: {
-            localStorage.setItem('userId', action.res.userId);
+            let userId = parseInt(action.res.userId);
+            localStorage.setItem('userId', userId);
             localStorage.setItem('role', action.res.rolle);
             localStorage.setItem('request_token', action.res.request_token);
-            return {...state, userId: action.res.userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token}
+            return {...state, userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token}
         }
         case LOGIN_POST_FAILED:
             alert("Netzwerkfehler");
