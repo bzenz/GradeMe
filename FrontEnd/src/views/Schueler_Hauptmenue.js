@@ -22,6 +22,7 @@ import GradesAccordions from "./GradesComponent";
 import Timetable from "./Timetable";
 import Taskoverview from "./Taskoverview";
 import LogoutButton from "../components/LogoutButton";
+import Box from "@material-ui/core/Box";
 
 const drawerWidth = 340;
 
@@ -65,7 +66,7 @@ export const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     drawerPaper: {
-        position: 'left',
+        position: 'relative',
         whiteSpace: 'nowrap',
         background: '#63a4ff',
         width: drawerWidth,
@@ -200,7 +201,9 @@ export default function SchuelerHauptmenue(){
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>
-                {renderMainPanel()}
+                    <Box align="center">
+                        {renderMainPanel()}
+                    </Box>
             </main>
         </div>
     );

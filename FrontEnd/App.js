@@ -21,7 +21,11 @@ const reducer = combineReducers({
 const store = createStore(reducer, install());
 
 function App(props) {
-    props.loadUserData(parseInt(localStorage.getItem("userId")), localStorage.getItem("role"), localStorage.getItem("request_token"))
+    if(localStorage.getItem("userId") && localStorage.getItem("role") && localStorage.getItem("request_token")){
+        props.loadUserData(parseInt(localStorage.getItem("userId")), localStorage.getItem("role"), localStorage.getItem("request_token"));
+
+    }
+
 
     const appropriateNavigation = localStorage.getItem("role") === "student" ? <SchuelerHauptmenue />: <LehrerNavigation />;
     if(localStorage.getItem("userId")) {
@@ -33,13 +37,14 @@ function App(props) {
         )
     }
     return (
-      <View style={styles.container}>
+      <View style={styles.loginScreen}>
           <LoginScreen />
           <StatusBar style="auto"/>
       </View>
     );
 
 }
+
 const ConnectedApp = connect(
     (state)=>({
       loggedIn: state.loginReducer.loggedIn,
@@ -64,8 +69,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+    loginScreen: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 });
 
