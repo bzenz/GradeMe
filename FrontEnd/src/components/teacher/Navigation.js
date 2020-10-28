@@ -33,7 +33,7 @@ function Dashboard(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    
+
     const renderContent = () => {
         switch(props.activeContent) {
             case TASK_OVERVIEW_IDENTIFIER:
