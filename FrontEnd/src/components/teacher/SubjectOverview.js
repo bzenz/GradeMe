@@ -3,7 +3,7 @@ import {SERVER} from "../../../index";
 import { connect } from "react-redux";
 import useStyles from "./CourseOverviewStyle";
 import Button from "@material-ui/core/Button";
-import {setSubject} from "../../actions/subjectSelectActions";
+import {setSubject, unselectCourse} from "../../actions/subjectSelectActions";
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {COURSES_FOR_SUBJECT_IDENTIFIER} from "./TeacherTabs";
 
@@ -23,6 +23,7 @@ function SubjectOverview(props) {
     }
 
     useEffect(()=>{
+        props.unselectCourse();
         fetch(SERVER+"/api/course/getAll/forUser",
             {
                 "method": "POST",
@@ -61,5 +62,5 @@ export default connect(
         request_token: state.loginReducer.request_token,
         content: state.teacherNavigationReducer.activeContent
     }),
-    {setSubject, switchContent})
+    {setSubject, switchContent, unselectCourse})
 (SubjectOverview);

@@ -15,6 +15,9 @@ export const TASK_OVERVIEW_IDENTIFIER = "TASK_OVERVIEW";
 export const SCHEDULE_IDENTIFIER = "SCHEDULE";
 export const COURSES_FOR_SUBJECT_IDENTIFIER = "COURSES_FOR_SUBJECT";
 export const COURSE_VIEW_IDENTIFIER = "COURSE_VIEW";
+export const TASKS_FOR_COURSE_IDENTIFIER = "TASKS_FOR_COURSE";
+export const STUDENTS_FOR_COURSE_IDENTIFIER = "STUDENTS_FOR_COURSE";
+export const ACTIONS_FOR_COURSE_IDENTIFIER = "ACTIONS_FOR_COURSE";
 
 class ListItemsComponent extends React.Component{
     constructor(props){
@@ -58,26 +61,37 @@ class ListItemsComponent extends React.Component{
 
 export const TeacherTabs = connect(null, {switchContent})(ListItemsComponent);
 
-export const CourseTabs = (
-    <div>
-        <ListSubheader inset>Kursnavigation</ListSubheader>
-        <ListItem button>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Aktion" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Schülerübersicht" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Aufgabenübersicht" />
-        </ListItem>
-    </div>
-);
+function CourseTabsComponent(props){
+
+    function handleSwitchContent(identifier){
+        function switchContent(){
+            props.switchContent(identifier);
+        }
+        return switchContent;
+    }
+    return(
+        <div>
+            <ListSubheader inset>Kursnavigation</ListSubheader>
+            <ListItem button onClick={handleSwitchContent(ACTIONS_FOR_COURSE_IDENTIFIER)}>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Aktion" />
+            </ListItem>
+            <ListItem button onClick={handleSwitchContent(STUDENTS_FOR_COURSE_IDENTIFIER)}>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Schülerübersicht" />
+            </ListItem>
+            <ListItem button onClick={handleSwitchContent(TASKS_FOR_COURSE_IDENTIFIER)}>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Aufgabenübersicht" />
+            </ListItem>
+        </div>
+    )
+}
+
+export const CourseTabs = connect(null, {switchContent})(CourseTabsComponent)
