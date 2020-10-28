@@ -53,6 +53,10 @@ function Taskoverview(props) {
         props.showEvaluateTaskPage(taskId, taskTitle);
     }
 
+    function getTasksForCourse(data){
+        return data.filter((task)=>(task.course === props.courseId));
+    }
+
     useEffect(() => {
         fetch(SERVER + "/api/task/getAll/forUser",
             {
@@ -61,7 +65,7 @@ function Taskoverview(props) {
                 "body": requestBody
             })
             .then(response => response.json())
-            .then(data => setTaskList(data))
+            .then(data => props.forCourse ? setTaskList(getTasksForCourse(data)): setTaskList(data))
     }, [])
 
     const taskAccordionsList = taskList.map((task) =>
@@ -105,6 +109,7 @@ const mapStateToProps = state => {
         userId: state.loginReducer.userId,
         request_token: state.loginReducer.request_token,
         role: state.loginReducer.role,
+        courseId: state.courseNavigationReducer.courseId,
     }
 }
 

@@ -4,7 +4,7 @@ import {SERVER} from "../../../index";
 import useStyles from "./CourseOverviewStyle";
 import Button from "@material-ui/core/Button";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import {setCourse} from "../../actions/subjectSelectActions";
+import {setCourse, unselectCourse} from "../../actions/subjectSelectActions";
 import {COURSE_VIEW_IDENTIFIER} from "./TeacherTabs";
 
 function CoursesForSubject(props){
@@ -22,6 +22,7 @@ function CoursesForSubject(props){
     });
 
     useEffect(()=>{
+        props.unselectCourse();
         fetch(SERVER+"/api/course/getAll/forUser",
             {
                 "method": "POST",
@@ -43,7 +44,7 @@ function CoursesForSubject(props){
 
     const courseButtons =courses.map((course)=>
         <Button className={classes.text} key={course.courseId} variant="outlined" onClick={handleCourseSelect(course.courseId)}>
-            {course.courseId}
+            {course.subjectName+course.year}
         </Button>
     )
 
@@ -57,9 +58,9 @@ function CoursesForSubject(props){
 
 export default connect(
     (state)=>({
-        subjectId: state.subjectSelectReducer.subjectId,
+        subjectId: state.courseNavigationReducer.subjectId,
         userId: state.loginReducer.userId,
         request_token: state.loginReducer.request_token
     }),
-    {switchContent, setCourse})
+    {switchContent, setCourse, unselectCourse})
 (CoursesForSubject);

@@ -7,4 +7,4 @@ function CourseOverview(props){
     )
 }
 
-export default connect((state)=>({courseId: state.subjectSelectReducer.courseId}))(CourseOverview)
+export default connect((state)=>({courseId: state.courseNavigationReducer.courseId}))(CourseOverview)
