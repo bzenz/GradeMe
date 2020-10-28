@@ -9,7 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {CourseTabs, TeacherTabs} from './TeacherTabs';
+import {CourseTabs, TASKS_FOR_COURSE_IDENTIFIER, TeacherTabs} from './TeacherTabs';
 import { connect } from 'react-redux';
 import {COURSE_VIEW_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, COURSES_FOR_SUBJECT_IDENTIFIER, SCHEDULE_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER} from "./TeacherTabs";
 import SubjectOverview from "./SubjectOverview";
@@ -49,7 +49,9 @@ function Dashboard(props) {
             case COURSE_VIEW_IDENTIFIER:
                 return <CourseView />;
             case SCHEDULE_IDENTIFIER:
-                return (<Timetable/>)
+                return (<Timetable/>);
+            case TASKS_FOR_COURSE_IDENTIFIER:
+                return <Taskoverview forCourse/>;
             default:
                 return <div>{props.activeContent}</div>
         }
@@ -90,7 +92,7 @@ function Dashboard(props) {
                 </div>
                 <Divider />
                 <Typography color='textPrimary' component={'div'}>
-                    {props.activeContent === COURSE_VIEW_IDENTIFIER && CourseTabs}
+                    {props.courseSelected && <CourseTabs />}
                 </Typography>
                 <Divider />
                 <Typography color='textPrimary' component={'div'}>
@@ -107,4 +109,4 @@ function Dashboard(props) {
         </div>
     );
 }
-export default connect((state) => ({activeContent: state.teacherNavigationReducer.activeContent}))(Dashboard);
+export default connect((state) => ({activeContent: state.teacherNavigationReducer.activeContent, courseSelected: state.courseNavigationReducer.courseSelected}))(Dashboard);

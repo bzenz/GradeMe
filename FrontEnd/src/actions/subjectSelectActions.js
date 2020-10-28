@@ -1,5 +1,6 @@
 export const SET_SUBJECT = "SET_SUBJECT";
 export const SET_COURSE = "SET_COURSE";
+export const UNSELECT_COURSE = "UNSELECT_COURSE";
 
 export function setSubject(subjectId){
     return {
@@ -12,5 +13,11 @@ export function setCourse(courseId){
     return {
         type: SET_COURSE,
         courseId
+    }
+}
+
+export function unselectCourse(){
+    return {
+        type: UNSELECT_COURSE,
     }
 }
