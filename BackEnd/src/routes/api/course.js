@@ -1,3 +1,4 @@
+const { getAllCoursesForUser } = require('../../db/getAllCourses');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
@@ -33,26 +34,35 @@ createRoutes([
         path: '/getAll/forUser', 
         method: 'post', 
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
-            let args;
             try 
             {  
-                args = extractArguments(req.body, 
+                const args = extractArguments(req.body, 
                 [
                     { key: 'userId', type: 'number' },
                 ]);
+                
+                const courses = await getAllCoursesForUser(args.userId);
+                
+                for (const i in courses) 
+                {
+                    const course = courses[i];
+                    courses[i] = 
+                    {
+                        courseId: course.CourseId, 
+                        year: course.Year, 
+                        subjectId: course.SubjectId, 
+                        subjectName: course.SubjectName,
+                    };
+                }
+
+                return res.status(200).json( courses );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: get all courses for user from DB
-            return res.status(200).json( [
-                {courseId: 1, year: 2019, subjectId: 0, subjectName: 'Wirtschaft'},
-                {courseId: 2, year: 2019, subjectId: 1, subjectName: 'Englisch'},
-                {courseId: 4, year: 2019, subjectId: 3, subjectName: 'Deutsch'},
-            ] );
         }
     },
 ]);
