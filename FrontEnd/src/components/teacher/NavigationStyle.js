@@ -81,4 +81,8 @@ export default makeStyles((theme) => ({
     fixedHeight: {
         height: 240,
     },
+    contentBox: {
+        paddingLeft: '5%',
+        paddingRight: '5%',
+    },
 }));

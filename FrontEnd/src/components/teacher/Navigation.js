@@ -33,9 +33,7 @@ function Dashboard(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+    
     const renderContent = () => {
         switch(props.activeContent) {
             case TASK_OVERVIEW_IDENTIFIER:
@@ -100,7 +98,7 @@ function Dashboard(props) {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                    <Box align="center">
+                    <Box className={classes.contentBox} align='center'>
                         {renderContent()}
                     </Box>
             </main>

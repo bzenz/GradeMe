@@ -105,6 +105,11 @@ export const useStyles = makeStyles((theme) => ({
     fixedHeight: {
         height: 240,
     },
+    contentBox: {
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        align: 'center',
+    },
 }));
 
 function Communicationdashboard() {
@@ -201,7 +206,7 @@ export default function SchuelerHauptmenue(){
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>
-                    <Box align="center">
+                    <Box className={classes.contentBox} align='center'>
                         {renderMainPanel()}
                     </Box>
             </main>
