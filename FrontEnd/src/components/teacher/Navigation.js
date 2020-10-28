@@ -10,19 +10,20 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {TASK_OVERVIEW_IDENTIFIER, TeacherTabs} from './TeacherTabs';
+import {SCHEDULE_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER, TeacherTabs} from './TeacherTabs';
 import { connect } from 'react-redux';
 import LogoutButton from "../LogoutButton";
 import Taskoverview from "../../views/Taskoverview";
 import EvaluateTaskPage from "./EvaluateTaskPage";
 import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
+import Box from "@material-ui/core/Box";
+import Timetable from "../../views/Timetable";
 
 const drawerWidth = 340;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        width: '60%',
     },
     toolbar: {
         background: '#004ba0',
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     drawerPaper: {
-        position: 'left',
+        position: 'relative',
         whiteSpace: 'nowrap',
         background: '#63a4ff',
         width: drawerWidth,
@@ -85,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
+        width: '100%',
     },
     container: {
         paddingTop: theme.spacing(4),
@@ -117,6 +119,8 @@ function Dashboard(props) {
                 return (<Taskoverview />)
             case SHOW_EVALUATE_TASK_PAGE:
                 return (<EvaluateTaskPage />)
+            case SCHEDULE_IDENTIFIER:
+                return (<Timetable/>)
             default:
                 return <div>{props.activeContent}</div>
         }
@@ -163,7 +167,9 @@ function Dashboard(props) {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                <div>{renderContent()}</div>
+                    <Box align="center">
+                        {renderContent()}
+                    </Box>
             </main>
         </div>
     );

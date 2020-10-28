@@ -65,12 +65,10 @@ export default (state = DEFAULT_STATE, action) => {
             alert("Netzwerkfehler");
             return{...state, attemptingLogin: false}
         case LOAD_USER_DATA:
-            return{...state, userId: action.userId, role: action.role, request_token: action.request_token}
+            return{...state, userId: action.userId, role: action.role, request_token: action.request_token, loggedIn: true}
         case LOGOUT_ACTION:
             return{...state, loggedIn: false}
         default:
             return state;
     }
 }
-
-

@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     drawerPaper: {
-        position: 'left',
+        position: 'relative',
         whiteSpace: 'nowrap',
         background: '#63a4ff',
         width: drawerWidth,
@@ -144,9 +144,9 @@ export default function Dashboard() {
                     </IconButton>
                 </div>
                 <Divider />
-                <Typography color='textPrimary'>
+
                     <List>{mainListItems}</List>
-                </Typography>
+
                 <Divider />
             </Drawer>
             <main className={classes.content}>
