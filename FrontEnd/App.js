@@ -42,7 +42,6 @@ function App(props) {
           <StatusBar style="auto"/>
       </View>
     );
-
 }
 
 const ConnectedApp = connect(
