@@ -20,6 +20,8 @@ import LogoutButton from "../LogoutButton";
 import Taskoverview from "../../views/Taskoverview";
 import EvaluateTaskPage from "./EvaluateTaskPage";
 import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
+import Box from "@material-ui/core/Box";
+import Timetable from "../../views/Timetable";
 
 
 function Dashboard(props) {
@@ -46,6 +48,8 @@ function Dashboard(props) {
                 return <CoursesForSubject />;
             case COURSE_VIEW_IDENTIFIER:
                 return <CourseView />;
+            case SCHEDULE_IDENTIFIER:
+                return (<Timetable/>)
             default:
                 return <div>{props.activeContent}</div>
         }
@@ -96,7 +100,9 @@ function Dashboard(props) {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                <div>{renderContent()}</div>
+                    <Box align="center">
+                        {renderContent()}
+                    </Box>
             </main>
         </div>
     );

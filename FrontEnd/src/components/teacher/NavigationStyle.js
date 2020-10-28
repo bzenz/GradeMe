@@ -42,7 +42,7 @@ export default makeStyles((theme) => ({
         flexGrow: 1,
     },
     drawerPaper: {
-        position: 'left',
+        position: 'relative',
         whiteSpace: 'nowrap',
         background: '#63a4ff',
         width: drawerWidth,
