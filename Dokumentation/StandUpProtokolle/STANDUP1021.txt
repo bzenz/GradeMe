@@ -1,0 +1,16 @@
+STANDUP 21.10.
+
+[X] Robin bastelt ne Schüleransicht
+[X] Flol bastelt schonmal n Loginscreen
+-> [X] Request token in den global state
+[X] Flol reviewed die REST schnittstellen
+[] Flol fängt an mit Lehreransicht
+-> Navigation gebastelt
+[] Kevin möchte Template für Standartansicht (Navigationsbar) implementieren (Issue: default ui anpassen)
+-> [] danach bastelt Kevin eine Komponente für die sekundäre Navigation
+[X] Benito fängt an die Datenbank zu basteln
+-> Datenbank läuft
+-> [] Benito bindet DB an Schnittstellen an
+
+-> Nächste Woche Vortrag anfangen
+-> Bis nächste Woche vorzeigbarer Prototyp
