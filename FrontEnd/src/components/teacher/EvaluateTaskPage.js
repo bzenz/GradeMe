@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import {SERVER} from "../../../index";
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {TASK_OVERVIEW_IDENTIFIER} from "./TeacherTabs";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -107,50 +108,60 @@ function evaluateTaskPage(props) {
         handleInputFieldChange(event, userId, "grade");
     }
 
-    //Gleiche Funtkionalität wie die handleGradeInputFieldChagne function, nur mit annotation diesmal.
+    //Gleiche Funtkionalität wie die handleGradeInputFieldChange function, nur mit annotation diesmal.
     // Es ist also egal, womit man anfängt beim Eintragen
     function handleAnnotationInputFieldChange(event, userId) {
         handleInputFieldChange(event, userId, "annotation");
     }
 
-    const studentGradePapers = studentsOfTask.map((schueler) =>
-        <Paper id={schueler.userId} className={classes.paper} variant={"outlined"}>
-            <Typography className={classes.text} variant="h5">
-                {schueler.vorname + " " + schueler.name}
-            </Typography>
-            <TextField
-                className={classes.textfieldPoints}
-                id="grade input"
-                variant={"filled"}
-                label={"Note"}
-                onChange={(e) => handleGradeInputFieldChange(e, schueler.userId)}
-            />
-            <TextField
-                className={classes.textfieldAnnotation}
-                id="annotation"
-                label="Anmerkung"
-                multiline
-                rows={3}
-                variant="outlined"
-                onChange={(e) => handleAnnotationInputFieldChange(e, schueler.userId)}
-            />
-        </Paper>
+    //Baut aus allen Schülern, die der Task zugehören jeweils eine Papercomponent und speichern sie in studentGradePapers.
+    //Vorher wird aber grprüft, ob die Rolle des Schülers "teacher" ist, da der Lehrer sich nicht selbst bewerten soll
+    const studentGradePapers = studentsOfTask.map((schueler) =>{
+        if(schueler.rolle !== "teacher"){
+            return (
+                <Paper id={schueler.userId} className={classes.paper} variant={"outlined"}>
+                    <Typography className={classes.text} variant="h5">
+                        {schueler.vorname + " " + schueler.name}
+                    </Typography>
+                    <TextField
+                        className={classes.textfieldPoints}
+                        id="grade input"
+                        variant={"filled"}
+                        label={"Note"}
+                        onChange={(e) => handleGradeInputFieldChange(e, schueler.userId)}
+                    />
+                    <TextField
+                        className={classes.textfieldAnnotation}
+                        id="annotation"
+                        label="Anmerkung"
+                        multiline
+                        rows={3}
+                        variant="outlined"
+                        onChange={(e) => handleAnnotationInputFieldChange(e, schueler.userId)}
+                    />
+            </Paper>
+            )
+        }
+    },
+
     )
 
     return(
         <div className={classes.root} style={{width: '100%'}}>
-                <Typography variant={'h4'}>
+                <Typography variant="h3" align="center" color="primary">
                     Bewertungsübersicht der Aufgabe: "{props.taskTitle}"
                 </Typography>
-            {studentGradePapers}
-            <Button
-                className={classes.button}
-                onClick={() => handleSumbitEvaluation()}>
-                <Typography variant={"button"} className={classes.buttonText}>
-                    Bewertung bestätigen
-                </Typography>
-                <CheckRoundedIcon/>
-            </Button>
+            <Box align="center">
+                {studentGradePapers}
+                <Button
+                    className={classes.button}
+                    onClick={() => handleSumbitEvaluation()}>
+                    <Typography variant={"button"} className={classes.buttonText}>
+                        Bewertung bestätigen
+                    </Typography>
+                    <CheckRoundedIcon/>
+                </Button>
+            </Box>
         </div>
     )
 }

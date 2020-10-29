@@ -35,7 +35,11 @@ const useStyles = makeStyles((theme) => ({
     button: {
         backgroundColor: '#63a4ff',
         flexBasis: '20%'
-    }
+    },
+    mainContentBox: {
+        paddingRight: '5%',
+        paddingLeft: '5%',
+    },
 }));
 
 
@@ -99,7 +103,10 @@ function Taskoverview(props) {
                     Aufgabenübersicht
                 </Typography>
             </Box>
-            {taskAccordionsList}
+            <Box className={classes.mainContentBox}>
+                {taskAccordionsList}
+            </Box>
+
         </div>
     )
 }

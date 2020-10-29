@@ -6,6 +6,8 @@ import Button from "@material-ui/core/Button";
 import {setSubject, unselectCourse} from "../../actions/subjectSelectActions";
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {COURSES_FOR_SUBJECT_IDENTIFIER} from "./TeacherTabs";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 function SubjectOverview(props) {
 
@@ -35,22 +37,30 @@ function SubjectOverview(props) {
         })
     }, [])
 
-    function handleSubjectSelect(subject) {
+    function handleSubjectSelect(subjectId, subjectName) {
         function showSubject(){
-            props.setSubject(subject);
+            props.setSubject(subjectId, subjectName);
             props.switchContent(COURSES_FOR_SUBJECT_IDENTIFIER);
         }
         return showSubject;
     }
 
-    const coursePapers =subjectsOfTeacher.map((subject)=>
-            <Button className={classes.text} key={subject.id} variant="outlined" onClick={handleSubjectSelect(subject.id)}>
+    const subjectPapers = subjectsOfTeacher.map((subject)=>
+            <Button className={classes.text} key={subject.id} variant="outlined" onClick={handleSubjectSelect(subject.id, subject.name)}>
                 {subject.name}
             </Button>
     )
     return(
         <div className={classes.root}>
-            {coursePapers}
+            <Box p={4} bgcolor="background.paper" align="center">
+                <Typography variant="h3" align="center" color="primary">
+                    Fächerübersicht
+                </Typography>
+            </Box>
+            <Box className={classes.mainContentBox}>
+                {subjectPapers}
+            </Box>
+
         </div>
     )
 }
