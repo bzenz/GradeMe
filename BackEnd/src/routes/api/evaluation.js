@@ -53,6 +53,9 @@ createRoutes([
                         evaluation: eval.Graded ? eval.Evaluation : Boolean(eval.Evaluation),
                         annotation: eval.Annotation,
                         course: eval.CourseId,
+                        year: eval.Year, 
+                        subjectId: eval.SubjectId, 
+                        subjectName: eval.SubjectName, 
                     };
                 }
                 
