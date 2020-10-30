@@ -27,7 +27,7 @@
             {userId, evalutation (bool/grade), annotation}
         ]) => taskId
 -   -   getAll
--   -   -   /forUser POST (userId, request_token) => [{ taskId, evaluation, annotation, course }]
+-   -   -   /forUser POST (userId, request_token) => [{ taskId, evaluation, annotation, course, year, subjectId, subjectName }]
 
 -   /course
 -   -   /create POST (year, subjectId, request_token) => courseId
