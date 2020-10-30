@@ -74,7 +74,7 @@ function GradesAccordions(props) {
                 id="panel1a-header"
             >
                 <Typography className={classes.heading}>
-                    KursId: {subject[0]}
+                    {subject[1][0].subjectName + subject[1][0].year}
                 </Typography>
             </AccordionSummary>
             <AccordionDetails>
