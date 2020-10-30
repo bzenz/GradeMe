@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -22,20 +22,20 @@ import EvaluateTaskPage from "./EvaluateTaskPage";
 import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
 import Box from "@material-ui/core/Box";
 import Timetable from "../../views/Timetable";
+import {SERVER} from "../../../index";
 
 
 function Dashboard(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
+    const [userData, setUserData] = React.useState("");
     const handleDrawerOpen = () => {
         setOpen(true);
     };
     const handleDrawerClose = () => {
         setOpen(false);
     };
-
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+    
     const renderContent = () => {
         switch(props.activeContent) {
             case TASK_OVERVIEW_IDENTIFIER:
@@ -56,9 +56,18 @@ function Dashboard(props) {
                 return <div>{props.activeContent}</div>
         }
     }
+    const requestBody = JSON.stringify({request_token: props.request_token})
+    useEffect(() => {
+        fetch(SERVER + "/api/auth/woAmI",
+            {
+                "method": "POST",
+                "headers": {'Content-Type': 'application/json'},
+                "body": requestBody,
+            }).then(response => response.json())
+            .then(data => setUserData(data))
+    }, [])
 
     return (
-
         <div className={classes.root}>
             <CssBaseline />
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -74,6 +83,9 @@ function Dashboard(props) {
                     </IconButton>
                     <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
                         GradeMe
+                    </Typography>
+                    <Typography>
+                        Sie sind angemeldet als "{userData.vorname + " " + userData.name}"
                     </Typography>
                     <LogoutButton />
                 </Toolbar>
@@ -109,4 +121,9 @@ function Dashboard(props) {
         </div>
     );
 }
-export default connect((state) => ({activeContent: state.teacherNavigationReducer.activeContent, courseSelected: state.courseNavigationReducer.courseSelected}))(Dashboard);
+export default connect((state) => ({
+    activeContent: state.teacherNavigationReducer.activeContent,
+    courseSelected: state.courseNavigationReducer.courseSelected,
+    request_token: state.loginReducer.request_token,
+}))
+(Dashboard);

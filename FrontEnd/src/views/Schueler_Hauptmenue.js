@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,6 +23,8 @@ import Timetable from "./Timetable";
 import Taskoverview from "./Taskoverview";
 import LogoutButton from "../components/LogoutButton";
 import Box from "@material-ui/core/Box";
+import {SERVER} from "../../index";
+import {connect} from "react-redux";
 
 const drawerWidth = 340;
 
@@ -115,16 +117,28 @@ function Communicationdashboard() {
     )
 }
 
-export default function SchuelerHauptmenue(){
+function SchuelerHauptmenue(props){
     const classes = useStyles();
     const[mainPanelContentType, setMainPanelContentType] = useState("");
     const [open, setOpen] = React.useState(true);
+    const [userData, setUserData] = React.useState("");
     const handleDrawerOpen = () => {
         setOpen(true);
     };
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const requestBody = JSON.stringify({request_token: props.request_token})
+    useEffect(() => {
+        fetch(SERVER + "/api/auth/woAmI",
+            {
+                "method": "POST",
+                "headers": {'Content-Type': 'application/json'},
+                "body": requestBody,
+            }).then(response => response.json())
+            .then(data => setUserData(data))
+    }, [])
 
     function renderMainPanel() {
         switch (mainPanelContentType) {
@@ -152,6 +166,9 @@ export default function SchuelerHauptmenue(){
                     </IconButton>
                     <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
                         GradeMe
+                    </Typography>
+                    <Typography>
+                        Sie sind angemeldet als "{userData.vorname + " " + userData.name}"
                     </Typography>
                     <LogoutButton />
                 </Toolbar>
@@ -208,3 +225,11 @@ export default function SchuelerHauptmenue(){
         </div>
     );
 }
+
+const mapStateToProps = (state) => {
+    return {
+        request_token: state.loginReducer.request_token,
+    }
+}
+
+export default connect(mapStateToProps, null)(SchuelerHauptmenue)
