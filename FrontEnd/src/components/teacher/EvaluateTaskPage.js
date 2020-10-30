@@ -87,8 +87,7 @@ function evaluateTaskPage(props) {
 
     let studentEvaluationDataArray = [];
 
-    function handleInputFieldChange(event, userId, inputFieldType) {
-        const value = event.target.value;
+    function handleInputFieldChange(value, userId, inputFieldType) {
         let studentDataFound = false;
         studentEvaluationDataArray.forEach((studentData) => {
             if(studentData.userId === userId) {
@@ -128,7 +127,7 @@ function evaluateTaskPage(props) {
                         id="grade input"
                         variant={"filled"}
                         label={"Note"}
-                        onChange={(e) => handleGradeInputFieldChange(e, schueler.userId)}
+                        onChange={(e) => handleGradeInputFieldChange(parseInt(event.target.value), schueler.userId)}
                     />
                     <TextField
                         className={classes.textfieldAnnotation}
@@ -137,7 +136,7 @@ function evaluateTaskPage(props) {
                         multiline
                         rows={3}
                         variant="outlined"
-                        onChange={(e) => handleAnnotationInputFieldChange(e, schueler.userId)}
+                        onChange={(e) => handleAnnotationInputFieldChange(event.target.value, schueler.userId)}
                     />
             </Paper>
             )

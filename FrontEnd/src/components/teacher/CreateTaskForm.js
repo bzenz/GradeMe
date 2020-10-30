@@ -8,7 +8,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
-import {SERVER} from "../../index";
+import {SERVER} from "../../../index";
+import {COURSE_VIEW_IDENTIFIER} from "./TeacherTabs";
+import {switchContent} from "../../actions/teacherNavigationActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,29 +38,32 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function CreateTaskForm(props){
-    const request_token = props.request_token;
     const classes = useStyles();
-    let taskData = {
+    let requestBody = {
         title: "",
         description: "",
+        course: props.courseId,
         graded: false,
         deadline: "00-00-0000",
+        request_token: props.request_token,
     };
 
     function handleFormChange(event, type) {
         if(type === "graded") {
-            taskData[type] = event.target.checked;
+            requestBody[type] = event.target.checked;
             return;
         }
-        taskData[type] = event.target.value;
+        requestBody[type] = event.target.value;
     }
 
     function submitTaskForm(){
         fetch(SERVER + "/api/task/create", {
             "method": "POST",
             "headers": {'Content-Type': 'application/json'},
-            "body": JSON.stringify({taskData, request_token })
+            "body": JSON.stringify(requestBody)
         })
+        alert("Aufgabe wurde erstellt");
+        props.switchContent(COURSE_VIEW_IDENTIFIER)
     }
 
     return(
@@ -116,7 +121,8 @@ function CreateTaskForm(props){
 const mapStateToProps = state => {
     return {
         request_token: state.loginReducer.request_token,
+        courseId: state.courseNavigationReducer.courseId,
     }
 }
 
-export default connect (mapStateToProps, null)(CreateTaskForm)
+export default connect (mapStateToProps, {switchContent})(CreateTaskForm)

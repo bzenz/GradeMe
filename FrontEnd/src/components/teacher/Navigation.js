@@ -9,7 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {CourseTabs, TASKS_FOR_COURSE_IDENTIFIER, TeacherTabs} from './TeacherTabs';
+import {ACTIONS_FOR_COURSE_IDENTIFIER, CourseTabs, TASKS_FOR_COURSE_IDENTIFIER, TeacherTabs} from './TeacherTabs';
 import { connect } from 'react-redux';
 import {COURSE_VIEW_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, COURSES_FOR_SUBJECT_IDENTIFIER, SCHEDULE_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER} from "./TeacherTabs";
 import SubjectOverview from "./SubjectOverview";
@@ -23,6 +23,8 @@ import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
 import Box from "@material-ui/core/Box";
 import Timetable from "../../views/Timetable";
 import {SERVER} from "../../../index";
+import ActionsForCourseList, {CREATE_NEW_TASK} from "./ActionsForCourseList";
+import CreateTaskForm from "./CreateTaskForm";
 
 
 function Dashboard(props) {
@@ -35,7 +37,7 @@ function Dashboard(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    
+
     const renderContent = () => {
         switch(props.activeContent) {
             case TASK_OVERVIEW_IDENTIFIER:
@@ -52,6 +54,10 @@ function Dashboard(props) {
                 return (<Timetable/>);
             case TASKS_FOR_COURSE_IDENTIFIER:
                 return <Taskoverview forCourse/>;
+            case ACTIONS_FOR_COURSE_IDENTIFIER:
+                return <ActionsForCourseList/>;
+            case CREATE_NEW_TASK:
+                return <CreateTaskForm/>;
             default:
                 return <div>{props.activeContent}</div>
         }
@@ -114,7 +120,7 @@ function Dashboard(props) {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                    <Box align="center">
+                    <Box className={classes.contentBox} align='center'>
                         {renderContent()}
                     </Box>
             </main>
