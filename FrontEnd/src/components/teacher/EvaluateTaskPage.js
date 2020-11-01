@@ -86,15 +86,21 @@ function evaluateTaskPage(props) {
 
     let studentEvaluationDataArray = [];
 
-    function handleInputFieldChange(event, userId, inputFieldType) {
+    function handleInputFieldChange(event, userId, inputFieldType, parseToInt=false) {
         const value = event.target.value;
         let studentDataFound = false;
         studentEvaluationDataArray.forEach((studentData) => {
-            if(studentData.userId === userId) {
-                studentData[inputFieldType] = value;
-                studentDataFound = true;
+            try {
+                if(studentData.userId === userId) {
+                    studentData[inputFieldType] = parseToInt ? parseInt(value) : value;
+                    studentDataFound = true;
+                }
             }
-        })
+            catch (err) 
+            {
+                alert(err.message);
+            }
+        });
         if(!studentDataFound) {
             studentEvaluationDataArray.push({userId, [inputFieldType]: value});
         }
@@ -104,7 +110,7 @@ function evaluateTaskPage(props) {
     //Schülerdatensatz per ID zu finden. Gibt es diesen bereits, wird der Wert geupdated.
     // Gibt es ihn nicht, wird ein neuer Datensatz mit der userId und der grade angelegt
      function handleGradeInputFieldChange(event, userId, )  {
-        handleInputFieldChange(event, userId, "grade");
+        handleInputFieldChange(event, userId, "evaluation", true);
     }
 
     //Gleiche Funtkionalität wie die handleGradeInputFieldChagne function, nur mit annotation diesmal.
