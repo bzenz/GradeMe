@@ -45,3 +45,4 @@ INSERT INTO IsIn VALUES (9, 3, 2); -- Erwin in Mathe20
 
 -- INSERT INTO HasEvaluation VALUES (Id, UserId, TaskId, Grade, Annotation);
 INSERT INTO HasEvaluation VALUES (0, 0, 3, 4, 'Ach komm, Benito, du kannst keine deutschen Vokabeln?'); -- Benito hat im Deutsch19 Vokabeltest eine 4
+INSERT INTO HasEvaluation VALUES (1, 0, 2, 5, 'Du warst schon immer ne null'); -- Benito hat im Mathe19 E-Funktionsscharenklausur eine 5

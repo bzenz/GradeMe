@@ -15,8 +15,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
+import useStyles from "../components/teacher/CourseOverviewStyle";
 
-const useStyles = makeStyles((theme) => ({
+
+const useStylesCustom = makeStyles((theme) => ({
     root: {
         width: '100%',
     },
@@ -35,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 function GradesAccordions(props) {
     const[allTasksOfUser, setAllTasksOfUser] = useState([]);
-    const classes = useStyles();
+    const classes = useStylesCustom();
+    const classesCustom = useStyles();
 
     let requestBody = JSON.stringify({
         userId: props.userId,
@@ -70,7 +73,9 @@ function GradesAccordions(props) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography className={classes.heading}>{subject[0]}</Typography>
+                <Typography className={classes.heading}>
+                    {subject[1][0].subjectName + subject[1][0].year}
+                </Typography>
             </AccordionSummary>
             <AccordionDetails>
                 <TableContainer component={Paper}>
@@ -102,7 +107,9 @@ function GradesAccordions(props) {
                     Notenübersicht
                 </Typography>
             </Box>
-        {accordionList}
+            <Box className={classesCustom.mainContentBox}>
+                {accordionList}
+            </Box>
         </div>
         )
 }

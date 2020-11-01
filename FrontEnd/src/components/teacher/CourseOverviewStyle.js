@@ -39,4 +39,11 @@ export default makeStyles((theme) => ({
     textfieldAnnotation: {
         width: '70%',
     },
+    mainContentBox: {
+        paddingRight: '5%',
+        paddingLeft: '5%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
 }))

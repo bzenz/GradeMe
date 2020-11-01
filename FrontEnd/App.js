@@ -23,10 +23,9 @@ const store = createStore(reducer, install());
 function App(props) {
     if(localStorage.getItem("userId") && localStorage.getItem("role") && localStorage.getItem("request_token")){
         props.loadUserData(parseInt(localStorage.getItem("userId")), localStorage.getItem("role"), localStorage.getItem("request_token"));
-
     }
 
-
+    document.title = "GradeMe-Prototyp";
     const appropriateNavigation = localStorage.getItem("role") === "student" ? <SchuelerHauptmenue />: <LehrerNavigation />;
     if(localStorage.getItem("userId")) {
         return(
@@ -36,6 +35,7 @@ function App(props) {
         </View>
         )
     }
+
     return (
       <View style={styles.loginScreen}>
           <LoginScreen />
