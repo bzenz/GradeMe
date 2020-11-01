@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(passport.initialize());
 
 initRoutes(app);
 
-app.get('/', (req, res) => res.send("Nothing to see here..."));
+app.use('/', express.static(path.join(__dirname) + '/../client'));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname) + '/../client/index.html'));
 
 module.exports = app;

@@ -1,3 +1,6 @@
 node_modules
 BackEnd/client
 *.db
+grademe-server-linux
+grademe-server-macos
+grademe-server-win.exe
