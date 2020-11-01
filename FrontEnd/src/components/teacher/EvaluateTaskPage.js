@@ -110,7 +110,7 @@ function evaluateTaskPage(props) {
     //Schülerdatensatz per ID zu finden. Gibt es diesen bereits, wird der Wert geupdated.
     // Gibt es ihn nicht, wird ein neuer Datensatz mit der userId und der grade angelegt
      function handleGradeInputFieldChange(event, userId, )  {
-        handleInputFieldChange(event, userId, "grade", true);
+        handleInputFieldChange(event, userId, "evaluation", true);
     }
 
     //Gleiche Funtkionalität wie die handleGradeInputFieldChagne function, nur mit annotation diesmal.
