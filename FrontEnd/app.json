@@ -1,9 +1,9 @@
 {
-  "name": "FrontEnd",
-  "displayName": "FrontEnd",
+  "name": "GradeMe-Prototyp",
+  "displayName": "GradeMe-Prototyp",
   "expo": {
-    "name": "FrontEnd",
-    "slug": "FrontEnd",
+    "name": "GradeMe-Prototyp",
+    "slug": "GradeMe-Prototyp",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

@@ -8,7 +8,7 @@ import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import Typography from "@material-ui/core/Typography";
 import {SERVER} from "../../../index";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import {TASK_OVERVIEW_IDENTIFIER} from "./TeacherTabs";
+import {TASK_OVERVIEW_IDENTIFIER, TASKS_FOR_COURSE_IDENTIFIER} from "./TeacherTabs";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +82,7 @@ function evaluateTaskPage(props) {
                 })
             })
         alert("Bewertungen wurden übermittelt");
-        props.switchContent(TASK_OVERVIEW_IDENTIFIER)
+        props.switchContent(TASKS_FOR_COURSE_IDENTIFIER)
     }
 
     let studentEvaluationDataArray = [];
@@ -96,7 +96,7 @@ function evaluateTaskPage(props) {
                     studentDataFound = true;
                 }
             }
-            catch (err) 
+            catch (err)
             {
                 alert(err.message);
             }
