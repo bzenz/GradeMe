@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import AddIcon from '@material-ui/icons/Add';
 import Button from "@material-ui/core/Button";
-import useStyles from "./NavigationStyle";
+import useStyles from "../../styles/NavigationStyle";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {switchContent} from "../../actions/teacherNavigationActions";

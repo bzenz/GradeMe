@@ -63,6 +63,8 @@ function LoginScreen(props) {
                             style={{ height: "40%", borderColor: 'gray', borderWidth: 1, borderRadius: 5, width: "100%", marginBottom: "3%" }}
                             placeholder = "Nutzername"
                             onChange={handleUsernameChange}
+                            autoFocus={true}
+                            onSubmitEditing = {handleSubmit}
                         />
                         <TextInput
                             style={{ height: "40%", borderColor: 'gray', borderWidth: 1, borderRadius: 5, width: "100%" }}
