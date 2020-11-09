@@ -25,6 +25,8 @@ import Timetable from "../../views/Timetable";
 import {SERVER} from "../../../index";
 import ActionsForCourseList, {CREATE_NEW_TASK} from "./ActionsForCourseList";
 import CreateTaskForm from "./CreateTaskForm";
+import { ERROR_CONTENT_IDENTIFIER } from "../../actions/errorActions";
+import ErrorContentPaper from "../ErrorContentPaper";
 
 
 function Dashboard(props) {
@@ -58,6 +60,8 @@ function Dashboard(props) {
                 return <ActionsForCourseList/>;
             case CREATE_NEW_TASK:
                 return <CreateTaskForm/>;
+            case ERROR_CONTENT_IDENTIFIER:
+                return <ErrorContentPaper errorMessageToUser={props.errorMessageToUser}/>
             default:
                 return <div>{props.activeContent}</div>
         }
@@ -131,5 +135,6 @@ export default connect((state) => ({
     activeContent: state.teacherNavigationReducer.activeContent,
     courseSelected: state.courseNavigationReducer.courseSelected,
     request_token: state.loginReducer.request_token,
+    errorMessageToUser: state.teacherNavigationReducer.errorMessageToUser,
 }))
 (Dashboard);

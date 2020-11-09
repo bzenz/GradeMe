@@ -16,6 +16,8 @@ import TableBody from "@material-ui/core/TableBody";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
 import useStyles from "../components/teacher/CourseOverviewStyle";
+import { switchContent } from "../actions/teacherNavigationActions";
+import { setErrorData } from "../actions/errorActions";
 
 
 const useStylesCustom = makeStyles((theme) => ({
@@ -36,68 +38,69 @@ const useStylesCustom = makeStyles((theme) => ({
 }));
 
 function GradesAccordions(props) {
-    const[allTasksOfUser, setAllTasksOfUser] = useState([]);
+
+    const [allTasksOfUser, setAllTasksOfUser] = useState([]);
     const classes = useStylesCustom();
     const classesCustom = useStyles();
 
     let requestBody = JSON.stringify({
-        userId: props.userId,
-        request_token: props.request_token
+      userId: props.userId,
+      request_token: props.request_token
     });
-
+  try {
     useEffect(() => {
-        fetch(SERVER + "/api/evaluation/getAll/forUser",
-            {
-                "method": "POST",
-                "headers": {'Content-Type': 'application/json'},
-                "body": requestBody
-            })
-            .then(response => response.json())
-            .then(data => setAllTasksOfUser(data))
+      fetch(SERVER + "/api/evaluation/getAll/forUser",
+        {
+          "method": "POST",
+          "headers": { 'Content-Type': 'application/json' },
+          "body": requestBody
+        })
+        .then(response => response.json())
+        .then(data => setAllTasksOfUser(data))
     }, [])
 
     const groupBy = key => array =>
-        array.reduce((objectsByKeyValue, obj) => {
-            const value = obj[key];
-            objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
-            return objectsByKeyValue;
-        }, {});
+      array.reduce((objectsByKeyValue, obj) => {
+        const value = obj[key];
+        objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+        return objectsByKeyValue;
+      }, {});
 
     const tasksByCourse = groupBy('course')(allTasksOfUser);
     let subjects = Object.entries(tasksByCourse);
 
     const accordionList = subjects.map((subject) =>
-        <Accordion className={classes.accordion}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-            >
-                <Typography className={classes.heading}>
-                    {subject[1][0].subjectName + subject[1][0].year}
-                </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <TableContainer component={Paper}>
-                    <Table className={classes.table} size="small">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="left">Note</TableCell>
-                                <TableCell align="right">Anmerkung</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {subject[1].map((row) => (
-                                <TableRow>
-                                    <TableCell align="left">{row.evaluation}</TableCell>
-                                    <TableCell align="right">{row.annotation}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </AccordionDetails>
-        </Accordion>
+      <Accordion className={ classes.accordion }>
+        <AccordionSummary
+          expandIcon={ <ExpandMoreIcon/> }
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={ classes.heading }>
+            { subject[1][0].subjectName + subject[1][0].year }
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <TableContainer component={ Paper }>
+            <Table className={ classes.table } size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">Note</TableCell>
+                  <TableCell align="right">Anmerkung</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                { subject[1].map((row) => (
+                  <TableRow>
+                    <TableCell align="left">{ row.evaluation }</TableCell>
+                    <TableCell align="right">{ row.annotation }</TableCell>
+                  </TableRow>
+                )) }
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </AccordionDetails>
+      </Accordion>
     )
 
     return(
@@ -112,6 +115,11 @@ function GradesAccordions(props) {
             </Box>
         </div>
         )
+  } catch (exeption) {
+    console.error("Errormessage: " + exeption.message + "\nStacktrace:\n" + exeption.stack);
+    props.setErrorData("Beim Darstellen der Notenübersicht ist ein Fehler aufgetreten. Möglicherweise konnte keine Verbindung zum Server aufgebaut werden");
+    return null;
+  }
 }
 
 const mapStateToProps = state => {
@@ -121,4 +129,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect (mapStateToProps)(GradesAccordions)
+export default connect (mapStateToProps, {switchContent, setErrorData})(GradesAccordions)
