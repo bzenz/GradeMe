@@ -73,7 +73,7 @@ function Taskoverview(props) {
     }, [])
 
     const taskAccordionsList = taskList.map((task) =>
-        <Accordion className={classes.accordion}>
+        <Accordion key={task.taskId} className={classes.accordion}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
