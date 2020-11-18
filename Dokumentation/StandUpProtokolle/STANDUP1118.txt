@@ -1,2 +1,3 @@
 Tagesordnung:
 1. Wie wollen wir mit Kursnamen verfahren? Bleibts dabei, dass wir die immer selber zusammensetzen? sollen die in der DB generiert werden? ...?
+2. Config Datei... wohin? Gibts da schon was?
