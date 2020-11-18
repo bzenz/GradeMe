@@ -7,8 +7,7 @@ import loginReducer from './src/reducers/loginReducer';
 import teacherNavigationReducer from "./src/reducers/teacherNavigationReducer";
 import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
-import LehrerNavigation from "./src/components/teacher/Navigation";
-import SchuelerHauptmenue from "./src/views/Schueler_Hauptmenue";
+import Navigation from "./src/components/Navigation";
 import courseNavigationReducer from "./src/reducers/courseNavigationReducer";
 import {loadUserData} from "./src/actions/loginActions";
 
@@ -26,11 +25,11 @@ function App(props) {
     }
 
     document.title = "GradeMe-Prototyp";
-    const appropriateNavigation = localStorage.getItem("role") === "student" ? <SchuelerHauptmenue />: <LehrerNavigation />;
+
     if(localStorage.getItem("userId")) {
         return(
         <View style={styles.container}>
-            {appropriateNavigation}
+           <Navigation/>
             <StatusBar style="auto"/>
         </View>
         )
