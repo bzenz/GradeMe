@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {SERVER} from "../../../index";
-import useStyles from "./CourseOverviewStyle";
+import useStyles from "../../styles/CourseOverviewStyle";
 import Button from "@material-ui/core/Button";
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {setCourse, unselectCourse} from "../../actions/subjectSelectActions";

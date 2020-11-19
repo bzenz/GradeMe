@@ -9,10 +9,12 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import List from '@material-ui/core/List';
 import { connect } from "react-redux";
 import {switchContent} from "../../actions/teacherNavigationActions";
+import PeopleIcon from "@material-ui/icons/People";
 
 export const SUBJECT_OVERVIEW_IDENTIFIER = "SUBJECT_OVERVIEW";
 export const TASK_OVERVIEW_IDENTIFIER = "TASK_OVERVIEW";
 export const SCHEDULE_IDENTIFIER = "SCHEDULE";
+export const COMMUNICATION_DASHBOARD_IDENTIFIER = "COMMUNICATION_DASHBOARD";
 export const COURSES_FOR_SUBJECT_IDENTIFIER = "COURSES_FOR_SUBJECT";
 export const COURSE_VIEW_IDENTIFIER = "COURSE_VIEW";
 export const TASKS_FOR_COURSE_IDENTIFIER = "TASKS_FOR_COURSE";
@@ -35,7 +37,7 @@ class ListItemsComponent extends React.Component{
     render() {
         return (
         <List>
-            <ListSubheader inset>Lehrernavigation</ListSubheader>
+            <ListSubheader inset>Hauptnavigation</ListSubheader>
             <ListItem button onClick={this.handleSwitchContent(SUBJECT_OVERVIEW_IDENTIFIER)}>
                 <ListItemIcon>
                     <ClassIcon/>
@@ -54,6 +56,12 @@ class ListItemsComponent extends React.Component{
                 </ListItemIcon>
                 <ListItemText primary="Stundenplan"/>
             </ListItem>
+          <ListItem button onClick={this.handleSwitchContent(COMMUNICATION_DASHBOARD_IDENTIFIER)}>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Kommunikationsdashboard"/>
+          </ListItem>
         </List>
         );
     }

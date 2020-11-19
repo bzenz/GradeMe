@@ -9,20 +9,26 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {ACTIONS_FOR_COURSE_IDENTIFIER, CourseTabs, TASKS_FOR_COURSE_IDENTIFIER, TeacherTabs} from './TeacherTabs';
+import { ACTIONS_FOR_COURSE_IDENTIFIER, COMMUNICATION_DASHBOARD_IDENTIFIER, CourseTabs, TASKS_FOR_COURSE_IDENTIFIER, TeacherTabs } from './teacher/TeacherTabs';
 import { connect } from 'react-redux';
-import {COURSE_VIEW_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, COURSES_FOR_SUBJECT_IDENTIFIER, SCHEDULE_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER} from "./TeacherTabs";
-import SubjectOverview from "./SubjectOverview";
-import CoursesForSubject from "./CoursesForSubject";
-import useStyles from "./NavigationStyle";
-import CourseView from "./CourseView";
-import LogoutButton from "../LogoutButton";
-import Taskoverview from "../../views/Taskoverview";
-import EvaluateTaskPage from "./EvaluateTaskPage";
-import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
+import {COURSE_VIEW_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, COURSES_FOR_SUBJECT_IDENTIFIER, SCHEDULE_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER} from "./teacher/TeacherTabs";
+import SubjectOverview from "./teacher/SubjectOverview";
+import CoursesForSubject from "./teacher/CoursesForSubject";
+import useStyles from "../styles/NavigationStyle";
+import CourseView from "./teacher/CourseView";
+import LogoutButton from "./LogoutButton";
+import Taskoverview from "./Taskoverview";
+import EvaluateTaskPage from "./teacher/EvaluateTaskPage";
+import {SHOW_EVALUATE_TASK_PAGE} from "../actions/teacherNavigationActions";
 import Box from "@material-ui/core/Box";
+import Timetable from "./Timetable";
+import {SERVER} from "../../index";
+import ActionsForCourseList, {CREATE_NEW_TASK} from "./teacher/ActionsForCourseList";
+import CreateTaskForm from "./teacher/CreateTaskForm";
+import CommunicationDashboard from "./CommunicationDashboard";
+import { GRADES_OVERVIEW_IDENTIFIER, StudentTabs } from "./student/StudentTabs";
+import GradesAccordions from "./student/GradesComponent";
 import Timetable from "../../views/Timetable";
-import {SERVER} from "../../../index";
 import ActionsForCourseList, {CREATE_NEW_TASK} from "./ActionsForCourseList";
 import CreateTaskForm from "./CreateTaskForm";
 import { ERROR_CONTENT_IDENTIFIER } from "../../actions/errorActions";
@@ -62,6 +68,10 @@ function Dashboard(props) {
                 return <CreateTaskForm/>;
             case ERROR_CONTENT_IDENTIFIER:
                 return <ErrorContentPaper errorMessageToUser={props.errorMessageToUser}/>
+            case COMMUNICATION_DASHBOARD_IDENTIFIER:
+                return <CommunicationDashboard/>;
+            case GRADES_OVERVIEW_IDENTIFIER:
+                return <GradesAccordions/>
             default:
                 return <div>{props.activeContent}</div>
         }
@@ -118,7 +128,7 @@ function Dashboard(props) {
                 </Typography>
                 <Divider />
                 <Typography color='textPrimary' component={'div'}>
-                    <TeacherTabs />
+                  {props.role === "teacher"?<TeacherTabs />:<StudentTabs/>}
                 </Typography>
                 <Divider />
             </Drawer>
@@ -136,5 +146,6 @@ export default connect((state) => ({
     courseSelected: state.courseNavigationReducer.courseSelected,
     request_token: state.loginReducer.request_token,
     errorMessageToUser: state.teacherNavigationReducer.errorMessageToUser,
+    role: state.loginReducer.role,
 }))
 (Dashboard);

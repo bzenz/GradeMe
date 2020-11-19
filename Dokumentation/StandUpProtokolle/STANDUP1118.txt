@@ -1,0 +1,7 @@
+Tagesordnung:
+1. Wie wollen wir mit Kursnamen verfahren? Bleibts dabei, dass wir die immer selber zusammensetzen? sollen die in der DB generiert werden? ...?
+  --> Kursnamen werden im Backend generiert und werden zusätzlich zur ID und subjectname, year mit bei API anfragen übergeben
+2. Config Datei, speziell zur Einfärbung von Aufgaben hinsichtlich der deadline?
+  -->sollte durch das Adminpanel regelbar sein und in der Datenbank gespeichert werden. Dann gibts im frontend API abfragen, wie die genauen Daten/Nummern dazu aussehen
+3. Done Line ist um Issues zu sammeln, die zwischen zwei Standups fertig geworden sind
+4.Wir wollen wieder Zeitschätzungen an die Issues hängen
