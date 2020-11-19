@@ -1,10 +1,11 @@
 export const SWITCH_TO_CONTENT = "SWITCH_TO_CONTENT";
 export const SHOW_EVALUATE_TASK_PAGE = "SHOW_EVALUATE_TASK_PAGE";
 
-export function switchContent(newContentIdentifier){
+export function switchContent(newContentIdentifier, errorMessageToUser){
     return {
         type: SWITCH_TO_CONTENT,
-        newContentIdentifier
+        newContentIdentifier,
+        errorMessageToUser,
     }
 }
 

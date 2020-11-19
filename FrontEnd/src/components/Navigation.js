@@ -28,6 +28,11 @@ import CreateTaskForm from "./teacher/CreateTaskForm";
 import CommunicationDashboard from "./CommunicationDashboard";
 import { GRADES_OVERVIEW_IDENTIFIER, StudentTabs } from "./student/StudentTabs";
 import GradesAccordions from "./student/GradesComponent";
+import Timetable from "../../views/Timetable";
+import ActionsForCourseList, {CREATE_NEW_TASK} from "./ActionsForCourseList";
+import CreateTaskForm from "./CreateTaskForm";
+import { ERROR_CONTENT_IDENTIFIER } from "../../actions/errorActions";
+import ErrorContentPaper from "../ErrorContentPaper";
 
 
 function Dashboard(props) {
@@ -61,6 +66,8 @@ function Dashboard(props) {
                 return <ActionsForCourseList/>;
             case CREATE_NEW_TASK:
                 return <CreateTaskForm/>;
+            case ERROR_CONTENT_IDENTIFIER:
+                return <ErrorContentPaper errorMessageToUser={props.errorMessageToUser}/>
             case COMMUNICATION_DASHBOARD_IDENTIFIER:
                 return <CommunicationDashboard/>;
             case GRADES_OVERVIEW_IDENTIFIER:
@@ -138,6 +145,7 @@ export default connect((state) => ({
     activeContent: state.teacherNavigationReducer.activeContent,
     courseSelected: state.courseNavigationReducer.courseSelected,
     request_token: state.loginReducer.request_token,
+    errorMessageToUser: state.teacherNavigationReducer.errorMessageToUser,
     role: state.loginReducer.role,
 }))
 (Dashboard);

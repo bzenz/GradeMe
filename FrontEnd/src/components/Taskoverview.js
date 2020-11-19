@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
 import Button from "@material-ui/core/Button";
 import {SHOW_EVALUATE_TASK_PAGE, showEvaluateTaskPage, switchContent} from "../actions/teacherNavigationActions";
+import { setErrorData } from "../actions/errorActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,54 +62,60 @@ function Taskoverview(props) {
         return data.filter((task)=>(task.course === props.courseId));
     }
 
+  try {
     useEffect(() => {
-        fetch(SERVER + "/api/task/getAll/forUser",
-            {
-                "method": "POST",
-                "headers": {'Content-Type': 'application/json'},
-                "body": requestBody
-            })
-            .then(response => response.json())
-            .then(data => props.forCourse ? setTaskList(getTasksForCourse(data)): setTaskList(data))
+      fetch(SERVER + "/api/task/getAll/forUser",
+        {
+          "method": "POST",
+          "headers": { 'Content-Type': 'application/json' },
+          "body": requestBody
+        })
+        .then(response => response.json())
+        .then(data => props.forCourse ? setTaskList(getTasksForCourse(data)) : setTaskList(data))
     }, [])
 
     const taskAccordionsList = taskList.map((task) =>
-        <Accordion className={classes.accordion}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-            >
-                <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{task.deadline.substr(0, 10)}</Typography>
-                {props.role === "teacher" && task.graded?
-                    <Button className={classes.button}
-                        onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
-                        Aufgabe bewerten
-                    </Button> :null}
-            </AccordionSummary>
-            <AccordionDetails>
-                <Typography>
-                    {task.description}
-                </Typography>
-            </AccordionDetails>
-        </Accordion>
+      <Accordion className={ classes.accordion }>
+        <AccordionSummary
+          expandIcon={ <ExpandMoreIcon/> }
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={ classes.accordionPrimaryHeading }>{ task.title }</Typography>
+          <Typography className={ classes.accordionSecondaryHeading }>{ task.course }</Typography>
+          <Typography className={ classes.accordionSecondaryHeading }>{ task.deadline.substr(0, 10) }</Typography>
+          { props.role === "teacher" && task.graded ?
+            <Button className={ classes.button }
+                    onClick={ () => handleEvaluateTaskClick(task.taskId, task.title) }>
+              Aufgabe bewerten
+            </Button> : null }
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            { task.description }
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
     )
 
-    return(
-        <div>
-            <Box p={4} bgcolor="background.paper" align="center">
-                <Typography variant="h3" align="center" color="primary">
-                    Aufgabenübersicht
-                </Typography>
-            </Box>
-            <Box className={classes.mainContentBox}>
-                {taskAccordionsList}
-            </Box>
+    return (
+      <div>
+        <Box p={ 4 } bgcolor="background.paper" align="center">
+          <Typography variant="h3" align="center" color="primary">
+            Aufgabenübersicht
+          </Typography>
+        </Box>
+        <Box className={ classes.mainContentBox }>
+        { taskAccordionsList }
+        </Box>
 
-        </div>
+      </div>
     )
+  } catch (exception) {
+      props.setErrorData("Beim Darstellen der Aufgabenübersicht ist ein Fehler aufgetreten. Möglicherweise konnte keine Verbindung zum Server aufgebaut werden");
+      console.error("Errormessage: " + exception.message + "\nStacktrace:\n" + exception.stack);
+      return null;
+  }
 }
 
 const mapStateToProps = state => {
@@ -120,4 +127,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect (mapStateToProps, {showEvaluateTaskPage, switchContent})(Taskoverview)
+export default connect (mapStateToProps, {showEvaluateTaskPage, switchContent, setErrorData})(Taskoverview)

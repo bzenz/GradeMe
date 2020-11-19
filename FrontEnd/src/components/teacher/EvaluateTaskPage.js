@@ -8,8 +8,9 @@ import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import Typography from "@material-ui/core/Typography";
 import {SERVER} from "../../../index";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import {TASK_OVERVIEW_IDENTIFIER, TASKS_FOR_COURSE_IDENTIFIER} from "./TeacherTabs";
+import { TASKS_FOR_COURSE_IDENTIFIER} from "./TeacherTabs";
 import Box from "@material-ui/core/Box";
+import { setErrorData } from "../../actions/errorActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,14 +61,15 @@ function evaluateTaskPage(props) {
         request_token: props.request_token
     });
 
+  try {
     useEffect(() => {
-        fetch(SERVER + "/api/user/getAll/forTask",
-            {
-                "method": "POST",
-                "headers": {'Content-Type': 'application/json'},
-                "body": requestBody
-            }).then(response => response.json())
-            .then(data => setStudentsOfTask(data))
+      fetch(SERVER + "/api/user/getAll/forTask",
+        {
+          "method": "POST",
+          "headers": { 'Content-Type': 'application/json' },
+          "body": requestBody
+        }).then(response => response.json())
+        .then(data => setStudentsOfTask(data))
     }, [])
 
     function handleSumbitEvaluation() {
@@ -90,16 +92,10 @@ function evaluateTaskPage(props) {
     function handleInputFieldChange(value, userId, inputFieldType) {
         let studentDataFound = false;
         studentEvaluationDataArray.forEach((studentData) => {
-            try {
                 if(studentData.userId === userId) {
                     studentData[inputFieldType] = value;
                     studentDataFound = true;
                 }
-            }
-            catch (err)
-            {
-                alert(err.message);
-            }
         });
         if(!studentDataFound) {
             studentEvaluationDataArray.push({userId, [inputFieldType]: value});
@@ -110,7 +106,7 @@ function evaluateTaskPage(props) {
     //Schülerdatensatz per ID zu finden. Gibt es diesen bereits, wird der Wert geupdated.
     // Gibt es ihn nicht, wird ein neuer Datensatz mit der userId und der grade angelegt
      function handleGradeInputFieldChange(event, userId, )  {
-        handleInputFieldChange(event, userId, "evaluation", true);
+        handleInputFieldChange(event, userId, "evaluation");
     }
 
     //Gleiche Funtkionalität wie die handleGradeInputFieldChange function, nur mit annotation diesmal.
@@ -148,7 +144,6 @@ function evaluateTaskPage(props) {
             )
         }
     },
-
     )
 
     return(
@@ -169,6 +164,11 @@ function evaluateTaskPage(props) {
             </Box>
         </div>
     )
+  } catch (exception) {
+    props.setErrorData("Beim Darstellen der Bewertungsseite ist ein Fehler aufgetreten. Möglicherweise konnte keine Verbindung zum Server aufgebaut werden");
+    console.error("Errormessage: " + exception.message + "\nStacktrace:\n" + exception.stack);
+    return null;
+  }
 }
 const mapStateToProps = state => {
     return {
@@ -178,4 +178,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {switchContent})(evaluateTaskPage)
+export default connect(mapStateToProps, {switchContent, setErrorData})(evaluateTaskPage)
