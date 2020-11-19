@@ -15,7 +15,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
-import useStyles from "../components/teacher/CourseOverviewStyle";
+import useStyles from "../styles/CourseOverviewStyle";
 
 
 const useStylesCustom = makeStyles((theme) => ({
@@ -65,8 +65,9 @@ function GradesAccordions(props) {
     const tasksByCourse = groupBy('course')(allTasksOfUser);
     let subjects = Object.entries(tasksByCourse);
 
+    //der key subject[0] ist die ID des subjects aus der DB, also einzigartig
     const accordionList = subjects.map((subject) =>
-        <Accordion className={classes.accordion}>
+        <Accordion key={subject[0]} className={classes.accordion}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
@@ -87,7 +88,7 @@ function GradesAccordions(props) {
                         </TableHead>
                         <TableBody>
                             {subject[1].map((row) => (
-                                <TableRow>
+                                <TableRow key={row.taskId}>
                                     <TableCell align="left">{row.evaluation}</TableCell>
                                     <TableCell align="right">{row.annotation}</TableCell>
                                 </TableRow>
