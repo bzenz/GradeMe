@@ -15,9 +15,16 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
     },
-    accordion: {
+    accordion_normal: {
       width: '100%',
-
+    },
+    accordion_red: {
+      width: '100%',
+      backgroundColor: '#E42C1D',
+    },
+    accordion_yellow: {
+      width: '100%',
+      backgroundColor: '#FFF144',
     },
     accordionPrimaryHeading: {
         flexBasis: '40%',
@@ -73,7 +80,25 @@ function Taskoverview(props) {
     }, [])
 
     const taskAccordionsList = taskList.map((task) =>
-        <Accordion className={classes.accordion}>
+      {
+      let appropriateAccordionStyle;
+      const currentDate = new Date();
+      let  deadline = new Date(task.deadline);
+
+      //berechnet den Unterschied in Tagen zwischen currentDate und deadline
+      const diffInDays = Math.abs(Math.floor(Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) -
+          Date.UTC(deadline.getFullYear(), deadline.getMonth(), deadline.getDate()))  / (1000 * 60 * 60 * 24));
+
+        if (props.role === "teacher" || diffInDays > 4) {
+          appropriateAccordionStyle = classes.accordion_normal;
+        } else if(diffInDays > 2) {
+          appropriateAccordionStyle = classes.accordion_yellow;
+        } else {
+          appropriateAccordionStyle = classes.accordion_red;
+        }
+
+      return (
+        <Accordion key={task.taskId} className= { appropriateAccordionStyle }>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
@@ -81,7 +106,7 @@ function Taskoverview(props) {
             >
                 <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
                 <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{task.deadline.substr(0, 10)}</Typography>
+                <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + deadline.getMonth() + "/" + deadline.getFullYear()}</Typography>
                 {props.role === "teacher" && task.graded?
                     <Button className={classes.button}
                         onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
@@ -94,6 +119,8 @@ function Taskoverview(props) {
                 </Typography>
             </AccordionDetails>
         </Accordion>
+        )
+      }
     )
 
     return(

@@ -24,7 +24,6 @@ const useStylesCustom = makeStyles((theme) => ({
     },
     accordion: {
         width: '100%',
-        minWidth: 650,
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
