@@ -14,10 +14,10 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Box from "@material-ui/core/Box";
-import {SERVER} from "../../index";
-import useStyles from "../components/teacher/CourseOverviewStyle";
-import { switchContent } from "../actions/teacherNavigationActions";
-import { setErrorData } from "../actions/errorActions";
+import {SERVER} from "../../../index";
+import useStyles from "../../styles/CourseOverviewStyle";
+import { switchContent } from "../../actions/teacherNavigationActions";
+import { setErrorData } from "../../actions/errorActions";
 
 
 const useStylesCustom = makeStyles((theme) => ({

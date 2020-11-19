@@ -28,12 +28,9 @@ import CreateTaskForm from "./teacher/CreateTaskForm";
 import CommunicationDashboard from "./CommunicationDashboard";
 import { GRADES_OVERVIEW_IDENTIFIER, StudentTabs } from "./student/StudentTabs";
 import GradesAccordions from "./student/GradesComponent";
-import Timetable from "../../views/Timetable";
-import ActionsForCourseList, {CREATE_NEW_TASK} from "./ActionsForCourseList";
-import CreateTaskForm from "./CreateTaskForm";
-import StudentsInCourseOverview from "./StudentsInCourseOverview";
-import { ERROR_CONTENT_IDENTIFIER } from "../../actions/errorActions";
-import ErrorContentPaper from "../ErrorContentPaper";
+import StudentsInCourseOverview from "./teacher/StudentsInCourseOverview";
+import { ERROR_CONTENT_IDENTIFIER } from "../actions/errorActions";
+import ErrorContentPaper from "./ErrorContentPaper";
 
 
 function Dashboard(props) {
