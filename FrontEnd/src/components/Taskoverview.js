@@ -75,27 +75,27 @@ function Taskoverview(props) {
     }, [])
 
     const taskAccordionsList = taskList.map((task) =>
-      <Accordion className={ classes.accordion }>
-        <AccordionSummary
-          expandIcon={ <ExpandMoreIcon/> }
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={ classes.accordionPrimaryHeading }>{ task.title }</Typography>
-          <Typography className={ classes.accordionSecondaryHeading }>{ task.course }</Typography>
-          <Typography className={ classes.accordionSecondaryHeading }>{ task.deadline.substr(0, 10) }</Typography>
-          { props.role === "teacher" && task.graded ?
-            <Button className={ classes.button }
-                    onClick={ () => handleEvaluateTaskClick(task.taskId, task.title) }>
-              Aufgabe bewerten
-            </Button> : null }
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            { task.description }
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+        <Accordion key={task.taskId} className={classes.accordion}>
+            <AccordionSummary
+                expandIcon={<ExpandMoreIcon/>}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+            >
+                <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
+                <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
+                <Typography className={classes.accordionSecondaryHeading}>{task.deadline.substr(0, 10)}</Typography>
+                {props.role === "teacher" && task.graded?
+                    <Button className={classes.button}
+                        onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
+                        Aufgabe bewerten
+                    </Button> :null}
+            </AccordionSummary>
+            <AccordionDetails>
+                <Typography>
+                    {task.description}
+                </Typography>
+            </AccordionDetails>
+        </Accordion>
     )
 
     return (

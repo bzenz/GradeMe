@@ -9,7 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { ACTIONS_FOR_COURSE_IDENTIFIER, COMMUNICATION_DASHBOARD_IDENTIFIER, CourseTabs, TASKS_FOR_COURSE_IDENTIFIER, TeacherTabs } from './teacher/TeacherTabs';
+import { ACTIONS_FOR_COURSE_IDENTIFIER, COMMUNICATION_DASHBOARD_IDENTIFIER, STUDENTS_FOR_COURSE_IDENTIFIER, CourseTabs, TASKS_FOR_COURSE_IDENTIFIER, TeacherTabs } from './teacher/TeacherTabs';
 import { connect } from 'react-redux';
 import {COURSE_VIEW_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, COURSES_FOR_SUBJECT_IDENTIFIER, SCHEDULE_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER} from "./teacher/TeacherTabs";
 import SubjectOverview from "./teacher/SubjectOverview";
@@ -31,6 +31,7 @@ import GradesAccordions from "./student/GradesComponent";
 import Timetable from "../../views/Timetable";
 import ActionsForCourseList, {CREATE_NEW_TASK} from "./ActionsForCourseList";
 import CreateTaskForm from "./CreateTaskForm";
+import StudentsInCourseOverview from "./StudentsInCourseOverview";
 import { ERROR_CONTENT_IDENTIFIER } from "../../actions/errorActions";
 import ErrorContentPaper from "../ErrorContentPaper";
 
@@ -66,6 +67,8 @@ function Dashboard(props) {
                 return <ActionsForCourseList/>;
             case CREATE_NEW_TASK:
                 return <CreateTaskForm/>;
+            case STUDENTS_FOR_COURSE_IDENTIFIER:
+                return <StudentsInCourseOverview/>;
             case ERROR_CONTENT_IDENTIFIER:
                 return <ErrorContentPaper errorMessageToUser={props.errorMessageToUser}/>
             case COMMUNICATION_DASHBOARD_IDENTIFIER:
