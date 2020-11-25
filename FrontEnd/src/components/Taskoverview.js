@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import GradeIcon from '@material-ui/icons/Grade';
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -21,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
     },
     accordion_red: {
       width: '100%',
-      backgroundColor: '#E42C1D',
+      backgroundColor: '#FF6D6D',
     },
     accordion_yellow: {
       width: '100%',
-      backgroundColor: '#FFF144',
+      backgroundColor: '#FDFF9A',
     },
     accordionPrimaryHeading: {
         flexBasis: '40%',
@@ -88,8 +90,8 @@ function Taskoverview(props) {
       let  deadline = new Date(task.deadline);
 
       //berechnet den Unterschied in Tagen zwischen currentDate und deadline
-      const diffInDays = Math.abs(Math.floor(Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) -
-          Date.UTC(deadline.getFullYear(), deadline.getMonth(), deadline.getDate()))  / (1000 * 60 * 60 * 24));
+      const diffInDays = Math.floor(Date.UTC(deadline.getFullYear(), deadline.getMonth(), deadline.getDate()) -
+        Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()))  / (1000 * 60 * 60 * 24);
 
         if (props.role === "teacher" || diffInDays > 4) {
           appropriateAccordionStyle = classes.accordion_normal;
@@ -114,6 +116,11 @@ function Taskoverview(props) {
                         onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
                         Aufgabe bewerten
                     </Button> :null}
+              {props.role === "student" && task.graded?
+                <Tooltip title={"Diese Aufgabe wird benotet"}>
+                  <GradeIcon/>
+                </Tooltip>: null
+              }
             </AccordionSummary>
             <AccordionDetails>
                 <Typography>
