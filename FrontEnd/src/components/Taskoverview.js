@@ -101,6 +101,9 @@ function Taskoverview(props) {
           appropriateAccordionStyle = classes.accordion_red;
         }
 
+      //Der Anzeigemonat muss hier berechnet werden, da man dort, wo das Datum berechnet wird nicht einfach getMonth()+1 machen
+      //kann, da ja dort ein String zusammengesetzt wird und dadurch einfach nur eine "1" angehangen wird
+      const displayMonth = deadline.getMonth()+1;
       return (
         <Accordion key={task.taskId} className= { appropriateAccordionStyle }>
             <AccordionSummary
@@ -110,7 +113,7 @@ function Taskoverview(props) {
             >
                 <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
                 <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + deadline.getMonth() + "/" + deadline.getFullYear()}</Typography>
+                <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + displayMonth + "/" + deadline.getFullYear()}</Typography>
                 {props.role === "teacher" && task.graded?
                     <Button className={classes.button}
                         onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
