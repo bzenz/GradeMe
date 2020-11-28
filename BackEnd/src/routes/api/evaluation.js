@@ -1,5 +1,5 @@
 const evaluateTask = require('../../db/evaluateTask');
-const { getAllEvaluationsForUser } = require('../../db/getAllEvaluations');
+const { getAllEvaluationsForUser, getAllEvaluationsForTask } = require('../../db/getAllEvaluations');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
@@ -56,6 +56,42 @@ createRoutes([
                         year: eval.Year, 
                         subjectId: eval.SubjectId, 
                         subjectName: eval.SubjectName, 
+                    };
+                }
+                
+                return res.status(200).json( evaluations );
+            }
+            catch (err) 
+            {
+                return res.status(400).json( {error: err.message} );
+            }
+        }
+    },
+    {
+        path: '/getAll/forTask', 
+        method: 'post', 
+        strategy: 'jwt',
+        callback: async (req, res, user) => 
+        {
+            try 
+            {  
+                const args = extractArguments(req.body,
+                [
+                    { key: 'taskId', type: 'number' },
+                ]);
+
+                const evaluations = await getAllEvaluationsForTask(args.taskId);
+                
+                for (const i in evaluations) 
+                {
+                    const eval = evaluations[i];
+                    evaluations[i] = 
+                    {
+                        userId: eval.UserId,
+                        userVorname: eval.UserVorname,
+                        userName: eval.UserName,
+                        evaluation: eval.Graded ? eval.Evaluation : Boolean(eval.Evaluation),
+                        annotation: eval.Annotation,
                     };
                 }
                 
