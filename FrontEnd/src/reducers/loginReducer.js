@@ -8,6 +8,9 @@ import {
 import { SERVER } from "../../index";
 import {loginPostFailed, loginPostSuccessfull, responseParsed} from "../actions/loginActions";
 import { loop, Cmd } from 'redux-loop';
+import {switchContent} from "../actions/teacherNavigationActions";
+import {GRADES_OVERVIEW_IDENTIFIER} from "../components/student/StudentTabs";
+import {SUBJECT_OVERVIEW_IDENTIFIER} from "../components/teacher/TeacherTabs";
 
 //FUNKTIONEN
 function postLoginAttempt(username, password){
@@ -60,7 +63,9 @@ export default (state = DEFAULT_STATE, action) => {
             localStorage.setItem('userId', userId);
             localStorage.setItem('role', action.res.rolle);
             localStorage.setItem('request_token', action.res.request_token);
-            return {...state, userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token}
+            return loop({...state, userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token},
+                Cmd.action(switchContent(action.res.rolle === "teacher" ? SUBJECT_OVERVIEW_IDENTIFIER:GRADES_OVERVIEW_IDENTIFIER)))
+
         }
         case LOGIN_POST_FAILED:
             alert("Netzwerkfehler");
