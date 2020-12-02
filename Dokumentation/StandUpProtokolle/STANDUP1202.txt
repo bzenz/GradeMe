@@ -1,0 +1,19 @@
+STANDUP 02.12.
+
+Ablaufplan beschlossen:
+
+>>
+Was gibt es zu sagen?
+
+ZenHub:
+
+Spalten "rückwärts" abarbeiten
+Done -> kurz erwähnen und in closed schieben ..  bei wichtigen Änderungen kurz vorstellen
+Review/QA -> über evtl Unstimmigkeiten beim CR reden
+In Progress -> Fragen ob jemand Probleme hat
+Backlog -> schauen dass die arbeit gleichmäßig verteilt ist
+IceBox -> Backlog nachfüllen mit Issues aus IceBox
+New Issues -> besprechen und dann in Backlog oder IceBox schieben (Höhe der Wichtigkeit anpassen)
+
+Weitere Fragen und Anmerkungen?
+<<
