@@ -90,8 +90,10 @@ function Taskoverview(props) {
       let  deadline = new Date(task.deadline);
 
       //berechnet den Unterschied in Tagen zwischen currentDate und deadline
-      const diffInDays = Math.floor(Date.UTC(deadline.getFullYear(), deadline.getMonth(), deadline.getDate()) -
-        Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()))  / (1000 * 60 * 60 * 24);
+        const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
+        const currentDateWithoutTime = new Date(currentDate.toDateString());
+        const deadlineDateWithoutTime = new Date(deadline.toDateString());
+        const diffInDays = (deadlineDateWithoutTime - currentDateWithoutTime) / MILLISECONDS_IN_A_DAY;
 
         if (props.role === "teacher" || diffInDays > 4) {
           appropriateAccordionStyle = classes.accordion_normal;
