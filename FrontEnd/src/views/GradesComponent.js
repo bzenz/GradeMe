@@ -15,7 +15,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
-import useStyles from "../components/teacher/CourseOverviewStyle";
+import useStyles from "../styles/CourseOverviewStyle";
 
 
 const useStylesCustom = makeStyles((theme) => ({
@@ -24,7 +24,6 @@ const useStylesCustom = makeStyles((theme) => ({
     },
     accordion: {
         width: '100%',
-        minWidth: 650,
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),

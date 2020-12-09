@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import GradeIcon from '@material-ui/icons/Grade';
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -16,9 +18,16 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
     },
-    accordion: {
+    accordion_normal: {
       width: '100%',
-
+    },
+    accordion_red: {
+      width: '100%',
+      backgroundColor: '#FF6D6D',
+    },
+    accordion_yellow: {
+      width: '100%',
+      backgroundColor: '#FDFF9A',
     },
     accordionPrimaryHeading: {
         flexBasis: '40%',
@@ -75,7 +84,30 @@ function Taskoverview(props) {
     }, [])
 
     const taskAccordionsList = taskList.map((task) =>
-        <Accordion key={task.taskId} className={classes.accordion}>
+      {
+      let appropriateAccordionStyle;
+      const currentDate = new Date();
+      let  deadline = new Date(task.deadline);
+
+      //berechnet den Unterschied in Tagen zwischen currentDate und deadline
+        const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
+        const currentDateWithoutTime = new Date(currentDate.toDateString());
+        const deadlineDateWithoutTime = new Date(deadline.toDateString());
+        const diffInDays = (deadlineDateWithoutTime - currentDateWithoutTime) / MILLISECONDS_IN_A_DAY;
+
+        if (props.role === "teacher" || diffInDays > 4) {
+          appropriateAccordionStyle = classes.accordion_normal;
+        } else if(diffInDays > 2) {
+          appropriateAccordionStyle = classes.accordion_yellow;
+        } else {
+          appropriateAccordionStyle = classes.accordion_red;
+        }
+
+      //Der Anzeigemonat muss hier berechnet werden, da man dort, wo das Datum berechnet wird nicht einfach getMonth()+1 machen
+      //kann, da ja dort ein String zusammengesetzt wird und dadurch einfach nur eine "1" angehangen wird
+      const displayMonth = deadline.getMonth()+1;
+      return (
+        <Accordion key={task.taskId} className= { appropriateAccordionStyle }>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
@@ -83,12 +115,17 @@ function Taskoverview(props) {
             >
                 <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
                 <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{task.deadline.substr(0, 10)}</Typography>
+                <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + displayMonth + "/" + deadline.getFullYear()}</Typography>
                 {props.role === "teacher" && task.graded?
                     <Button className={classes.button}
                         onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
                         Aufgabe bewerten
                     </Button> :null}
+              {props.role === "student" && task.graded?
+                <Tooltip title={"Diese Aufgabe wird benotet"}>
+                  <GradeIcon/>
+                </Tooltip>: null
+              }
             </AccordionSummary>
             <AccordionDetails>
                 <Typography>
@@ -96,6 +133,8 @@ function Taskoverview(props) {
                 </Typography>
             </AccordionDetails>
         </Accordion>
+        )
+      }
     )
 
     return (
