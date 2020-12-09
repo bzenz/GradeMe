@@ -1,0 +1,5 @@
+1. Wie soll mit vergangenen Aufgaben (in der Aufgabenliste Lehrer/Schüler) verfahren werden?
+  Automatische löschung nach X Tagen? (Löschung natürlich nicht aus der DB. Aber aus der Aufgabenliste)
+  Soll der Lehrer sie (manuell) entfernen?
+  Wenn eine benotete Aufgabe für alle Schüler benotet wurde, soll sie aus den Aufgabenlisten entfernt werden?
+  Sollten Schüler sie manuell für erledigt markieren können (und bsp. in einem Archiv suchen können?)
