@@ -85,13 +85,15 @@ function Taskoverview(props) {
 
     const taskAccordionsList = taskList.map((task) =>
       {
-      let appropriateAccordionStyle;
-      const currentDate = new Date();
-      let  deadline = new Date(task.deadline);
+        let appropriateAccordionStyle;
+        const currentDate = new Date();
+        let  deadline = new Date(task.deadline);
 
-      //berechnet den Unterschied in Tagen zwischen currentDate und deadline
-      const diffInDays = Math.floor(Date.UTC(deadline.getFullYear(), deadline.getMonth(), deadline.getDate()) -
-        Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()))  / (1000 * 60 * 60 * 24);
+        //berechnet den Unterschied in Tagen zwischen currentDate und deadline
+        const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
+        const currentDateWithoutTime = new Date(currentDate.toDateString());
+        const deadlineDateWithoutTime = new Date(deadline.toDateString());
+        const diffInDays = (deadlineDateWithoutTime - currentDateWithoutTime) / MILLISECONDS_IN_A_DAY;
 
         if (props.role === "teacher" || diffInDays > 4) {
           appropriateAccordionStyle = classes.accordion_normal;
@@ -101,9 +103,9 @@ function Taskoverview(props) {
           appropriateAccordionStyle = classes.accordion_red;
         }
 
-      //Der Anzeigemonat muss hier berechnet werden, da man dort, wo das Datum berechnet wird nicht einfach getMonth()+1 machen
-      //kann, da ja dort ein String zusammengesetzt wird und dadurch einfach nur eine "1" angehangen wird
-      const displayMonth = deadline.getMonth()+1;
+        //Der Anzeigemonat muss hier berechnet werden, da man dort, wo das Datum berechnet wird nicht einfach getMonth()+1 machen
+        //kann, da ja dort ein String zusammengesetzt wird und dadurch einfach nur eine "1" angehangen wird
+        const displayMonth = deadline.getMonth()+1;
       return (
         <Accordion key={task.taskId} className= { appropriateAccordionStyle }>
             <AccordionSummary
