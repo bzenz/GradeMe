@@ -84,7 +84,7 @@ function evaluateTaskPage(props) {
                 })
             })
         alert("Bewertungen wurden übermittelt");
-        props.switchContent(TASKS_FOR_COURSE_IDENTIFIER)
+        props.switchContent(props.previousContent);
     }
 
     let studentEvaluationDataArray = [];
@@ -175,6 +175,7 @@ const mapStateToProps = state => {
         request_token: state.loginReducer.request_token,
         taskId: state.teacherNavigationReducer.taskId,
         taskTitle: state.teacherNavigationReducer.taskTitle,
+        previousContent: state.teacherNavigationReducer.previousContent,
     }
 }
 

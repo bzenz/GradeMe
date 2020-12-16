@@ -7,7 +7,7 @@ const DEFAULT_STATE = {activeContent: SUBJECT_OVERVIEW_IDENTIFIER}
 export default (state = DEFAULT_STATE, action) => {
     switch(action.type){
       case SWITCH_TO_CONTENT:
-            return {...state, activeContent: action.newContentIdentifier};
+            return {...state, activeContent: action.newContentIdentifier, previousContent: state.activeContent};
         case SHOW_EVALUATE_TASK_PAGE:
             return {...state, taskId: action.taskId, taskTitle: action.taskTitle};
         case ERROR_CONTENT_IDENTIFIER:
