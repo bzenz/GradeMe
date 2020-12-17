@@ -77,11 +77,6 @@ function evaluateTaskPage(props) {
       dataArray.push(newEvaluationData);
       setStudentEvaluationDataArray(dataArray);
     }
-    const addToNonGradedStudentsArray = (newStudent) => {
-      let dataArray = nonGradedStudents;
-      dataArray.push(newStudent);
-      setNonGradedStudents(dataArray);
-    }
 
     let requestBody = JSON.stringify({
         taskId: props.taskId,
@@ -134,6 +129,10 @@ function evaluateTaskPage(props) {
         }
     }
 
+    /*
+    Hier werden die einzenlen Studenten als Komponentenarray zusammengeebaut. Dieses Komponentenarray wird später
+    in der Hauptkomponente genutzt
+    */
     const studentGradePapers = studentEvaluationDataArray.map((schueler) =>{
         if(schueler.rolle !== "teacher"){
           let grade = schueler.evaluation!==0?schueler.evaluation:"";
@@ -168,18 +167,29 @@ function evaluateTaskPage(props) {
     },
     )
 
+    /*
+    Funktion wird aufgerufen, wenn das Bewertungsformular submitted wird. Hier wird geprüft, ob in dem Array der
+    Schüler auch bei jedem Schüler eine (korrekte) Note zwischen 1 und 6 eingetragen ist. Ist garnichts eingetragen,
+    ist die Note entweder 0, null oder NaN. In diesen Fällen gilt der Schüler ebenfalls als nicht bewertet und wird
+    dem Array nonGradedStudentsArray hinzugefügt.
+    Dieses Array wird am Ende auf die Hook nonGradedStudents gesetzt, um dieses Array beizubehalten und später
+    die nicht bewerteten Schüler aufzulisten.
+    */
     function checkIfAllStudentsAreFilledOut(){
-      setNonGradedStudents([]);
+      let nonGradedStudentsArray = [];
+      let foundUnevaluatedStudents = false;
         studentEvaluationDataArray.forEach((student) => {
-          if(student.evaluation === 0 && student.rolle !== "teacher"){
-            addToNonGradedStudentsArray(student)
+          if((student.evaluation < 1 || student.evaluation > 6) && student.rolle !== "teacher"){
+            nonGradedStudentsArray.push(student);
+            foundUnevaluatedStudents = true;
           }
         })
 
-      if(nonGradedStudents.length < 1 ){
-         handleSubmitEvaluation();
+      if(foundUnevaluatedStudents){
+          setNonGradedStudents(nonGradedStudentsArray);
+          handleOpenSubmitConfirmationDialog();
       } else {
-         handleOpenSubmitConfirmationDialog();
+          handleSubmitEvaluation();
       }
     }
 
@@ -206,7 +216,10 @@ function evaluateTaskPage(props) {
             <DialogTitle id="submit_evaluations_dialog_title">{"Wollen sie die Bewertungen übermitteln?"}</DialogTitle>
             <DialogContent>
               <DialogContentText id="submit_evaluations__dialog_content">
-                Es wurden noch nicht alle Schüler bewertet. Wollen sie die bisherigen Bewertungen trotzdem übermitteln? + {nonGradedStudents.forEach((student) => <Typography>{student.vorname}</Typography>)}
+                  Es wurden noch nicht alle Schüler korrekt bewertet. Bitte überprüfen sie die Noten folgender Schüler: {nonGradedStudents.map((student) => {
+                  return <Typography><Box fontWeight="fontWeightBold" m={0.5}>{student.vorname + " " + student.name + "\n"}</Box></Typography>
+              })}
+                Wollen sie die bisherigen Bewertungen trotzdem übermitteln?
               </DialogContentText>
             </DialogContent>
             <DialogActions>
