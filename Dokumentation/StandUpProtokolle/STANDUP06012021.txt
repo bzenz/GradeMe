@@ -1,0 +1,10 @@
+Standup vom 6.1.2021
+
+1.  Parameter rolle in role umbenennen (Sprache einheitlich halten, nicht englisch/deutsch)
+gleiches für vorname/nachname
+
+--> Variablennamen in Zukunft englisch benennen
+
+--> Standups finden in Zukunft Dienstags um 13:10 uhr statt
+
+

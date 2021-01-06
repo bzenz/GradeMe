@@ -21,4 +21,25 @@ const getAllEvaluationsForUser = userId =>
     });
 };
 
+const getAllEvaluationsForTask = taskId => 
+{
+    return new Promise(async (resolve, reject) => 
+    {
+        const sql = `
+            SELECT HasEvaluation.UserId AS UserId, u.Vorname AS UserVorname, u.Name AS UserName, HasEvaluation.Grade AS Evaluation, t.Graded AS Graded, HasEvaluation.Annotation AS Annotation 
+            FROM HasEvaluation, Tasks t, Users u 
+            WHERE HasEvaluation.TaskId = ? AND HasEvaluation.TaskId = t.Id AND HasEvaluation.UserId = u.Id;        
+        `;
+        await executeOnDB(db => 
+        {
+            db.all(sql, [taskId], (err, row) => 
+            {
+                if (err) reject(err);
+                resolve(row);
+            });
+        });
+    });
+};
+
 exports.getAllEvaluationsForUser = getAllEvaluationsForUser;
+exports.getAllEvaluationsForTask = getAllEvaluationsForTask;

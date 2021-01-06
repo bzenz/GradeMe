@@ -124,7 +124,7 @@ function Dashboard(props) {
                 </div>
                 <Divider />
                 <Typography color='textPrimary' component={'div'}>
-                    {props.courseSelected && <CourseTabs />}
+                    {props.role === "teacher" && props.courseSelected && <CourseTabs />}
                 </Typography>
                 <Divider />
                 <Typography color='textPrimary' component={'div'}>

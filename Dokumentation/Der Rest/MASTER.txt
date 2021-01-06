@@ -4,8 +4,8 @@ Immer muss GradeMe einem Nutzer die Möglichkeit bieten, die Noten, für deren E
 Immer muss GradeMe einem Schüler die Möglichkeit bieten, seine Aufgaben einzusehen.
 Immer muss GradeMe einem Schüler die Möglichkeit bieten, seine Fächer einzusehen.
 
-Immer muss GradeMe einem Lehrer die Möglichkeit bieten eine Aufgabe anzulegen.
-Wenn er eine Aufgabe angelegt hat, muss GradeMe einem Lehrer die Möglichkeit bieten diese Aufgabe zu bearbeiten.
+Immer muss GradeMe einem Lehrer die Möglichkeit bieten, eine Aufgabe anzulegen.
+Wenn er eine Aufgabe angelegt hat, muss GradeMe einem Lehrer die Möglichkeit bieten, diese Aufgabe zu bearbeiten.
 Wenn er eine Aufgabe angelegt hat, muss GradeMe dem Lehrer die Möglichkeit bieten, die entsprechenden Noten einzutragen.
 
 ----------
@@ -13,7 +13,7 @@ Wenn er eine Aufgabe angelegt hat, muss GradeMe dem Lehrer die Möglichkeit biet
 Wenn ein Lehrer eine Note einträgt, sollte GradeMe die Statistiken neu berechnen.
 Immer sollte GradeMe einem Nutzer die Möglichkeit bieten, die Statistiken, für deren Einsicht er berechtigt ist, einzusehen.
 
-Solange ein Nutzer angemeldet ist, sollte GradeMe dem Nutzer die Möglichkeit bieten seinen Stundenplan einzusehen.
+Solange ein Nutzer angemeldet ist, sollte GradeMe dem Nutzer die Möglichkeit bieten, seinen Stundenplan einzusehen.
 
 Immer sollte GradeMe einem Lehrer die M�glichkeit bieten, Anwesenheiten zu erfassen.
 

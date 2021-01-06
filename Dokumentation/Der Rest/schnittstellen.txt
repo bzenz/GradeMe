@@ -28,6 +28,7 @@
         ]) => taskId
 -   -   getAll
 -   -   -   /forUser POST (userId, request_token) => [{ taskId, evaluation, annotation, course, year, subjectId, subjectName }]
+-   -   -   /forTask POST (taskId, request_token) => [{ userId, userVorname, userName, evaluation, annotation }]
 
 -   /course
 -   -   /create POST (year, subjectId, request_token) => courseId
