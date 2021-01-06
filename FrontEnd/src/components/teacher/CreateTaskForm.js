@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Typography} from "@material-ui/core";
@@ -38,25 +38,47 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function CreateTaskForm(props){
-    const classes = useStyles();
-    let requestBody = {
-        title: "",
-        description: "",
-        course: props.courseId,
-        graded: false,
-        deadline: "00-00-0000",
-        request_token: props.request_token,
-    };
+  const [titleFieldFilled, setTitleFieldFilled] = useState(true);
+  const [deadlineFieldFilled, setDeadlineFieldFilled] = useState(true);
+  const [title, setTitle] = useState("");
+  const [graded, setGraded] = useState(false);
+  const [deadline, setDeadline] = useState("00-00-0000");
+  const [description, setDescription] = useState("");
+  const classes = useStyles();
 
     function handleFormChange(event, type) {
-        if(type === "graded") {
-            requestBody[type] = event.target.checked;
-            return;
+      switch (type) {
+        case "title": setTitle(event.target.value); break;
+        case "graded": setGraded(event.target.checked); break;
+        case "deadline": setDeadline(event.target.value); break;
+        case "description": setDescription(event.target.value);
         }
-        requestBody[type] = event.target.value;
     }
 
     function submitTaskForm(){
+      let isTitleFieldFilled = (title !== "");
+      let isDeadlineFieldFilled = (deadline !== "00-00-0000" && deadline !== "");
+      setTitleFieldFilled(isTitleFieldFilled);
+      setDeadlineFieldFilled(isDeadlineFieldFilled)
+
+   /* Der Grund dafür, dass hier der Wert der Variablen "isTitleFieldFilled" bzw. "isDeadlineFieldFilled"
+      abgefragt wird, ist dass Hooks zu setzen eine ansyncrone Funktion ist. D.h. ich kann nicht den Ausdruck
+      (title !== "") bzw. (deadline !== "00-00-0000" && deadline !== "") auswerten, ihn als Hook setzen und direkt danach
+      die Hook abfragen, da sich die Hook noch nicht aktualisiert hat.
+      Deshalb muss man hier leider sowohl Hooks als auch normale Variablen nutzen*/
+      if(!isTitleFieldFilled || !isDeadlineFieldFilled){
+        alert("Nicht alle Pflichtfelder wurden ausgefüllt.");
+        return;
+      }
+
+      let requestBody = {
+        title: title,
+        description: description,
+        course: props.courseId,
+        graded: graded,
+        deadline: deadline,
+        request_token: props.request_token,
+      };
         fetch(SERVER + "/api/task/create", {
             "method": "POST",
             "headers": {'Content-Type': 'application/json'},
@@ -74,6 +96,8 @@ function CreateTaskForm(props){
             <Paper className={classes.root}>
                 <TextField
                     id={'title'}
+                    error ={ !titleFieldFilled }
+                    helperText={"Pflichtfeld"}
                     className={classes.textfield}
                     variant={'outlined'}
                     label={'Titel'}
@@ -92,6 +116,8 @@ function CreateTaskForm(props){
                 <form className={classes.container} noValidate>
                     <TextField
                         id="taskDeadline"
+                        error = { !deadlineFieldFilled }
+                        helperText={"Pflichtfeld"}
                         label="Abgabedatum"
                         type="date"
                         InputLabelProps={{
