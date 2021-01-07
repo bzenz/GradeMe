@@ -17,20 +17,21 @@ import CoursesForSubject from "./teacher/CoursesForSubject";
 import useStyles from "../styles/NavigationStyle";
 import CourseView from "./teacher/CourseView";
 import LogoutButton from "./LogoutButton";
-import Taskoverview from "./Taskoverview";
+import Taskoverview, { EDIT_TASK } from "./Taskoverview";
 import EvaluateTaskPage from "./teacher/EvaluateTaskPage";
 import {SHOW_EVALUATE_TASK_PAGE} from "../actions/teacherNavigationActions";
 import Box from "@material-ui/core/Box";
 import Timetable from "./Timetable";
 import {SERVER} from "../../index";
 import ActionsForCourseList, {CREATE_NEW_TASK} from "./teacher/ActionsForCourseList";
-import CreateTaskForm from "./teacher/CreateTaskForm";
+import CreateTaskForm from "./teacher/CreateOrEditTaskForm";
 import CommunicationDashboard from "./CommunicationDashboard";
 import { GRADES_OVERVIEW_IDENTIFIER, StudentTabs } from "./student/StudentTabs";
 import GradesAccordions from "./student/GradesComponent";
 import StudentsInCourseOverview from "./teacher/StudentsInCourseOverview";
 import { ERROR_CONTENT_IDENTIFIER } from "../actions/errorActions";
 import ErrorContentPaper from "./ErrorContentPaper";
+import CreateOrEditTaskForm from "./teacher/CreateOrEditTaskForm";
 
 
 function Dashboard(props) {
@@ -64,6 +65,8 @@ function Dashboard(props) {
                 return <ActionsForCourseList/>;
             case CREATE_NEW_TASK:
                 return <CreateTaskForm/>;
+            case EDIT_TASK:
+                return <CreateOrEditTaskForm/>;
             case STUDENTS_FOR_COURSE_IDENTIFIER:
                 return <StudentsInCourseOverview/>;
             case ERROR_CONTENT_IDENTIFIER:

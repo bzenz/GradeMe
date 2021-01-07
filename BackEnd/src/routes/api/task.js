@@ -48,7 +48,7 @@ createRoutes([
                     { key: 'taskId',        type: 'number' },
                     { key: 'title',         type: 'string', optional: true },
                     { key: 'description',   type: 'string', optional: true },
-                    { key: 'course',        type: 'string', optional: true }, // Note: password can't consist of only numbers using this method
+                    { key: 'course',        type: 'number', optional: true }, // Note: password can't consist of only numbers using this method
                     { key: 'deadline',      type: 'string', optional: true },
                     { key: 'graded',        type: 'boolean',optional: true },
                 ]);
