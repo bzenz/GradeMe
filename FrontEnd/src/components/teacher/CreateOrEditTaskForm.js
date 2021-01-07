@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
 function CreateOrEditTaskForm(props){
   const [titleFieldFilled, setTitleFieldFilled] = useState(true);
   const [deadlineFieldFilled, setDeadlineFieldFilled] = useState(true);
-  const [title, setTitle] = useState("");
-  const [graded, setGraded] = useState(false);
-  const [deadline, setDeadline] = useState("00-00-0000");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(props.isTaskBeingEdited?props.taskOriginalTitle:"");
+  const [graded, setGraded] = useState(props.isTaskBeingEdited?props.isTaskOriginallyGraded:false);
+  const [deadline, setDeadline] = useState(props.isTaskBeingEdited?props.taskOriginalDeadline:"00-00-0000");
+  const [description, setDescription] = useState(props.isTaskBeingEdited?props.taskOriginalDescription:"");
   const classes = useStyles();
 
     function handleFormChange(event, type) {
@@ -94,8 +94,8 @@ function CreateOrEditTaskForm(props){
           "headers": { 'Content-Type': 'application/json' },
           "body": JSON.stringify(requestBody)
         })
-        props.setIsTaskBeingEdited(false);
         alert("Aufgabe wurde bearbeitet");
+        props.setIsTaskBeingEdited(false);
       } else {
           fetch(SERVER + "/api/task/create", {
             "method": "POST",
