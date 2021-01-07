@@ -8,9 +8,13 @@ import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import Typography from "@material-ui/core/Typography";
 import {SERVER} from "../../../index";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import { TASKS_FOR_COURSE_IDENTIFIER} from "./TeacherTabs";
 import Box from "@material-ui/core/Box";
 import { setErrorData } from "../../actions/errorActions";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,7 +59,24 @@ const useStyles = makeStyles((theme) => ({
 
 function evaluateTaskPage(props) {
     const classes = useStyles();
-    const[studentsOfTask, setStudentsOfTask] = useState([]);
+    const [open, setOpen] = React.useState(false);
+    const [studentEvaluationDataArray, setStudentEvaluationDataArray] = useState([]);
+    const [nonGradedStudents, setNonGradedStudents] = useState([]);
+
+    const handleOpenSubmitConfirmationDialog = () => {
+      setOpen(true);
+    };
+
+    const handleCloseSubmitConfirmationDialog = () => {
+      setOpen(false);
+    };
+
+    const addToStudentEvaluationDataArray = (newEvaluationData) => {
+      let dataArray = studentEvaluationDataArray;
+      dataArray.push(newEvaluationData);
+      setStudentEvaluationDataArray(dataArray);
+    }
+
     let requestBody = JSON.stringify({
         taskId: props.taskId,
         request_token: props.request_token
@@ -69,10 +90,10 @@ function evaluateTaskPage(props) {
           "headers": { 'Content-Type': 'application/json' },
           "body": requestBody
         }).then(response => response.json())
-        .then(data => setStudentsOfTask(data))
+        .then(data => setStudentEvaluationDataArray(data))
     }, [])
 
-    function handleSumbitEvaluation() {
+    function handleSubmitEvaluation() {
         fetch(SERVER + "/api/evaluation/evaluateTask",
             {
                 "method": "POST",
@@ -87,9 +108,14 @@ function evaluateTaskPage(props) {
         props.switchContent(props.previousContent);
     }
 
-    let studentEvaluationDataArray = [];
 
+    //Funktion wird bei jedem Change des eines InputFields aufgerufen und versucht im studentEvaluationDataArray den
+    //Schülerdatensatz per ID zu finden. Gibt es diesen bereits, wird der Wert geupdated.
+    // Gibt es ihn nicht, wird ein neuer Datensatz mit der userId und der grade bzw. annotation angelegt
     function handleInputFieldChange(value, userId, inputFieldType) {
+      if(value !== value) {
+        value = "";
+      }
         let studentDataFound = false;
         studentEvaluationDataArray.forEach((studentData) => {
                 if(studentData.userId === userId) {
@@ -98,53 +124,73 @@ function evaluateTaskPage(props) {
                 }
         });
         if(!studentDataFound) {
-            studentEvaluationDataArray.push({userId, [inputFieldType]: value});
+           addToStudentEvaluationDataArray({userId, [inputFieldType]: value});
         }
     }
 
-    //Funktion wird bei jedem Change des GradeInputField aufgerufen und versucht im studentEvaluationDataArray den
-    //Schülerdatensatz per ID zu finden. Gibt es diesen bereits, wird der Wert geupdated.
-    // Gibt es ihn nicht, wird ein neuer Datensatz mit der userId und der grade angelegt
-     function handleGradeInputFieldChange(event, userId, )  {
-        handleInputFieldChange(event, userId, "evaluation");
-    }
-
-    //Gleiche Funtkionalität wie die handleGradeInputFieldChange function, nur mit annotation diesmal.
-    // Es ist also egal, womit man anfängt beim Eintragen
-    function handleAnnotationInputFieldChange(event, userId) {
-        handleInputFieldChange(event, userId, "annotation");
-    }
-
-    //Baut aus allen Schülern, die der Task zugehören jeweils eine Papercomponent und speichern sie in studentGradePapers.
-    //Vorher wird aber grprüft, ob die Rolle des Schülers "teacher" ist, da der Lehrer sich nicht selbst bewerten soll
-    const studentGradePapers = studentsOfTask.map((schueler) =>{
+    /*
+    Hier werden die einzenlen Studenten als Komponentenarray zusammengeebaut. Dieses Komponentenarray wird später
+    in der Hauptkomponente genutzt
+    */
+    const studentGradePapers = studentEvaluationDataArray.map((schueler) =>{
         if(schueler.rolle !== "teacher"){
+          let grade = schueler.evaluation!==0?schueler.evaluation:"";
+          let annotation = schueler.annotation;
+
             return (
-                <Paper id={schueler.userId} className={classes.paper} variant={"outlined"}>
+                <Paper key={schueler.userId} id={schueler.userId} className={classes.paper} variant={"outlined"}>
                     <Typography className={classes.text} variant="h5">
                         {schueler.vorname + " " + schueler.name}
                     </Typography>
                     <TextField
                         className={classes.textfieldPoints}
                         id="grade input"
+                        defaultValue={grade}
                         variant={"filled"}
                         label={"Note"}
-                        onChange={() => handleGradeInputFieldChange(parseInt(event.target.value), schueler.userId)}
+                        onChange={() => handleInputFieldChange(parseInt(event.target.value), schueler.userId, "evaluation")}
                     />
                     <TextField
                         className={classes.textfieldAnnotation}
                         id="annotation"
+                        defaultValue={annotation}
                         label="Anmerkung"
                         multiline
                         rows={3}
                         variant="outlined"
-                        onChange={() => handleAnnotationInputFieldChange(event.target.value, schueler.userId)}
+                        onChange={() => handleInputFieldChange(event.target.value, schueler.userId, "annotation")}
                     />
             </Paper>
             )
         }
     },
     )
+
+    /*
+    Funktion wird aufgerufen, wenn das Bewertungsformular submitted wird. Hier wird geprüft, ob in dem Array der
+    Schüler auch bei jedem Schüler eine (korrekte) Note zwischen 1 und 6 eingetragen ist. Ist garnichts eingetragen,
+    ist die Note entweder 0, null oder NaN. In diesen Fällen gilt der Schüler ebenfalls als nicht bewertet und wird
+    dem Array nonGradedStudentsArray hinzugefügt.
+    Dieses Array wird am Ende auf die Hook nonGradedStudents gesetzt, um dieses Array beizubehalten und später
+    die nicht bewerteten Schüler aufzulisten.
+    */
+    function checkIfAllStudentsAreFilledOut(){
+      let nonGradedStudentsArray = [];
+      let foundUnevaluatedStudents = false;
+        studentEvaluationDataArray.forEach((student) => {
+          if((student.evaluation < 1 || student.evaluation > 6) && student.rolle !== "teacher"){
+            nonGradedStudentsArray.push(student);
+            foundUnevaluatedStudents = true;
+          }
+        })
+
+      if(foundUnevaluatedStudents){
+          setNonGradedStudents(nonGradedStudentsArray);
+          handleOpenSubmitConfirmationDialog();
+      } else {
+          handleSubmitEvaluation();
+      }
+    }
 
     return(
         <div className={classes.root} style={{width: '100%'}}>
@@ -155,13 +201,35 @@ function evaluateTaskPage(props) {
                 {studentGradePapers}
                 <Button
                     className={classes.button}
-                    onClick={() => handleSumbitEvaluation()}>
+                    onClick={ checkIfAllStudentsAreFilledOut}>
                     <Typography variant={"button"} className={classes.buttonText}>
                         Bewertung bestätigen
                     </Typography>
                     <CheckRoundedIcon/>
                 </Button>
             </Box>
+          <Dialog
+            open={open}
+            onClose={handleCloseSubmitConfirmationDialog}
+          >
+            <DialogTitle id="submit_evaluations_dialog_title">{"Wollen sie die Bewertungen übermitteln?"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="submit_evaluations__dialog_content">
+                  Es wurden noch nicht alle Schüler korrekt bewertet. Bitte überprüfen sie die Noten folgender Schüler: {nonGradedStudents.map((student) => {
+                  return <Typography><Box fontWeight="fontWeightBold" m={0.5}>{student.vorname + " " + student.name + "\n"}</Box></Typography>
+              })}
+                Wollen sie die bisherigen Bewertungen trotzdem übermitteln?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleSubmitEvaluation} color="primary">
+                Ja
+              </Button>
+              <Button onClick={handleCloseSubmitConfirmationDialog} color="primary" autoFocus>
+                Nein
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
     )
   } catch (exception) {
