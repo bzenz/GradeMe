@@ -19,21 +19,21 @@
 -   -   /create POST (title, description, course, deadline, graded, request_token) => taskId
 -   -   /edit POST (taskId, request_token, title?, description?, course?, deadline?, graded?) => taskId
 -   -   /getAll
--   -   -   /forCourse POST (courseId, request_token) => [{taskId, title, description, course, deadline, graded}] (nach deadline sortiert)
--   -   -   /forUser POST (userId, request_token) => [{taskId, title, description, course, deadline, graded}] (nach deadline sortiert)
+-   -   -   /forCourse POST (courseId, request_token) => [{taskId, title, description, courseId, courseName, deadline, graded}] (nach deadline sortiert)
+-   -   -   /forUser POST (userId, request_token) => [{taskId, title, description, courseId, courseName, deadline, graded}] (nach deadline sortiert)
 
 -   /evaluation
 -   -   /evaluateTask POST (taskId, request_token, users: [
             {userId, evalutation (bool/grade), annotation}
         ]) => taskId
 -   -   getAll
--   -   -   /forUser POST (userId, request_token) => [{ taskId, evaluation, annotation, course, year, subjectId, subjectName }]
+-   -   -   /forUser POST (userId, request_token) => [{ taskId, evaluation, annotation, courseId, courseName, year, subjectId, subjectName }]
 -   -   -   /forTask POST (taskId, request_token) => [{ userId, userVorname, userName, evaluation, annotation }]
 
 -   /course
--   -   /create POST (year, subjectId, request_token) => courseId
+-   -   /create POST (year, subjectId, request_token) => [{courseId, courseName}]
 -   -   /getAll
--   -   -   /forUser POST (userId, request_token) => [{courseId, year, subjectId, subjectName}]
+-   -   -   /forUser POST (userId, request_token) => [{courseId, courseName, year, subjectId, subjectName}]
 
 -   /subject
 -   -   /create POST (name, request_token) => subjectId

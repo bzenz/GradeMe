@@ -1,5 +1,6 @@
 const createTask = require('../../db/createTask');
 const { getAllTasksForCourse, getAllTasksForUser } = require('../../db/getAllTasks');
+const { generateCourseName } = require('../../utils/nameGenerators');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
@@ -121,7 +122,8 @@ const prepareTasks = tasks =>
             taskId: task.Id, 
             title: task.Title, 
             description: task.Description, 
-            course: task.CourseId, 
+            courseId: task.CourseId, 
+            courseName: generateCourseName(task.SubjectName, task.CourseYear), 
             deadline: task.Date, 
             graded: Boolean(task.Graded),
         };
