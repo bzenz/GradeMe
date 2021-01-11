@@ -1,4 +1,5 @@
 const { getAllCoursesForUser } = require('../../db/getAllCourses');
+const { generateCourseName } = require('../../utils/nameGenerators');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
@@ -27,7 +28,7 @@ createRoutes([
             const id = Math.ceil(Math.random()*30);
 
             // TODO: create task and save in DB
-            return res.status(200).json( { courseId: id } );
+            return res.status(200).json( { courseId: id, courseName: 'Mockthe-2021' } );
         }
     },
     {
@@ -51,6 +52,7 @@ createRoutes([
                     courses[i] = 
                     {
                         courseId: course.CourseId, 
+                        courseName: generateCourseName(course.SubjectName, course.Year), 
                         year: course.Year, 
                         subjectId: course.SubjectId, 
                         subjectName: course.SubjectName,
