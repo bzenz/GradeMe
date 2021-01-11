@@ -79,7 +79,7 @@ function CourseTabsComponent(props){
     }
     return(
         <div>
-            <ListSubheader inset>Kursnavigation</ListSubheader>
+            <ListSubheader inset>{props.courseName}</ListSubheader>
             <ListItem button onClick={handleSwitchContent(ACTIONS_FOR_COURSE_IDENTIFIER)}>
                 <ListItemIcon>
                     <AssignmentIcon />
@@ -102,4 +102,4 @@ function CourseTabsComponent(props){
     )
 }
 
-export const CourseTabs = connect(null, {switchContent})(CourseTabsComponent)
+export const CourseTabs = connect(state => ({courseName: state.courseNavigationReducer.courseName}), {switchContent})(CourseTabsComponent)
