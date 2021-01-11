@@ -37,18 +37,18 @@ function CoursesForSubject(props){
         })
     }, []);
 
-    function handleCourseSelect(courseId, courseYear, courseSubjectName) {
+    function handleCourseSelect(courseId, courseSubjectName, courseName) {
       function showCourse() {
         props.switchContent(COURSE_VIEW_IDENTIFIER);
-        props.setCourse(courseId, courseYear, courseSubjectName);
+        props.setCourse(courseId, courseSubjectName, courseName);
       }
 
       return showCourse;
     }
 
     const courseButtons = courses.map((course) =>
-      <Button className={ classes.text } key={ course.courseId } variant="outlined" onClick={ handleCourseSelect(course.courseId, course.year, course.subjectName) }>
-        { course.subjectName + course.year }
+      <Button className={ classes.text } key={ course.courseId } variant="outlined" onClick={ handleCourseSelect(course.courseId, course.subjectName, course.courseName) }>
+        { course.courseName }
       </Button>
     )
 
