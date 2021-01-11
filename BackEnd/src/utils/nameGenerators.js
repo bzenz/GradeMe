@@ -3,7 +3,7 @@ exports.generateCourseName = (subjectName='', courseYear=0) =>
     if (!validateArgs([
         {value: subjectName, type: 'string'},
         {value: courseYear, type: 'number'},
-        ])) throw new Error('subjectName and courseYear must be of type String');
+        ])) throw new Error('subjectName must be of type String and courseYear must be of type Number');
     
     return `${subjectName}-${courseYear}`;
 };
