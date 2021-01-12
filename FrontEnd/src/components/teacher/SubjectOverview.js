@@ -78,7 +78,6 @@ function SubjectOverview(props) {
 
 export default connect(
     (state)=>({
-        state,
         userId: state.loginReducer.userId,
         request_token: state.loginReducer.request_token,
         content: state.teacherNavigationReducer.activeContent
