@@ -1,0 +1,8 @@
+Standup vom 12.1.2021
+
+Soll man als Schüler in die Fächerübersicht kommen?
+-> Kursübersicht, ja aber erst wenn es implementiert wird
+
+-> Standup in Zukunft Dienstag 16:00
+
+-> Doku für Adminoberfläche liegt in Doku/Der Rest/adminoberfläche.txt
