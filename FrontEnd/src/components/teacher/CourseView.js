@@ -9,7 +9,7 @@ function CourseOverview(props){
     return(
         <div>
             <Typography variant="h3" align="center" color="primary">
-                Kursdetails für Kurs "{props.courseSubjectName + props.courseYear}"
+                Kursdetails für Kurs "{props.courseName}"
             </Typography>
             <Paper className={classes.paper}>
                 <Typography variant="body1">
@@ -23,7 +23,7 @@ function CourseOverview(props){
 const mapStateToProps = state => {
     return {
         courseId: state.courseNavigationReducer.courseId,
-        courseYear: state.courseNavigationReducer.courseYear,
+        courseName: state.courseNavigationReducer.courseName,
         courseSubjectName: state.courseNavigationReducer.courseSubjectName,
     }
 }

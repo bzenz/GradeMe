@@ -46,7 +46,7 @@ function StudentsInCourseOverview(props) {
       <div>
         <Box p={4} bgcolor="background.paper" align="center">
           <Typography variant="h3" align="center" color="primary">
-            Schülerliste für den Kurs "{props.courseSubjectName + props.courseYear}"
+            Schülerliste für den Kurs "{props.courseName}"
           </Typography>
         </Box>
         { studentPaperList }
@@ -64,7 +64,7 @@ const mapStateToProps = state => {
     request_token: state.loginReducer.request_token,
     courseId: state.courseNavigationReducer.courseId,
     courseSubjectName: state.courseNavigationReducer.courseSubjectName,
-    courseYear: state.courseNavigationReducer.courseYear,
+    courseName: state.courseNavigationReducer.courseName,
   }
 }
 export default connect (mapStateToProps, null)(StudentsInCourseOverview)

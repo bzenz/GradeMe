@@ -69,7 +69,7 @@ function Taskoverview(props) {
     }
 
     function getTasksForCourse(data){
-        return data.filter((task)=>(task.course === props.courseId));
+        return data.filter((task)=>(task.courseId === props.courseId));
     }
 
   try {
@@ -82,7 +82,7 @@ function Taskoverview(props) {
         })
         .then(response => response.json())
         .then(data => props.forCourse ? setTaskList(getTasksForCourse(data)) : setTaskList(data))
-    }, [])
+    }, [props.forCourse])
 
     let currentTasksAccordionList= [];
     let pastTasksAccordionList = [];
@@ -119,7 +119,7 @@ function Taskoverview(props) {
                 id="panel1a-header"
             >
                 <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
+                <Typography className={classes.accordionSecondaryHeading}>{task.courseName}</Typography>
                 <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + displayMonth + "/" + deadline.getFullYear()}</Typography>
                 {props.role === "teacher" && task.graded?
                     <Button className={classes.button}

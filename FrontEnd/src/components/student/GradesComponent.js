@@ -66,7 +66,7 @@ function GradesAccordions(props) {
         return objectsByKeyValue;
       }, {});
 
-    const tasksByCourse = groupBy('course')(allTasksOfUser);
+    const tasksByCourse = groupBy('courseId')(allTasksOfUser);
     let subjects = Object.entries(tasksByCourse);
 
     const accordionList = subjects.map((subject) =>
@@ -77,7 +77,7 @@ function GradesAccordions(props) {
           id="panel1a-header"
         >
           <Typography className={ classes.heading }>
-            { subject[1][0].subjectName + subject[1][0].year }
+            { subject[1][0].courseName }
           </Typography>
         </AccordionSummary>
         <AccordionDetails>

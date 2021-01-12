@@ -10,12 +10,12 @@ export function setSubject(subjectId, subjectName){
     }
 }
 
-export function setCourse(courseId, courseYear, courseSubjectName){
+export function setCourse(courseId, courseSubjectName, courseName){
     return {
         type: SET_COURSE,
         courseId,
-        courseYear,
         courseSubjectName,
+        courseName,
     }
 }
 
