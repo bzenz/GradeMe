@@ -101,11 +101,11 @@ function Dashboard(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
+                    <Typography  className={classes.title}>
                         GradeMe
                     </Typography>
-                    <Typography>
-                        Sie sind angemeldet als "{userData.vorname + " " + userData.name}"
+                    <Typography className={classes.appBarFont1} align={"center"}>
+                       Angemeldet als "{userData.vorname + " " + userData.name}"
                     </Typography>
                     <LogoutButton />
                 </Toolbar>

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {SERVER} from "../../../index";
 import { connect } from "react-redux";
 import useStyles from "../../styles/CourseOverviewStyle";
+import generalStyles from "../../styles/GeneralStyles";
 import Button from "@material-ui/core/Button";
 import {setSubject, unselectCourse} from "../../actions/subjectSelectActions";
 import {switchContent} from "../../actions/teacherNavigationActions";
@@ -13,6 +14,7 @@ import { setErrorData } from "../../actions/errorActions";
 function SubjectOverview(props) {
 
     const classes = useStyles();
+    const generalStyle = generalStyles();
     const[subjectsOfTeacher, setSubjectsOfTeacher] = useState([]);
     const requestBody = JSON.stringify({
         userId: props.userId,
@@ -59,7 +61,7 @@ function SubjectOverview(props) {
     return (
       <div className={ classes.root }>
         <Box p={ 4 } bgcolor="background.paper" align="center">
-          <Typography variant="h3" align="center" color="primary">
+          <Typography className={generalStyle.siteHeading}>
             Fächerübersicht
           </Typography>
         </Box>

@@ -24,6 +24,18 @@ export default makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
     },
+    appBarFont1: {
+        fontSize: '0.9rem',
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '0.6rem',
+        },
+        [theme.breakpoints.only('sm')]: {
+            fontSize: '0.8rem',
+        },
+        [theme.breakpoints.up("lg")]: {
+            fontSize: '1rem',
+        }
+    },
     appBarShift: {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,

@@ -7,6 +7,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import generalStyles from "../styles/GeneralStyles";
 import {connect} from "react-redux";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Taskoverview(props) {
     const classes = useStyles();
+    const generalStyle = generalStyles();
     const[taskList, setTaskList] = useState([]);
 
     let requestBody = JSON.stringify({
@@ -152,7 +154,7 @@ function Taskoverview(props) {
     return (
       <div>
         <Box p={ 4 } bgcolor="background.paper">
-          <Typography variant="h3" align="center" color="primary">
+          <Typography className={generalStyle.siteHeading}>
             Aufgabenübersicht
           </Typography>
         </Box>
@@ -162,7 +164,7 @@ function Taskoverview(props) {
             <Divider />
           </Box>
           <Box p={ 2 } >
-            <Typography variant="h4" color="primary" >
+            <Typography className={generalStyle.siteSubHeading1}>
               Aufgabenarchiv
             </Typography>
           </Box>

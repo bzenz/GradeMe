@@ -8,7 +8,6 @@ import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import Typography from "@material-ui/core/Typography";
 import {SERVER} from "../../../index";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import { TASKS_FOR_COURSE_IDENTIFIER} from "./TeacherTabs";
 import Box from "@material-ui/core/Box";
 import { setErrorData } from "../../actions/errorActions";
 import Dialog from "@material-ui/core/Dialog";
@@ -16,6 +15,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
+import generalStyles from "../../styles/GeneralStyles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 function evaluateTaskPage(props) {
     const classes = useStyles();
+    const generalStyle = generalStyles();
     const [open, setOpen] = React.useState(false);
     const [studentEvaluationDataArray, setStudentEvaluationDataArray] = useState([]);
     const [nonGradedStudents, setNonGradedStudents] = useState([]);
@@ -195,7 +196,7 @@ function evaluateTaskPage(props) {
 
     return(
         <div className={classes.root} style={{width: '100%'}}>
-                <Typography variant="h3" align="center" color="primary">
+                <Typography className={generalStyle.siteHeading}>
                     Bewertungsübersicht der Aufgabe: "{props.taskTitle}"
                 </Typography>
             <Box align="center">

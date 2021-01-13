@@ -6,7 +6,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {connect} from "react-redux";
-import {Table} from "@material-ui/core";
+import {createMuiTheme, responsiveFontSizes, Table} from "@material-ui/core";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import TableHead from "@material-ui/core/TableHead";
@@ -16,8 +16,10 @@ import TableBody from "@material-ui/core/TableBody";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../../index";
 import useStyles from "../../styles/CourseOverviewStyle";
+import generalStyles from "../../styles/GeneralStyles";
 import { switchContent } from "../../actions/teacherNavigationActions";
 import { setErrorData } from "../../actions/errorActions";
+import {ThemeProvider} from "@material-ui/styles";
 
 
 const useStylesCustom = makeStyles((theme) => ({
@@ -32,16 +34,17 @@ const useStylesCustom = makeStyles((theme) => ({
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
-    table: {
-
-    }
 }));
+
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme);
 
 function GradesAccordions(props) {
 
     const [allTasksOfUser, setAllTasksOfUser] = useState([]);
     const classes = useStylesCustom();
     const classesCustom = useStyles();
+    const generalStyle = generalStyles();
 
     let requestBody = JSON.stringify({
       userId: props.userId,
@@ -105,11 +108,13 @@ function GradesAccordions(props) {
 
     return(
         <div>
-            <Box p={4} bgcolor="background.paper" align="center">
-                <Typography variant="h3" align="center" color="primary">
-                    Notenübersicht
-                </Typography>
-            </Box>
+            <ThemeProvider theme={theme}>
+                <Box p={4} bgcolor="background.paper" align="center">
+                    <Typography className={generalStyle.siteHeading}>
+                        Notenübersicht
+                    </Typography>
+                </Box>
+            </ThemeProvider>
             <Box className={classesCustom.mainContentBox}>
                 {accordionList}
             </Box>
