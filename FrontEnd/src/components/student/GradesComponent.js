@@ -85,15 +85,17 @@ function GradesAccordions(props) {
             <Table className={ classes.table } size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell align="left">Note</TableCell>
+                  <TableCell align="left">Aufgabe</TableCell>
+                  <TableCell align="center">Note</TableCell>
                   <TableCell align="right">Anmerkung</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 { subject[1].map((row) => (
                   <TableRow>
-                    <TableCell align="left">{ row.evaluation }</TableCell>
-                    <TableCell align="right">{ row.annotation }</TableCell>
+                      <TableCell align="left">{ row.taskTitle }</TableCell>
+                      <TableCell align="center">{ row.evaluation }</TableCell>
+                      <TableCell align="right">{ row.annotation }</TableCell>
                   </TableRow>
                 )) }
               </TableBody>
