@@ -1,2 +1,4 @@
 1. Verhalten des Drawers in Mobile ansicht. Automatisch schließen bei klick?
 2. Aktionsmenüpunkt im Kursmenü. Bisher nur Aufgabe anlegen. Entfernen?
+3. Wenn man von der Kursaufgabenübersicht in die Normale Aufgabenübersicht geht, schließt sich das Kursmenü nicht. beim Rest der Hauptmenüpunkte schon.
+    Wie soll hier generell und einheitlich verfahren werden?
