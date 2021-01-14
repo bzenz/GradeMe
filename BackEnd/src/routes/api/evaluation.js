@@ -51,6 +51,7 @@ createRoutes([
                     evaluations[i] = 
                     {
                         taskId: eval.TaskId,
+                        taskTitle: eval.TaskTitle,
                         evaluation: eval.Graded ? eval.Evaluation : Boolean(eval.Evaluation),
                         annotation: eval.Annotation,
                         courseId: eval.CourseId,
