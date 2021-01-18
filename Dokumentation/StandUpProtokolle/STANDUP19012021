@@ -2,3 +2,4 @@
 2. Aktionsmenüpunkt im Kursmenü. Bisher nur Aufgabe anlegen. Entfernen?
 3. Wenn man von der Kursaufgabenübersicht in die Normale Aufgabenübersicht geht, schließt sich das Kursmenü nicht. beim Rest der Hauptmenüpunkte schon.
     Wie soll hier generell und einheitlich verfahren werden?
+4. Wenn wir sowieso ganze Komponenten in ein Try catch yeeten und nicht mehr Fehlerbehandlung machen als zu schreiben ist ein Fehler aufgetreten... wollen wir das dann nicht evtl in Navigation.js um renderContent herum machen?
