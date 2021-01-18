@@ -1,6 +1,16 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import {Dimensions} from "react-native";
 
-const drawerWidth = 340;
+export const mobileDeviceScreenWidthBreakpoint = 550;
+
+let drawerWidth = 290;
+//Wird eine kritische Bildschirmbreite unterschritten (diese kann in der globalen Variable mobileDeviceScreenWidthBreakpoint
+// festgelegt werden) ergibt es keinen Sinn mehr, bei offenem Drawer
+//etwas im Maincontentpanel zu machen, daher bedeckt ab dieser kritischen Grenze der Drawer den kompletten Screen:
+const screenWidth = Math.round(Dimensions.get('window').width);
+if (screenWidth < mobileDeviceScreenWidthBreakpoint) {
+    drawerWidth = screenWidth;
+}
 
 export default makeStyles((theme) => ({
     root: {
@@ -23,6 +33,19 @@ export default makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
+    },
+    appBarTitle: {
+        fontSize: '1.6rem',
+        flexGrow: 1,
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '0.9rem',
+        },
+        [theme.breakpoints.only('sm')]: {
+            fontSize: '1.3rem',
+        },
+        [theme.breakpoints.up("lg")]: {
+            fontSize: '1.8rem',
+        }
     },
     appBarFont1: {
         fontSize: '0.9rem',
@@ -49,9 +72,6 @@ export default makeStyles((theme) => ({
     },
     menuButtonHidden: {
         display: 'none',
-    },
-    title: {
-        flexGrow: 1,
     },
     drawerPaper: {
         position: 'relative',
@@ -96,5 +116,9 @@ export default makeStyles((theme) => ({
     contentBox: {
         paddingLeft: '5%',
         paddingRight: '5%',
+        [theme.breakpoints.down("xs")]: {
+            paddingLeft: '1%',
+            paddingRight: '1%',
+        }
     },
 }));

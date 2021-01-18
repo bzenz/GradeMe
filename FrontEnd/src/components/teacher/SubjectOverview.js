@@ -54,7 +54,7 @@ function SubjectOverview(props) {
     }
 
     const subjectPapers = subjectsOfTeacher.map((subject) =>
-      <Button className={ classes.text } key={ subject.id } variant="outlined" onClick={ handleSubjectSelect(subject.id, subject.name) }>
+      <Button className={ classes.buttonListButton } key={ subject.id } variant="outlined" onClick={ handleSubjectSelect(subject.id, subject.name) }>
         { subject.name }
       </Button>
     )

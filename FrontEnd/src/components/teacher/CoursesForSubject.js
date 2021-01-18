@@ -50,7 +50,7 @@ function CoursesForSubject(props){
     }
 
     const courseButtons = courses.map((course) =>
-      <Button className={ classes.text } key={ course.courseId } variant="outlined" onClick={ handleCourseSelect(course.courseId, course.subjectName, course.courseName) }>
+      <Button className={ classes.buttonListButton } key={ course.courseId } variant="outlined" onClick={ handleCourseSelect(course.courseId, course.subjectName, course.courseName) }>
         { course.courseName }
       </Button>
     )

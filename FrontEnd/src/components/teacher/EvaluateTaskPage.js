@@ -27,10 +27,16 @@ const useStyles = makeStyles((theme) => ({
         /*backgroundColor: "#63a4ff",*/
         marginTop: '10px',
         padding: theme.spacing(1),
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(0),
+        paddingRight: theme.spacing(0),
         boxShadow: '3',
         width: '50%',
+        [theme.breakpoints.down("sm")]: {
+            width: '100%'
+        },
+        [theme.breakpoints.only("md")]: {
+            width: '75%'
+        },
     },
     button: {
         marginTop: theme.spacing(1),
@@ -39,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#63a4ff",
         boxShadow: '3',
         width: '50%',
+        [theme.breakpoints.down("sm")]:{
+            width: '100%',
+        },
     },
     text: {
         padding: theme.spacing(1),
@@ -52,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
     textfieldPoints: {
         width: '20%',
         marginRight: theme.spacing(2),
+        marginBottom: theme.spacing(0),
+        [theme.breakpoints.down("sm")]:{
+            width: '70%',
+            marginRight: theme.spacing(0),
+            marginBottom: theme.spacing(1),
+        },
     },
     textfieldAnnotation: {
         width: '70%',
