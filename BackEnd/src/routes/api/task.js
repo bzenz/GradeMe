@@ -1,4 +1,5 @@
 const createTask = require('../../db/createTask');
+const editTask = require('../../db/editTask');
 const { getAllTasksForCourse, getAllTasksForUser } = require('../../db/getAllTasks');
 const { generateCourseName } = require('../../utils/nameGenerators');
 const createRoutes = require('../createRoutes');
@@ -49,19 +50,32 @@ createRoutes([
                     { key: 'taskId',        type: 'number' },
                     { key: 'title',         type: 'string', optional: true },
                     { key: 'description',   type: 'string', optional: true },
-                    { key: 'course',        type: 'string', optional: true }, // Note: password can't consist of only numbers using this method
                     { key: 'deadline',      type: 'string', optional: true },
-                    { key: 'graded',        type: 'boolean',optional: true },
                 ]);
+
+                // TODO: check deadline is date, if exists
+
+                const dbArgs = {
+                    Title: args.title,
+                    Description: args.description,
+                    Date: args.deadline,
+                }
+                // get only the keys which have a value assigned
+                const validKeys = Object.keys(dbArgs).filter(key => 
+                    dbArgs[key] != undefined 
+                );
+                // create an object with only the valid Keys and their corresponding value
+                const options = {};
+                for (const key of validKeys) options[key] = dbArgs[key];
+                
+                editTask(args.taskId, options);
+
+                return res.status(200).json( { taskId: args.taskId } );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-
-            // TODO: check deadline is date, if exists
-            // TODO: edit task in DB
-            return res.status(200).json( { taskId: args.taskId } );
         }
     },
     {
