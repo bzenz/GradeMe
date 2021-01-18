@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {logoutAction} from "../actions/loginActions";
+import localStorage from "../../utils/localStorageMock";
 
 function LogoutButton(props) {
     function handleLogout(){

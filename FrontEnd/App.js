@@ -10,6 +10,7 @@ import {combineReducers, install } from 'redux-loop';
 import Navigation from "./src/components/Navigation";
 import courseNavigationReducer from "./src/reducers/courseNavigationReducer";
 import {loadUserData} from "./src/actions/loginActions";
+import localStorage from "./utils/localStorageMock";
 
 const reducer = combineReducers({
   loginReducer,
@@ -24,7 +25,7 @@ function App(props) {
         props.loadUserData(parseInt(localStorage.getItem("userId")), localStorage.getItem("role"), localStorage.getItem("request_token"));
     }
 
-    document.title = "GradeMe-Prototyp";
+    //document.title = "GradeMe-Prototyp";
 
     if(localStorage.getItem("userId")) {
         return(

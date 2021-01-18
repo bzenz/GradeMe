@@ -11,6 +11,7 @@ import { loop, Cmd } from 'redux-loop';
 import {switchContent} from "../actions/teacherNavigationActions";
 import {GRADES_OVERVIEW_IDENTIFIER} from "../components/student/StudentTabs";
 import {SUBJECT_OVERVIEW_IDENTIFIER} from "../components/teacher/TeacherTabs";
+import localStorage from "../../utils/localStorageMock";
 
 //FUNKTIONEN
 function postLoginAttempt(username, password){
