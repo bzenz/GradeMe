@@ -1,0 +1,21 @@
+teacherNavigationReducer (ACHTUNG nicht verwechseln mit courseNavigationReducer)
+    activeContent: enthält einen identifier welcher angibt, welcher Inhalt angezeigt wird
+    previousContent: enthält einen identifier welcher angibt, welcher Inhalt zuletzt angezeigt wurde
+    taskId: (nur für bewertung von Aufgaben verwendet) gibt die Id von dem task, der gerade bewertet wird an
+    taskTitle: (nur für bewertung von Aufgaben verwendet) gibt den Titel von dem task, der gerade bewertet wird an
+    errorMessageToUser: Fehlermeldung, die dem Nutzer angezeigt wird, wenn die App bzw. eine einzelne Komponente "crasht"
+
+loginReducer
+    attemptingLogin: true solange versucht wird den Nutzer anzumelden
+    userId: NutzerId des angemeldeten Nutzers
+    role: Rolle des angemeldeten Nutzers
+    loggedIn: Parameter, welcher angibt, ob aktuell ein Nutzer angemeldet ist
+    request_token: token, welcher für Schnittstellenanfragen benötigt wird
+
+courseNavigationReducer (ACHTUNG nicht verwechseln mit teacherNavigationReducer)
+    subjectId: eindeutige Id des ausgewählten Fachs
+    subjectName: für Nutzer verständlicher Name des ausgewählten Fachs
+    courseId: eindeutige Id für den ausgewählten Kurs
+    courseName: für Nutzer verständlicher Name des ausgewählten Kurs
+    courseSubjectName: für Nutzer verständlicher Name des Fachs des ausgewählten Kurs
+    courseSelected: gibt an ob aktuell ein Kurs ausgewählt ist
