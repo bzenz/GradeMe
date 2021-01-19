@@ -1,5 +1,17 @@
 1. Verhalten des Drawers in Mobile ansicht. Automatisch schließen bei klick?
+--> wird so gemacht. Für mobile Geräte mal schauen, ob das Sidemenü den content überdecken sollte, statt wegschieben
+
 2. Aktionsmenüpunkt im Kursmenü. Bisher nur Aufgabe anlegen. Entfernen?
+--> lassen wir erstmal so
+
 3. Wenn man von der Kursaufgabenübersicht in die Normale Aufgabenübersicht geht, schließt sich das Kursmenü nicht. beim Rest der Hauptmenüpunkte schon.
     Wie soll hier generell und einheitlich verfahren werden?
-4. Wenn wir sowieso ganze Komponenten in ein Try catch yeeten und nicht mehr Fehlerbehandlung machen als zu schreiben ist ein Fehler aufgetreten... wollen wir das dann nicht evtl in Navigation.js um renderContent herum machen?
+--> Kursmenü wird unter Hauptnavigation gesetzt
+
+4. Wenn wir sowieso ganze Komponenten in ein Try catch yeeten und nicht mehr Fehlerbehandlung machen als zu schreiben ist ein Fehler aufgetreten... 
+   wollen wir das dann nicht evtl in Navigation.js um renderContent herum machen?
+--> Wir sollten irgendwnn mal richtige Fehlerbehandlung machen. Dafür sind die try catches da, sodass sie später schon zur Verfügung stehen
+
+5. Wenn eine Task editiert wird, sollte man Kurs und graded parameter ändern können?
+--> Kurs definitiv nicht. Graded kann man umstellen. Wenn von graded auf ungraded umgestellt wird, sollte Warnung im Frontendangezeigt werden. Im Backend
+werden die Noten nicht gelöscht. Im Frontend sollte in der Notenansicht bei jeder Note geprüft werden, ob sie von einer bewerteten Aufgabe stammt oder nicht.
