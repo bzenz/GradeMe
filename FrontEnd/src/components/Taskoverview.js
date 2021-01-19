@@ -198,7 +198,6 @@ const mapStateToProps = state => {
         request_token: state.loginReducer.request_token,
         role: state.loginReducer.role,
         courseId: state.courseNavigationReducer.courseId,
-        isScreenWidthMobile: state.loginReducer.isScreenWidthMobile,
     }
 }
 

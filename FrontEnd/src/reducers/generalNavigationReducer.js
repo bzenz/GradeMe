@@ -1,6 +1,6 @@
-import {SET_IS_DRAWER_OPEN} from "../actions/navigationActions";
+import { SET_IS_DRAWER_OPEN} from "../actions/generalNavigationActions";
 
-const DEFAULT_STATE = {isDrawerOpen: true}
+const DEFAULT_STATE = {isDrawerOpen: true, drawerWidth: 290}
 
 export default (state = DEFAULT_STATE, action) => {
     switch(action.type){

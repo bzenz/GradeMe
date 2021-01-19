@@ -1,16 +1,12 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Dimensions} from "react-native";
 
-export const mobileDeviceScreenWidthBreakpoint = 550;
-
-let drawerWidth = 290;
 //Wird eine kritische Bildschirmbreite unterschritten (diese kann in der globalen Variable mobileDeviceScreenWidthBreakpoint
 // festgelegt werden) ergibt es keinen Sinn mehr, bei offenem Drawer
 //etwas im Maincontentpanel zu machen, daher bedeckt ab dieser kritischen Grenze der Drawer den kompletten Screen:
-const screenWidth = Math.round(Dimensions.get('window').width);
-if (screenWidth < mobileDeviceScreenWidthBreakpoint) {
-    drawerWidth = screenWidth;
-}
+export const mobileDeviceScreenWidthBreakpoint = 550;
+let drawerWidth = 290;
+let screenWidth = Math.round(Dimensions.get('window').width);
 
 export default makeStyles((theme) => ({
     root: {
@@ -62,6 +58,10 @@ export default makeStyles((theme) => ({
     appBarShift: {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
+        [theme.breakpoints.down(mobileDeviceScreenWidthBreakpoint)]: {
+            width: `calc(100% - ${screenWidth}px)`,
+            marginLeft: screenWidth,
+        },
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -78,6 +78,11 @@ export default makeStyles((theme) => ({
         whiteSpace: 'nowrap',
         background: '#63a4ff',
         width: drawerWidth,
+        variant: "permanent",
+        [theme.breakpoints.down(mobileDeviceScreenWidthBreakpoint)]: {
+            width: screenWidth,
+
+        },
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,

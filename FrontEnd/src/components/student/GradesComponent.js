@@ -190,7 +190,6 @@ const mapStateToProps = state => {
     return {
         userId: state.loginReducer.userId,
         request_token: state.loginReducer.request_token,
-        isScreenWidthMobile: state.loginReducer.isScreenWidthMobile,
     }
 }
 

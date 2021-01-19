@@ -12,7 +12,7 @@ import {switchContent} from "../../actions/teacherNavigationActions";
 import PeopleIcon from "@material-ui/icons/People";
 import ForumIcon from '@material-ui/icons/Forum';
 import BuildIcon from '@material-ui/icons/Build';
-import {setDrawerOpenState} from "../../actions/navigationActions";
+import {setDrawerOpenState} from "../../actions/generalNavigationActions";
 
 export const SUBJECT_OVERVIEW_IDENTIFIER = "SUBJECT_OVERVIEW";
 export const TASK_OVERVIEW_IDENTIFIER = "TASK_OVERVIEW";

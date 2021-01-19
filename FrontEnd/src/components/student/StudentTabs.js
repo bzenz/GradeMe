@@ -11,7 +11,7 @@ import {switchContent} from "../../actions/teacherNavigationActions";
 import ForumIcon from '@material-ui/icons/Forum';
 import GradesIcon from "@material-ui/icons/Grade";
 import { COMMUNICATION_DASHBOARD_IDENTIFIER, SCHEDULE_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER } from "../teacher/TeacherTabs";
-import {setDrawerOpenState} from "../../actions/navigationActions";
+import {setDrawerOpenState} from "../../actions/generalNavigationActions";
 
 export const GRADES_OVERVIEW_IDENTIFIER = "GRADES_OVERVIEW";
 

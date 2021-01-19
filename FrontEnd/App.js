@@ -12,14 +12,14 @@ import courseNavigationReducer from "./src/reducers/courseNavigationReducer";
 import {loadUserData, setScreenWidthIsMobile} from "./src/actions/loginActions";
 import {Dimensions} from "react-native";
 import {mobileDeviceScreenWidthBreakpoint} from "./src/styles/NavigationStyle";
-import navigationReducer from "./src/reducers/navigationReducer";
-import {setDrawerOpenState} from "./src/actions/navigationActions";
+import generalNavigationReducer from "./src/reducers/generalNavigationReducer";
+import {setDrawerOpenState} from "./src/actions/generalNavigationActions";
 
 const reducer = combineReducers({
   loginReducer,
   teacherNavigationReducer,
   courseNavigationReducer,
-  navigationReducer,
+  generalNavigationReducer,
 })
 
 const store = createStore(reducer, install());

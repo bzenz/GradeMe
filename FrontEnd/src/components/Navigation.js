@@ -31,7 +31,7 @@ import GradesAccordions from "./student/GradesComponent";
 import StudentsInCourseOverview from "./teacher/StudentsInCourseOverview";
 import { ERROR_CONTENT_IDENTIFIER } from "../actions/errorActions";
 import ErrorContentPaper from "./ErrorContentPaper";
-import {setDrawerOpenState} from "../actions/navigationActions";
+import {setDrawerOpenState} from "../actions/generalNavigationActions";
 
 function Dashboard(props) {
     const classes = useStyles();
@@ -104,7 +104,9 @@ function Dashboard(props) {
                 </Toolbar>
             </AppBar>
             <Drawer
-                variant="permanent"
+                //Bei einem mobileScreen soll der Drawer wie in einer App über den Inhalt gehen und zusätzlich soll
+                // die kleine Seitenleiste des Drawer verschwinden. In der Desktopansicht hat man das platzintensiverere Menü
+                variant={props.isScreenWidthMobile?"temporary":"permanent"}
                 classes={{
                     paper: clsx(classes.drawerPaper, !props.isDrawerOpen && classes.drawerPaperClose),
                 }}
@@ -141,6 +143,6 @@ export default connect((state) => ({
     errorMessageToUser: state.teacherNavigationReducer.errorMessageToUser,
     role: state.loginReducer.role,
     isScreenWidthMobile: state.loginReducer.isScreenWidthMobile,
-    isDrawerOpen: state.navigationReducer.isDrawerOpen,
+    isDrawerOpen: state.generalNavigationReducer.isDrawerOpen,
 }), {setDrawerOpenState})
 (Dashboard);
