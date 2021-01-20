@@ -10,6 +10,12 @@ import IconButton from "@material-ui/core/IconButton";
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import {SERVER} from "../../../index";
 import { setIsTaskBeingEdited, switchContent } from "../../actions/teacherNavigationActions";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,12 +49,22 @@ function CreateOrEditTaskForm(props){
   const [graded, setGraded] = useState(props.isTaskBeingEdited?props.isTaskOriginallyGraded:false);
   const [deadline, setDeadline] = useState(props.isTaskBeingEdited?props.taskOriginalDeadline:"00-00-0000");
   const [description, setDescription] = useState(props.isTaskBeingEdited?props.taskOriginalDescription:"");
+  const [isWarningDialogOpen, setIsWarningDialogOpen] = useState(false);
   const classes = useStyles();
 
+  const handleWarningDialogClose = () => {
+      setIsWarningDialogOpen(false);
+  }
     function handleFormChange(event, type) {
       switch (type) {
         case "title": setTitle(event.target.value); break;
-        case "graded": setGraded(event.target.checked); break;
+        case "graded": {
+            let checkBoxValue = event.target.checked;
+            if(!checkBoxValue){
+                setIsWarningDialogOpen(true);
+            }
+            setGraded(checkBoxValue);
+        } break;
         case "deadline": setDeadline(event.target.value); break;
         case "description": setDescription(event.target.value);
         }
@@ -163,6 +179,24 @@ function CreateOrEditTaskForm(props){
                   {props.isTaskBeingEdited?"Veränderte Aufgabendetails absenden":"Aufgabe erstellen"}
                 </IconButton>
             </Paper>
+            <Dialog
+                open={isWarningDialogOpen}
+                onClose={handleWarningDialogClose}
+
+            >
+                <DialogTitle id="warning-dialog-title">{"Warnung"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="warning-dialog-description">
+                        Wenn sie diese Aufgabe als unbewertet markieren, werden alle bisher gespeicherten Noten dieser Aufgabe
+                        für die Schüler unsichtbar. Die bisher gespeicherten Noten gehen jedoch nicht verloren.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleWarningDialogClose} color="primary">
+                        Ok
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

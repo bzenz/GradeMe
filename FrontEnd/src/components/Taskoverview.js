@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     accordionSecondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
         color: theme.palette.text.secondary,
-        flexBasis: '20%',
+        flexBasis: '15%',
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
@@ -46,12 +46,16 @@ const useStyles = makeStyles((theme) => ({
     },
     gradeButton: {
         backgroundColor: '#63a4ff',
-        flexBasis: '20%'
+        flexBasis: '15%'
+    },
+    gradeButtonPlaceholder: {
+        backgroundColor: 'white',
+        flexBasis: '15%'
     },
     editButton: {
-      width: "20%",
-      marginTop: "10pt",
+      flexBasis: "15%",
       backgroundColor: '#63a4ff',
+        marginLeft: '1%',
     },
     mainContentBox: {
         paddingRight: '5%',
@@ -138,7 +142,16 @@ function Taskoverview(props) {
                   <Button className={classes.gradeButton}
                     onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
                     Bewerten
-                  </Button> :null}
+                  </Button>:
+                  <Button className={classes.gradeButtonPlaceholder} disabled={true}>
+
+                  </Button>}
+                {props.role === "teacher"?
+                    <Button className={classes.editButton}
+                            onClick={() => handleEditTaskClick(task.taskId, task.title, task.graded, task.deadline, task.description, task.course)}
+                            marginTop={'100pt'}>
+                        Bearbeiten
+                    </Button>:null}
                 {props.role === "student" && task.graded?
                 <Tooltip title={"Diese Aufgabe wird benotet"}>
                   <GradeIcon/>
@@ -149,12 +162,6 @@ function Taskoverview(props) {
                 <Typography align={"left"}>
                     {task.description}
                 </Typography>
-              {props.role === "teacher"?
-                <Button className={classes.editButton}
-                        onClick={() => handleEditTaskClick(task.taskId, task.title, task.graded, task.deadline, task.description, task.course)}
-                        marginTop={'100pt'}>
-                  Bearbeiten
-                </Button>:null}
             </AccordionDetails>
         </Accordion>
         )
