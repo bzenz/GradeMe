@@ -19,3 +19,6 @@ courseNavigationReducer (ACHTUNG nicht verwechseln mit teacherNavigationReducer)
     courseName: für Nutzer verständlicher Name des ausgewählten Kurs
     courseSubjectName: für Nutzer verständlicher Name des Fachs des ausgewählten Kurs
     courseSelected: gibt an ob aktuell ein Kurs ausgewählt ist
+
+generalNavigationReducer (Reducer, der für alle Ansichten, also Admin, Lehrer, Schüler, gedacht ist)
+    isDrawerOpen: gibt an, ob das ausklappbare Navigationsmenü offen oder eingeklappt ist
