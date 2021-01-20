@@ -2,6 +2,7 @@ import {connect} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {SERVER} from "../../../index";
 import useStyles from "../../styles/CourseOverviewStyle";
+import generalStyles from "../../styles/GeneralStyles";
 import Button from "@material-ui/core/Button";
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {setCourse, unselectCourse} from "../../actions/subjectSelectActions";
@@ -12,6 +13,8 @@ import Box from "@material-ui/core/Box";
 function CoursesForSubject(props){
 
     const classes = useStyles();
+    const generalStyle = generalStyles();
+
     const[courses, setCourses] = useState([]);
 
     function getCoursesForSubject(data){
@@ -47,7 +50,7 @@ function CoursesForSubject(props){
     }
 
     const courseButtons = courses.map((course) =>
-      <Button className={ classes.text } key={ course.courseId } variant="outlined" onClick={ handleCourseSelect(course.courseId, course.subjectName, course.courseName) }>
+      <Button className={ classes.buttonListButton } key={ course.courseId } variant="outlined" onClick={ handleCourseSelect(course.courseId, course.subjectName, course.courseName) }>
         { course.courseName }
       </Button>
     )
@@ -55,7 +58,7 @@ function CoursesForSubject(props){
     return (
       <div className={ classes.root }>
         <Box p={ 4 } bgcolor="background.paper" align="center">
-          <Typography variant="h3" align="center" color="primary">
+          <Typography className={generalStyle.siteHeading}>
             Kurse für Fach "{ props.subjectName }"
           </Typography>
         </Box>
