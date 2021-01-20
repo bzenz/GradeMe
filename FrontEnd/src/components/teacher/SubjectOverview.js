@@ -9,6 +9,7 @@ import {COURSES_FOR_SUBJECT_IDENTIFIER} from "./TeacherTabs";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { setErrorData } from "../../actions/errorActions";
+import SearchAndListComponent from "../SearchAndListComponent";
 
 function SubjectOverview(props) {
 
@@ -66,7 +67,7 @@ function SubjectOverview(props) {
         <Box className={ classes.mainContentBox }>
           { subjectPapers }
         </Box>
-
+        <SearchAndListComponent/>
       </div>
     )
   } catch(exception){
