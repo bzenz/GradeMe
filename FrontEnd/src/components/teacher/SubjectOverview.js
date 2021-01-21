@@ -67,7 +67,7 @@ function SubjectOverview(props) {
         <Box className={ classes.mainContentBox }>
           { subjectPapers }
         </Box>
-        <SearchAndListComponent/>
+        <SearchAndListComponent firstListHeading={"yeetus deletus"} secondListHeading={"yeetus zweiter "}/>
       </div>
     )
   } catch(exception){
