@@ -69,7 +69,14 @@ function SubjectOverview(props) {
         <Box className={ classes.mainContentBox }>
           { subjectPapers }
         </Box>
-        <SearchAndListComponent firstListHeading={"yeetus deletus"} secondListHeading={"yeetus zweiter "}/>
+        <SearchAndListComponent
+            firstListHeading={"yeetus deletus"}
+            secondListHeading={"yeetus zweiter "}
+            tableHeadWords={["Id", "Benutzername", "vorname", "name", "Rolle"]}
+            searchOptionArray={[{value: "username", displayedString: "Benutzername"}, {value: "vorname", displayedString: "Vorname"}, {value: "name", displayedString: "Nachname"}]}
+            filterOptionArray={[{value: "all", displayedString: "Alle"}, {value: "student", displayedString: "Schüler"}, {value: "teacher", displayedString: "Lehrer"}]}
+            filterParameter={"role"}
+        />
       </div>
     )
   } catch(exception){
