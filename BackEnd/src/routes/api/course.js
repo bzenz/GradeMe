@@ -1,4 +1,6 @@
+const createCourse = require('../../db/createCourse');
 const { getAllCoursesForUser } = require('../../db/getAllCourses');
+const getSubject = require('../../db/getSubject');
 const { generateCourseName } = require('../../utils/nameGenerators');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
@@ -9,7 +11,7 @@ createRoutes([
         path: '/create', 
         method: 'post', 
         strategy: 'jwt', 
-        callback: (req, res, user) => 
+        callback: async (req, res, user) => 
         {
             let args;
             try 
@@ -19,16 +21,15 @@ createRoutes([
                     { key: 'year', type: 'number' },
                     { key: 'subjectId', type: 'number' },
                 ]);
+                const subject = await getSubject(args.subjectId);
+                if (!subject) throw new Error(`There is no subject with id ${args.subjectId}`);
+                const id = await createCourse(args.subjectId, args.year);
+                return res.status(200).json( { courseId: id, courseName: generateCourseName(subject.Name, args.year) } );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-
-            const id = Math.ceil(Math.random()*30);
-
-            // TODO: create task and save in DB
-            return res.status(200).json( { courseId: id, courseName: 'Mockthe-2021' } );
         }
     },
     {
