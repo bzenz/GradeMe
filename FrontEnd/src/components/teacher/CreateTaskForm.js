@@ -2,6 +2,7 @@ import {connect} from "react-redux";
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import generalStyles from "../../styles/GeneralStyles";
 import {Typography} from "@material-ui/core";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -45,6 +46,7 @@ function CreateTaskForm(props){
   const [deadline, setDeadline] = useState("00-00-0000");
   const [description, setDescription] = useState("");
   const classes = useStyles();
+  const generalStyle = generalStyles();
 
     function handleFormChange(event, type) {
       switch (type) {
@@ -90,7 +92,7 @@ function CreateTaskForm(props){
 
     return(
         <div className={classes.root}>
-            <Typography className={classes.heading4} variant={'h4'}>
+            <Typography className={generalStyle.siteHeading} >
                 Aufgabe erstellen
             </Typography>
             <Paper className={classes.root}>

@@ -7,6 +7,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import generalStyles from "../styles/GeneralStyles";
 import {connect} from "react-redux";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
@@ -51,11 +52,22 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: '5%',
         paddingLeft: '5%',
     },
+    accordionHeaderFlexbox: {
+        display: "flex",
+        flexDirection: "row",
+        [theme.breakpoints.down("sm")]: {
+            flexDirection: "column",
+        },
+        flexGrow: 1,
+        alignSelf: "center",
+        alignItems: "center",
+    },
 }));
 
 
 function Taskoverview(props) {
     const classes = useStyles();
+    const generalStyle = generalStyles();
     const[taskList, setTaskList] = useState([]);
 
     let requestBody = JSON.stringify({
@@ -118,19 +130,21 @@ function Taskoverview(props) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{task.courseName}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + displayMonth + "/" + deadline.getFullYear()}</Typography>
-                {props.role === "teacher" && task.graded?
-                    <Button className={classes.button}
-                        onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
-                        Aufgabe bewerten
-                    </Button> :null}
-              {props.role === "student" && task.graded?
-                <Tooltip title={"Diese Aufgabe wird benotet"}>
-                  <GradeIcon/>
-                </Tooltip>: null
-              }
+                <Box className={classes.accordionHeaderFlexbox}>
+                    <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
+                    <Typography className={classes.accordionSecondaryHeading}>{task.courseName}</Typography>
+                    <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + displayMonth + "/" + deadline.getFullYear()}</Typography>
+                    {props.role === "teacher" && task.graded?
+                        <Button className={classes.button}
+                                onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
+                            Aufgabe bewerten
+                        </Button> :null}
+                    {props.role === "student" && task.graded?
+                        <Tooltip title={"Diese Aufgabe wird benotet"} >
+                            <GradeIcon/>
+                        </Tooltip>: null
+                    }
+                </Box>
             </AccordionSummary>
             <AccordionDetails>
                 <Typography>
@@ -152,7 +166,7 @@ function Taskoverview(props) {
     return (
       <div>
         <Box p={ 4 } bgcolor="background.paper">
-          <Typography variant="h3" align="center" color="primary">
+          <Typography className={generalStyle.siteHeading}>
             Aufgabenübersicht
           </Typography>
         </Box>
@@ -162,7 +176,7 @@ function Taskoverview(props) {
             <Divider />
           </Box>
           <Box p={ 2 } >
-            <Typography variant="h4" color="primary" >
+            <Typography className={generalStyle.siteSubHeading1}>
               Aufgabenarchiv
             </Typography>
           </Box>

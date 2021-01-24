@@ -3,7 +3,7 @@ import {
     RESPONSE_PARSED,
     LOGIN_POST_SUCCESSFULL,
     LOGIN_POST_FAILED,
-    LOAD_USER_DATA, LOGOUT_ACTION
+    LOAD_USER_DATA, LOGOUT_ACTION, SET_SCREEN_WIDTH_IS_MOBILE
 } from "../actions/loginActions";
 import { SERVER } from "../../index";
 import {loginPostFailed, loginPostSuccessfull, responseParsed} from "../actions/loginActions";
@@ -31,7 +31,8 @@ const DEFAULT_STATE = {
     loggedIn: false,
     userId: undefined,
     role: undefined,
-    attemptingLogin: false
+    attemptingLogin: false,
+    isScreenWidthMobile: false,
 }
 
 //REDUCER
@@ -74,6 +75,8 @@ export default (state = DEFAULT_STATE, action) => {
             return{...state, userId: action.userId, role: action.role, request_token: action.request_token, loggedIn: true}
         case LOGOUT_ACTION:
             return{...state, loggedIn: false}
+        case SET_SCREEN_WIDTH_IS_MOBILE:
+            return{...state, isScreenWidthMobile: action.isScreenWidthMobile}
         default:
             return state;
     }
