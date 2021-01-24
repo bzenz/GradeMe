@@ -2,7 +2,7 @@ import {AsyncStorage} from 'react-native';
 
 let getItem = (key) => {
     let returnVal;
-    AsyncStorage.getItem(key, (yeet, result) => {returnVal = result});
+    AsyncStorage.getItem(key, (variableToCatchANullValueGivenToTheCallbackForUnknownReasons, result) => {returnVal = result});
     return returnVal;
 }
 
