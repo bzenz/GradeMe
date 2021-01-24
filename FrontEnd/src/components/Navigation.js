@@ -31,18 +31,11 @@ import GradesAccordions from "./student/GradesComponent";
 import StudentsInCourseOverview from "./teacher/StudentsInCourseOverview";
 import { ERROR_CONTENT_IDENTIFIER } from "../actions/errorActions";
 import ErrorContentPaper from "./ErrorContentPaper";
-
+import {setDrawerOpenState} from "../actions/generalNavigationActions";
 
 function Dashboard(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
     const [userData, setUserData] = React.useState("");
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
 
     const renderContent = () => {
         switch(props.activeContent) {
@@ -90,35 +83,37 @@ function Dashboard(props) {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <AppBar position="absolute" className={clsx(classes.appBar, props.isDrawerOpen && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        onClick={() => props.setDrawerOpenState(true)}
+                        className={clsx(classes.menuButton, props.isDrawerOpen && classes.menuButtonHidden)}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
+                    <Typography  className={classes.appBarTitle}>
                         GradeMe
                     </Typography>
-                    <Typography>
-                        Sie sind angemeldet als "{userData.vorname + " " + userData.name}"
+                    <Typography className={classes.appBarFont1} align={"center"}>
+                       Angemeldet als "{userData.vorname + " " + userData.name}"
                     </Typography>
                     <LogoutButton />
                 </Toolbar>
             </AppBar>
             <Drawer
-                variant="permanent"
+                //Bei einem mobileScreen soll der Drawer wie in einer App über den Inhalt gehen und zusätzlich soll
+                // die kleine Seitenleiste des Drawer verschwinden. In der Desktopansicht hat man das platzintensiverere Menü
+                variant={props.isScreenWidthMobile?"temporary":"permanent"}
                 classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+                    paper: clsx(classes.drawerPaper, !props.isDrawerOpen && classes.drawerPaperClose),
                 }}
-                open={open}
+                open={props.isDrawerOpen}
             >
                 <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton onClick={() => props.setDrawerOpenState(false)}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </div>
@@ -147,5 +142,7 @@ export default connect((state) => ({
     request_token: state.loginReducer.request_token,
     errorMessageToUser: state.teacherNavigationReducer.errorMessageToUser,
     role: state.loginReducer.role,
-}))
+    isScreenWidthMobile: state.loginReducer.isScreenWidthMobile,
+    isDrawerOpen: state.generalNavigationReducer.isDrawerOpen,
+}), {setDrawerOpenState})
 (Dashboard);

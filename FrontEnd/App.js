@@ -9,13 +9,18 @@ import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
 import Navigation from "./src/components/Navigation";
 import courseNavigationReducer from "./src/reducers/courseNavigationReducer";
-import {loadUserData} from "./src/actions/loginActions";
 import localStorage from "./utils/localStorageMock";
+import {loadUserData, setScreenWidthIsMobile} from "./src/actions/loginActions";
+import {Dimensions} from "react-native";
+import {mobileDeviceScreenWidthBreakpoint} from "./src/styles/NavigationStyle";
+import generalNavigationReducer from "./src/reducers/generalNavigationReducer";
+import {setDrawerOpenState} from "./src/actions/generalNavigationActions";
 
 const reducer = combineReducers({
   loginReducer,
   teacherNavigationReducer,
-  courseNavigationReducer
+  courseNavigationReducer,
+  generalNavigationReducer,
 })
 
 const store = createStore(reducer, install());
@@ -25,7 +30,14 @@ function App(props) {
         props.loadUserData(parseInt(localStorage.getItem("userId")), localStorage.getItem("role"), localStorage.getItem("request_token"));
     }
 
-    //document.title = "GradeMe-Prototyp";
+    //document.title = "GradeMe-Prototyp"
+    const screenWidth = Math.round(Dimensions.get('window').width);
+    if (screenWidth < mobileDeviceScreenWidthBreakpoint) {
+        props.setScreenWidthIsMobile(true);
+        props.setDrawerOpenState(false); //Bei Mobilescreens soll der Drawer anfangs eingeklappt sein, bei Desktop ausgeklappt
+    } else {
+        props.setScreenWidthIsMobile(false);
+    }
 
     if(localStorage.getItem("userId")) {
         return(
@@ -51,7 +63,7 @@ const ConnectedApp = connect(
       role: state.loginReducer.role,
       request_token: state.loginReducer.request_token,
     }),
-    { loadUserData }
+    { loadUserData, setScreenWidthIsMobile, setDrawerOpenState }
 )(App);
 
 export default class MyApp extends React.Component {
