@@ -1,6 +1,12 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import {Dimensions} from "react-native";
 
-const drawerWidth = 340;
+//Wird eine kritische Bildschirmbreite unterschritten (diese kann in der globalen Variable mobileDeviceScreenWidthBreakpoint
+// festgelegt werden) ergibt es keinen Sinn mehr, bei offenem Drawer
+//etwas im Maincontentpanel zu machen, daher bedeckt ab dieser kritischen Grenze der Drawer den kompletten Screen:
+export const mobileDeviceScreenWidthBreakpoint = 550;
+let drawerWidth = 290;
+let screenWidth = Math.round(Dimensions.get('window').width);
 
 export default makeStyles((theme) => ({
     root: {
@@ -24,9 +30,38 @@ export default makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
     },
+    appBarTitle: {
+        fontSize: '1.6rem',
+        flexGrow: 1,
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '0.9rem',
+        },
+        [theme.breakpoints.only('sm')]: {
+            fontSize: '1.3rem',
+        },
+        [theme.breakpoints.up("lg")]: {
+            fontSize: '1.8rem',
+        }
+    },
+    appBarFont1: {
+        fontSize: '0.9rem',
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '0.6rem',
+        },
+        [theme.breakpoints.only('sm')]: {
+            fontSize: '0.8rem',
+        },
+        [theme.breakpoints.up("lg")]: {
+            fontSize: '1rem',
+        }
+    },
     appBarShift: {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
+        [theme.breakpoints.down(mobileDeviceScreenWidthBreakpoint)]: {
+            width: `calc(100% - ${screenWidth}px)`,
+            marginLeft: screenWidth,
+        },
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -38,14 +73,16 @@ export default makeStyles((theme) => ({
     menuButtonHidden: {
         display: 'none',
     },
-    title: {
-        flexGrow: 1,
-    },
     drawerPaper: {
         position: 'relative',
         whiteSpace: 'nowrap',
         background: '#63a4ff',
         width: drawerWidth,
+        variant: "permanent",
+        [theme.breakpoints.down(mobileDeviceScreenWidthBreakpoint)]: {
+            width: screenWidth,
+
+        },
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -84,5 +121,9 @@ export default makeStyles((theme) => ({
     contentBox: {
         paddingLeft: '5%',
         paddingRight: '5%',
+        [theme.breakpoints.down("xs")]: {
+            paddingLeft: '1%',
+            paddingRight: '1%',
+        }
     },
 }));

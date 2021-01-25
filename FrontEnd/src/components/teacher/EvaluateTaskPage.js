@@ -8,7 +8,6 @@ import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import Typography from "@material-ui/core/Typography";
 import {SERVER} from "../../../index";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import { TASKS_FOR_COURSE_IDENTIFIER} from "./TeacherTabs";
 import Box from "@material-ui/core/Box";
 import { setErrorData } from "../../actions/errorActions";
 import Dialog from "@material-ui/core/Dialog";
@@ -16,6 +15,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
+import generalStyles from "../../styles/GeneralStyles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,10 +27,16 @@ const useStyles = makeStyles((theme) => ({
         /*backgroundColor: "#63a4ff",*/
         marginTop: '10px',
         padding: theme.spacing(1),
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(0),
+        paddingRight: theme.spacing(0),
         boxShadow: '3',
         width: '50%',
+        [theme.breakpoints.down("sm")]: {
+            width: '100%'
+        },
+        [theme.breakpoints.only("md")]: {
+            width: '75%'
+        },
     },
     button: {
         marginTop: theme.spacing(1),
@@ -39,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#63a4ff",
         boxShadow: '3',
         width: '50%',
+        [theme.breakpoints.down("sm")]:{
+            width: '100%',
+        },
     },
     text: {
         padding: theme.spacing(1),
@@ -52,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
     textfieldPoints: {
         width: '20%',
         marginRight: theme.spacing(2),
+        marginBottom: theme.spacing(0),
+        [theme.breakpoints.down("sm")]:{
+            width: '70%',
+            marginRight: theme.spacing(0),
+            marginBottom: theme.spacing(1),
+        },
     },
     textfieldAnnotation: {
         width: '70%',
@@ -60,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 
 function evaluateTaskPage(props) {
     const classes = useStyles();
+    const generalStyle = generalStyles();
     const [open, setOpen] = React.useState(false);
     const [studentEvaluationDataArray, setStudentEvaluationDataArray] = useState([]);
     const [nonGradedStudents, setNonGradedStudents] = useState([]);
@@ -195,7 +211,7 @@ function evaluateTaskPage(props) {
 
     return(
         <div className={classes.root} style={{width: '100%'}}>
-                <Typography variant="h3" align="center" color="primary">
+                <Typography className={generalStyle.siteHeading}>
                     Bewertungsübersicht der Aufgabe: "{props.taskTitle}"
                 </Typography>
             <Box align="center">

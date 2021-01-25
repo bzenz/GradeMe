@@ -27,7 +27,12 @@ export default makeStyles((theme) => ({
         padding: theme.spacing(1),
         justifyContent: 'center',
         fontVariant: 'body1',
-
+    },
+    buttonListButton: {  //Der Style für eine Liste von Buttons die untereinander angeordnet sind, z.B. die Fächerliste
+        padding: theme.spacing(1),
+        justifyContent: 'center',
+        fontVariant: 'body1',
+        marginTop: theme.spacing(1),
     },
     buttonText: {
         marginRight: theme.spacing(2),
@@ -45,5 +50,9 @@ export default makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        [theme.breakpoints.down("sm")]: {
+            paddingRight: '1%',
+            paddingLeft: '1%',
+        }
     },
 }))
