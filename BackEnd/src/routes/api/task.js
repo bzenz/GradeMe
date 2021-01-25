@@ -59,14 +59,13 @@ createRoutes([
                     Title: args.title,
                     Description: args.description,
                     Date: args.deadline,
-                }
-                // get only the keys which have a value assigned
-                const validKeys = Object.keys(dbArgs).filter(key => 
-                    dbArgs[key] != undefined 
-                );
-                // create an object with only the valid Keys and their corresponding value
+                };
+                // create an object with only the valid keys and their corresponding value
                 const options = {};
-                for (const key of validKeys) options[key] = dbArgs[key];
+                for (const key in dbArgs) {
+                    const value = dbArgs[key];
+                    if (value != undefined) options[key] = value;
+                }
                 
                 editTask(args.taskId, options);
 
