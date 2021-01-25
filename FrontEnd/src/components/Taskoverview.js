@@ -63,6 +63,16 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: '5%',
         paddingLeft: '5%',
     },
+    accordionHeaderFlexbox: {
+        display: "flex",
+        flexDirection: "row",
+        [theme.breakpoints.down("sm")]: {
+            flexDirection: "column",
+        },
+        flexGrow: 1,
+        alignSelf: "center",
+        alignItems: "center",
+    },
     accordionDetails: {
       display: "flex",
       flexDirection: "column",
@@ -141,28 +151,30 @@ function Taskoverview(props) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
-                <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + displayMonth + "/" + deadline.getFullYear()}</Typography>
-                {props.role === "teacher" && task.graded?
-                  <Button className={classes.gradeButton}
-                    onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
-                    Bewerten
-                  </Button>:
-                  <Button className={classes.gradeButtonPlaceholder} disabled={true}>
+                <Box className={classes.accordionHeaderFlexbox}>
+                    <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
+                    <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
+                    <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + displayMonth + "/" + deadline.getFullYear()}</Typography>
+                    {props.role === "teacher" && task.graded?
+                      <Button className={classes.gradeButton}
+                        onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
+                        Bewerten
+                      </Button>:
+                      <Button className={classes.gradeButtonPlaceholder} disabled={true}>
 
-                  </Button>}
-                {props.role === "teacher"?
-                    <Button className={classes.editButton}
-                            onClick={() => handleEditTaskClick(task.taskId, task.title, task.graded, task.deadline, task.description, task.course)}
-                            marginTop={'100pt'}>
-                        Bearbeiten
-                    </Button>:null}
-                {props.role === "student" && task.graded?
-                <Tooltip title={"Diese Aufgabe wird benotet"}>
-                  <GradeIcon/>
-                </Tooltip>: null
-              }
+                      </Button>}
+                    {props.role === "teacher"?
+                        <Button className={classes.editButton}
+                                onClick={() => handleEditTaskClick(task.taskId, task.title, task.graded, task.deadline, task.description, task.course)}
+                                marginTop={'100pt'}>
+                            Bearbeiten
+                        </Button>:null}
+                    {props.role === "student" && task.graded?
+                    <Tooltip title={"Diese Aufgabe wird benotet"}>
+                      <GradeIcon/>
+                    </Tooltip>: null
+                  }
+                </Box>
             </AccordionSummary>
             <AccordionDetails className={classes.accordionDetails}>
                 <Typography align={"left"}>
