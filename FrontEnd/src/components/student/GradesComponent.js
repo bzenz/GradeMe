@@ -144,6 +144,7 @@ function GradesAccordions(props) {
                               </Button>
                           </TableCell>
                       }
+
                   </TableRow>
                 )) }
               </TableBody>

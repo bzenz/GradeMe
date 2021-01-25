@@ -9,6 +9,7 @@ import LoginScreen from "./src/components/LoginScreen";
 import {combineReducers, install } from 'redux-loop';
 import Navigation from "./src/components/Navigation";
 import courseNavigationReducer from "./src/reducers/courseNavigationReducer";
+import localStorage from "./utils/localStorageMock";
 import {loadUserData, setScreenWidthIsMobile} from "./src/actions/loginActions";
 import {Dimensions} from "react-native";
 import {mobileDeviceScreenWidthBreakpoint} from "./src/styles/NavigationStyle";
@@ -29,7 +30,7 @@ function App(props) {
         props.loadUserData(parseInt(localStorage.getItem("userId")), localStorage.getItem("role"), localStorage.getItem("request_token"));
     }
 
-    document.title = "GradeMe-Prototyp";
+    //document.title = "GradeMe-Prototyp"
     const screenWidth = Math.round(Dimensions.get('window').width);
     if (screenWidth < mobileDeviceScreenWidthBreakpoint) {
         props.setScreenWidthIsMobile(true);
