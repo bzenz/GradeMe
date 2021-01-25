@@ -10,7 +10,8 @@ import {COURSES_FOR_SUBJECT_IDENTIFIER} from "./TeacherTabs";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { setErrorData } from "../../actions/errorActions";
-import SearchAndListComponent from "../SearchAndListComponent";
+import TwoListsOfDataRecordsComponent from "../SearchListComponent";
+import SearchListComponent from "../SearchListComponent";
 
 function SubjectOverview(props) {
 
@@ -69,13 +70,15 @@ function SubjectOverview(props) {
         <Box className={ classes.mainContentBox }>
           { subjectPapers }
         </Box>
-        <SearchAndListComponent
-            firstListHeading={"yeetus deletus"}
-            secondListHeading={"yeetus zweiter "}
+        <SearchListComponent
+            isTwoListComponent={false}
+            normalListHeading={"yeetus deletus"}
+            searchListHeading={"yeetus zweiter "}
             tableHeadWords={["Id", "Benutzername", "vorname", "name", "Rolle"]}
             searchOptionArray={[{value: "username", displayedString: "Benutzername"}, {value: "vorname", displayedString: "Vorname"}, {value: "name", displayedString: "Nachname"}]}
             filterOptionArray={[{value: "all", displayedString: "Alle"}, {value: "student", displayedString: "Schüler"}, {value: "teacher", displayedString: "Lehrer"}]}
             filterParameter={"role"}
+            buttonListForTableEntry={[<Button onClick={() => alert("yo")}>lelus</Button>,<Button onClick={() => alert("yo123")}>yetus deletus</Button> ]}
         />
       </div>
     )
