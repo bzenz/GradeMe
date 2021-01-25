@@ -118,14 +118,27 @@ function GradesAccordions(props) {
         <AccordionDetails>
             <Table size={"medium"} >
               <TableHead>
+
+                <TableRow>
+                  <TableCell align="left">Aufgabe</TableCell>
+                  <TableCell align="center">Note</TableCell>
+                  <TableCell align="right">Anmerkung</TableCell>
+
                 <TableRow className={classes.tableFlexRow}>
                   <TableCell className={classes.tableCellTitle} align="left" >Aufgabe</TableCell>
                   <TableCell className={classes.tableCell} align="center" >Note</TableCell>
                   <TableCell className={classes.tableCell} align="center">Anmerkung</TableCell>
+
                 </TableRow>
               </TableHead>
               <TableBody>
                 { subject[1].map((row) => (
+
+                  <TableRow>
+                      <TableCell align="left">{ row.taskTitle }</TableCell>
+                      <TableCell align="center">{ row.evaluation }</TableCell>
+                      <TableCell align="right">{ row.annotation }</TableCell>
+
                   <TableRow className={classes.tableFlexRow} >
                     <TableCell className={classes.tableCellTitle} >{ row.taskTitle }</TableCell>
                     <TableCell className={classes.tableCell} align="center">{ row.evaluation }</TableCell>
@@ -144,6 +157,7 @@ function GradesAccordions(props) {
                               </Button>
                           </TableCell>
                       }
+
                   </TableRow>
                 )) }
               </TableBody>
