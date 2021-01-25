@@ -1,5 +1,7 @@
 const createTask = require('../../db/createTask');
+const editTask = require('../../db/editTask');
 const { getAllTasksForCourse, getAllTasksForUser } = require('../../db/getAllTasks');
+const { generateCourseName } = require('../../utils/nameGenerators');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
@@ -48,19 +50,31 @@ createRoutes([
                     { key: 'taskId',        type: 'number' },
                     { key: 'title',         type: 'string', optional: true },
                     { key: 'description',   type: 'string', optional: true },
-                    { key: 'course',        type: 'number', optional: true }, // Note: password can't consist of only numbers using this method
                     { key: 'deadline',      type: 'string', optional: true },
-                    { key: 'graded',        type: 'boolean',optional: true },
                 ]);
+
+                // TODO: check deadline is date, if exists
+
+                const dbArgs = {
+                    Title: args.title,
+                    Description: args.description,
+                    Date: args.deadline,
+                };
+                // create an object with only the valid keys and their corresponding value
+                const options = {};
+                for (const key in dbArgs) {
+                    const value = dbArgs[key];
+                    if (value != undefined) options[key] = value;
+                }
+                
+                editTask(args.taskId, options);
+
+                return res.status(200).json( { taskId: args.taskId } );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-
-            // TODO: check deadline is date, if exists
-            // TODO: edit task in DB
-            return res.status(200).json( { taskId: args.taskId } );
         }
     },
     {
@@ -121,7 +135,8 @@ const prepareTasks = tasks =>
             taskId: task.Id, 
             title: task.Title, 
             description: task.Description, 
-            course: task.CourseId, 
+            courseId: task.CourseId, 
+            courseName: generateCourseName(task.SubjectName, task.CourseYear), 
             deadline: task.Date, 
             graded: Boolean(task.Graded),
         };

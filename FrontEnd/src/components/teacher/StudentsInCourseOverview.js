@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import generalStyles from "../../styles/GeneralStyles";
 
 const useStylesCustom = makeStyles(() => ({
   root: {
@@ -20,7 +21,8 @@ const useStylesCustom = makeStyles(() => ({
 
 function StudentsInCourseOverview(props) {
   const customClasses = useStylesCustom();
-  const [studentList, setStudentList] = useState([]);
+    const generalStyle = generalStyles();
+    const [studentList, setStudentList] = useState([]);
   try{
     const requestBody = JSON.stringify({
       request_token: props.request_token,
@@ -45,8 +47,8 @@ function StudentsInCourseOverview(props) {
     return (
       <div>
         <Box p={4} bgcolor="background.paper" align="center">
-          <Typography variant="h3" align="center" color="primary">
-            Schülerliste für den Kurs "{props.courseSubjectName + props.courseYear}"
+          <Typography className={generalStyle.siteHeading}>
+            Schülerliste für den Kurs "{props.courseName}"
           </Typography>
         </Box>
         { studentPaperList }
@@ -64,7 +66,7 @@ const mapStateToProps = state => {
     request_token: state.loginReducer.request_token,
     courseId: state.courseNavigationReducer.courseId,
     courseSubjectName: state.courseNavigationReducer.courseSubjectName,
-    courseYear: state.courseNavigationReducer.courseYear,
+    courseName: state.courseNavigationReducer.courseName,
   }
 }
 export default connect (mapStateToProps, null)(StudentsInCourseOverview)

@@ -1,5 +1,6 @@
 const evaluateTask = require('../../db/evaluateTask');
 const { getAllEvaluationsForUser, getAllEvaluationsForTask } = require('../../db/getAllEvaluations');
+const { generateCourseName } = require('../../utils/nameGenerators');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
@@ -50,9 +51,11 @@ createRoutes([
                     evaluations[i] = 
                     {
                         taskId: eval.TaskId,
+                        taskTitle: eval.TaskTitle,
                         evaluation: eval.Graded ? eval.Evaluation : Boolean(eval.Evaluation),
                         annotation: eval.Annotation,
-                        course: eval.CourseId,
+                        courseId: eval.CourseId,
+                        courseName: generateCourseName(eval.SubjectName, eval.Year),
                         year: eval.Year, 
                         subjectId: eval.SubjectId, 
                         subjectName: eval.SubjectName, 

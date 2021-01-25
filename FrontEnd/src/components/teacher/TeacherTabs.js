@@ -10,6 +10,9 @@ import List from '@material-ui/core/List';
 import { connect } from "react-redux";
 import {switchContent} from "../../actions/teacherNavigationActions";
 import PeopleIcon from "@material-ui/icons/People";
+import ForumIcon from '@material-ui/icons/Forum';
+import BuildIcon from '@material-ui/icons/Build';
+import {setDrawerOpenState} from "../../actions/generalNavigationActions";
 
 export const SUBJECT_OVERVIEW_IDENTIFIER = "SUBJECT_OVERVIEW";
 export const TASK_OVERVIEW_IDENTIFIER = "TASK_OVERVIEW";
@@ -30,6 +33,9 @@ class ListItemsComponent extends React.Component{
     handleSwitchContent = (identifier) =>{
         function switchContent(){
             this.props.switchContent(identifier);
+            if(this.props.isScreenWidthMobile){
+                this.props.setDrawerOpenState(false)
+            }
         }
         return switchContent.bind(this);
     }
@@ -42,7 +48,7 @@ class ListItemsComponent extends React.Component{
                 <ListItemIcon>
                     <ClassIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Fachübersicht"/>
+                <ListItemText primary="Fächerübersicht"/>
             </ListItem>
             <ListItem button onClick={this.handleSwitchContent(TASK_OVERVIEW_IDENTIFIER)}>
                 <ListItemIcon>
@@ -58,7 +64,7 @@ class ListItemsComponent extends React.Component{
             </ListItem>
           <ListItem button onClick={this.handleSwitchContent(COMMUNICATION_DASHBOARD_IDENTIFIER)}>
             <ListItemIcon>
-              <PeopleIcon />
+                <ForumIcon />
             </ListItemIcon>
             <ListItemText primary="Kommunikationsdashboard"/>
           </ListItem>
@@ -67,28 +73,31 @@ class ListItemsComponent extends React.Component{
     }
 }
 
-export const TeacherTabs = connect(null, {switchContent})(ListItemsComponent);
+export const TeacherTabs = connect((state) => ({isScreenWidthMobile: state.loginReducer.isScreenWidthMobile}), {switchContent, setDrawerOpenState})(ListItemsComponent);
 
 function CourseTabsComponent(props){
 
     function handleSwitchContent(identifier){
         function switchContent(){
             props.switchContent(identifier);
+            if(props.isScreenWidthMobile){
+                props.setDrawerOpenState(false)
+            }
         }
         return switchContent;
     }
     return(
         <div>
-            <ListSubheader inset>Kursnavigation</ListSubheader>
+            <ListSubheader inset>{props.courseName}</ListSubheader>
             <ListItem button onClick={handleSwitchContent(ACTIONS_FOR_COURSE_IDENTIFIER)}>
                 <ListItemIcon>
-                    <AssignmentIcon />
+                    <BuildIcon />
                 </ListItemIcon>
                 <ListItemText primary="Aktion" />
             </ListItem>
             <ListItem button onClick={handleSwitchContent(STUDENTS_FOR_COURSE_IDENTIFIER)}>
                 <ListItemIcon>
-                    <AssignmentIcon />
+                    <PeopleIcon />
                 </ListItemIcon>
                 <ListItemText primary="Schülerübersicht" />
             </ListItem>
@@ -102,4 +111,7 @@ function CourseTabsComponent(props){
     )
 }
 
-export const CourseTabs = connect(null, {switchContent})(CourseTabsComponent)
+export const CourseTabs = connect(state => ({
+    courseName: state.courseNavigationReducer.courseName,
+    isScreenWidthMobile: state.loginReducer.isScreenWidthMobile,
+}), {switchContent, setDrawerOpenState})(CourseTabsComponent)

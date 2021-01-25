@@ -6,9 +6,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {connect} from "react-redux";
-import {Table} from "@material-ui/core";
-import TableContainer from "@material-ui/core/TableContainer";
-import Paper from "@material-ui/core/Paper";
+import {createMuiTheme, responsiveFontSizes, Table} from "@material-ui/core";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
@@ -16,8 +14,16 @@ import TableBody from "@material-ui/core/TableBody";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../../index";
 import useStyles from "../../styles/CourseOverviewStyle";
+import generalStyles from "../../styles/GeneralStyles";
 import { switchContent } from "../../actions/teacherNavigationActions";
 import { setErrorData } from "../../actions/errorActions";
+import DescriptionIcon from '@material-ui/icons/Description';
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
 
 
 const useStylesCustom = makeStyles((theme) => ({
@@ -26,27 +32,56 @@ const useStylesCustom = makeStyles((theme) => ({
     },
     accordion: {
         width: '100%',
-        minWidth: 650,
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
-    table: {
-
+    tableCell: {
+        flexBasis: '30%',
+        padding: '0px',
+        [theme.breakpoints.only("xs")]: {
+            flexBasis: '20%'
+        }
+    },
+    tableCellTitle: {
+        flexBasis: '40%',
+        padding: '0px',
+        [theme.breakpoints.only("xs")]: {
+            flexBasis: '60%'
+        }
+    },
+    tableFlexRow: {
+        display: "flex",
     }
 }));
+
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme);
 
 function GradesAccordions(props) {
 
     const [allTasksOfUser, setAllTasksOfUser] = useState([]);
+    const [open, setOpen] = React.useState(false);
+    const [currentAnnotation, setCurrentAnnotation] = React.useState("");
     const classes = useStylesCustom();
     const classesCustom = useStyles();
+    const generalStyle = generalStyles();
 
     let requestBody = JSON.stringify({
       userId: props.userId,
       request_token: props.request_token
     });
+
+    const showAnnotationOfGrade = (annotation) => {
+        setOpen(true);
+        setCurrentAnnotation(annotation);
+    }
+
+    const hideAnnotationOfGrade = () => {
+        setOpen(false);
+    }
+
   try {
     useEffect(() => {
       fetch(SERVER + "/api/evaluation/getAll/forUser",
@@ -66,7 +101,7 @@ function GradesAccordions(props) {
         return objectsByKeyValue;
       }, {});
 
-    const tasksByCourse = groupBy('course')(allTasksOfUser);
+    const tasksByCourse = groupBy('courseId')(allTasksOfUser);
     let subjects = Object.entries(tasksByCourse);
 
     const accordionList = subjects.map((subject) =>
@@ -77,42 +112,72 @@ function GradesAccordions(props) {
           id="panel1a-header"
         >
           <Typography className={ classes.heading }>
-            { subject[1][0].subjectName + subject[1][0].year }
+            { subject[1][0].courseName }
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <TableContainer component={ Paper }>
-            <Table className={ classes.table } size="small">
+            <Table size={"medium"} >
               <TableHead>
-                <TableRow>
-                  <TableCell align="left">Note</TableCell>
-                  <TableCell align="right">Anmerkung</TableCell>
+                <TableRow className={classes.tableFlexRow}>
+                  <TableCell className={classes.tableCellTitle} align="left" >Aufgabe</TableCell>
+                  <TableCell className={classes.tableCell} align="center" >Note</TableCell>
+                  <TableCell className={classes.tableCell} align="center">Anmerkung</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 { subject[1].map((row) => (
-                  <TableRow>
-                    <TableCell align="left">{ row.evaluation }</TableCell>
-                    <TableCell align="right">{ row.annotation }</TableCell>
+                  <TableRow className={classes.tableFlexRow} >
+                    <TableCell className={classes.tableCellTitle} >{ row.taskTitle }</TableCell>
+                    <TableCell className={classes.tableCell} align="center">{ row.evaluation }</TableCell>
+                      {row.annotation?
+                          <TableCell className={classes.tableCell} align="center">
+                              <Button
+                                  title={"Anmerkung ansehen"}
+                                  align="right"
+                                  onClick={() => showAnnotationOfGrade(row.annotation)}
+                              >
+                                  <DescriptionIcon/>
+                              </Button>
+                          </TableCell>:
+                          <TableCell className={classes.tableCell} align="center">
+                              <Button align="right" disabled={true}>
+                              </Button>
+                          </TableCell>
+                      }
+
                   </TableRow>
                 )) }
               </TableBody>
             </Table>
-          </TableContainer>
         </AccordionDetails>
       </Accordion>
     )
-
     return(
         <div>
             <Box p={4} bgcolor="background.paper" align="center">
-                <Typography variant="h3" align="center" color="primary">
+                <Typography className={generalStyle.siteHeading}>
                     Notenübersicht
                 </Typography>
             </Box>
             <Box className={classesCustom.mainContentBox}>
                 {accordionList}
             </Box>
+            <Dialog
+                open={open}
+                onClose={hideAnnotationOfGrade}
+            >
+                <DialogTitle id="submit_evaluations_dialog_title">{"Anmerkung"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="submit_evaluations__dialog_content">
+                        {currentAnnotation}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={hideAnnotationOfGrade} color="primary">
+                        Schließen
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
         )
   } catch (exeption) {

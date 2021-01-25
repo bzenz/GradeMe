@@ -7,7 +7,7 @@ export default (state = defaultState, action) => {
         case(SET_SUBJECT):
             return {...state, subjectId: action.subjectId, subjectName: action.subjectName};
         case(SET_COURSE):
-            return {...state, courseId: action.courseId, courseYear: action.courseYear, courseSubjectName: action.courseSubjectName, courseSelected: true}
+            return {...state, courseId: action.courseId, courseName: action.courseName, courseSubjectName: action.courseSubjectName, courseSelected: true}
         case(UNSELECT_COURSE):
             return {...state, subjectId: null, courseSelected: false}
         default: return state;

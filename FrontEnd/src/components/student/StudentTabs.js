@@ -8,9 +8,10 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import List from '@material-ui/core/List';
 import { connect } from "react-redux";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import PeopleIcon from "@material-ui/icons/People";
+import ForumIcon from '@material-ui/icons/Forum';
 import GradesIcon from "@material-ui/icons/Grade";
 import { COMMUNICATION_DASHBOARD_IDENTIFIER, SCHEDULE_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER } from "../teacher/TeacherTabs";
+import {setDrawerOpenState} from "../../actions/generalNavigationActions";
 
 export const GRADES_OVERVIEW_IDENTIFIER = "GRADES_OVERVIEW";
 
@@ -23,6 +24,9 @@ class ListItemsComponent extends React.Component{
     handleSwitchContent = (identifier) =>{
         function switchContent(){
             this.props.switchContent(identifier);
+            if(this.props.isScreenWidthMobile){
+                this.props.setDrawerOpenState(false)
+            }
         }
         return switchContent.bind(this);
     }
@@ -51,7 +55,7 @@ class ListItemsComponent extends React.Component{
             </ListItem>
           <ListItem button onClick={this.handleSwitchContent(COMMUNICATION_DASHBOARD_IDENTIFIER)}>
             <ListItemIcon>
-              <PeopleIcon />
+              <ForumIcon />
             </ListItemIcon>
             <ListItemText primary="Kommunikationsdashboard"/>
           </ListItem>
@@ -60,5 +64,5 @@ class ListItemsComponent extends React.Component{
     }
 }
 
-export const StudentTabs = connect(null, {switchContent})(ListItemsComponent);
+export const StudentTabs = connect((state) => ({isScreenWidthMobile: state.loginReducer.isScreenWidthMobile}), {switchContent, setDrawerOpenState})(ListItemsComponent);
 

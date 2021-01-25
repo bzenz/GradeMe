@@ -3,13 +3,15 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import {Paper} from "@material-ui/core";
 import useStyles from "../../styles/CourseOverviewStyle";
+import generalStyles from "../../styles/GeneralStyles";
 
 function CourseOverview(props){
     const classes = useStyles();
+    const generalStyle = generalStyles();
     return(
         <div>
-            <Typography variant="h3" align="center" color="primary">
-                Kursdetails für Kurs "{props.courseSubjectName + props.courseYear}"
+            <Typography className={generalStyle.siteHeading}>
+                Kursdetails für Kurs "{props.courseName}"
             </Typography>
             <Paper className={classes.paper}>
                 <Typography variant="body1">
@@ -23,7 +25,7 @@ function CourseOverview(props){
 const mapStateToProps = state => {
     return {
         courseId: state.courseNavigationReducer.courseId,
-        courseYear: state.courseNavigationReducer.courseYear,
+        courseName: state.courseNavigationReducer.courseName,
         courseSubjectName: state.courseNavigationReducer.courseSubjectName,
     }
 }

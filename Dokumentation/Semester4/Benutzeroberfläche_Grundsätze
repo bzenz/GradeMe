@@ -1,0 +1,54 @@
+    Aufgabenangemessenheit
+
+    	Prüfung ob Pflichtfelder gefüllt sind
+
+    	nur Eingabe von Integer von 1-6 bei Noteneingabe erlauben
+
+    	"Bewertung bestätigen" Knopf ist ganz untem im "Aufgabe bewerten" Dialog, um den Nutzer 
+	    anzuleiten, erst alle Noten einzutragen
+
+    Selbstbeschreibungsfähigkeit
+
+    	Navigationsbuttons heißen genauso wie die angesteuerten Seiten
+
+    	[X] Navigationsbutton der aktiven Ansicht ist farblich gekennzeichnet
+
+    Steuerbarkeit
+
+    	[X] Abbrechenbuttons in jedem Dialog
+
+    	Dialogablauf "Bewertung einer Aufgabe" lässt sich starten durch Klick auf "Aufgabe bewerten"
+
+   	  Dialogablauf "Bewertung einer Aufgabe" lässt sich abschließen durch Klick auf Bewertung Bestätigen
+
+    Erwartungskonformität
+
+    	Aufgabenübersicht für Kurs und Gesamtaufgabenübersicht sind gleich aufgebaut
+
+    	Gleicher Aufbau der Seite in verschiedenen Nutzeransicten (Admin, Lehrer, Schüler)
+
+    	Navigationsmenü kommt von der linken Seite (wie in fast allen Mobil-Apps)
+
+    Fehlertoleranz
+
+    	Fehler bei Aufgabenerstellung kann nachträglich korrigiert werden
+
+    	Fehler bei der Benotung kann nachträglich korrigiert werden
+
+    	Wurden im Bewertungsdialog nicht alle Schüler korrekt bewertet, wird beim Absenden des Formulars 
+	    eine Warnung ausgegeben, mit einer Liste an Schülern, die noch ausstehen und einer Auswahl ob die 
+	    Bewertungen trotzdem übermittelt werden sollen
+
+    Individualisierbarkeit
+
+    	Helles / Dunkles Thema
+
+    	Anmeldung mit Nutzeraccount
+
+    	App passt sich an verstchiedene Bildschirmgrößen an (Smartphone/Ipad/Desktop usw.)
+
+    Lernförderlichkeit
+
+    	Ob eine Aufgabe benotet ist oder nicht kann nachträglich geändert werden, dabei wird dem Lehrer 
+    	ein Warndialog angezeigt, der ihn warnt, dass damit die Noten für die Schüler nicht mehr sichtbar sind
+

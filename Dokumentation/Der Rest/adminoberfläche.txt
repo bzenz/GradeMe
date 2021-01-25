@@ -1,0 +1,84 @@
+Adminoberfläche
+	Nutzer verwalten
+		Nutzer anlegen
+		Nutzer editieren
+		Nutzer Löschen
+(	Klassen verwalten
+		Nutzer für Klasse verwalten
+		Klasse anlegen
+		Klasse umbenennen
+		Klasse entfernen)
+	Kurse verwalten
+		Kurs anlegen
+		Kurs editieren
+		Kurs "löschen" -> Kurs wird unsichtbar
+		Nutzer für Kurs verwalten
+	Fächer verwalten?
+		Fach anlegen (dies kann dann als Fach bei Kurserstellung ausgewählt werden)
+		Fach umbenennen
+		Fach entfernen
+	Stundenpläne? -> meine Idee ist, dass man bei Kursen angeben kann, wann diese stattfinden und der Stundenplan dann auf Clientseite pro Nutzer generiert wird
+
+linksseitiges Menü:
+	Nutzerverwaltung
+	Klassenverwaltung
+	Kursverwaltung
+	Fächerverwaltung
+
+Nutzerverwaltung:
+
+Nutzerübersicht:
+	Kopf: Suchfunktion -> Nutzer nach Name suchen, Nutzer nach Rolle filtern && neuen Nutzer anlegen Knopf
+	Rumpf: Auflistung aller Nutzer entsprechend der Suche; sichbare Daten: Nutzername, Rolle, editieren Knopf, löschen Knopf
+
+Neuen Nutzer anlegen:
+	Folgende Daten können eingetragen werden:
+		Name, Vorname, Geburtsdatum, Anschrift, Tel.
+		optional kann der neu angelegte Nutzer auch gleich einer Klasse zugeordnet werden
+		(weitere?)
+
+Nutzer editieren:
+	Es öffnet sich ein Formular (ohne links einen neuen Reiter zu erzeugen)
+	folgende Daten können geändert werden: Name, Vorname, Geburtsdatum, Anschrift
+	Speichern Knopf, Abbrechen Knopf
+
+Klassenverwaltung (eigentlich nur da um "Klassenlehrer von" verknüpfung zu verwalten) (brauchen wir sowas?)
+
+Klassenübersicht:
+    neue Klasse anlegen Knopf
+	Auflistung aller Klassen mit Klassennamen & Bearbeiten / Löschen Knopf
+
+Neue Klasse anlegen:
+	Name kann eingetragen werden
+	Liste mit hinzugefügten Nutzern
+	Liste mit allen Nutzern
+		(Listen sind jeweils unerteilt nach Rolle (schüler / Lehrer) & Listenelement besteht jeweils aus username und ein [+] bzw [x] Knopf)
+	Speichern Knopf, Abbrechen Knopf
+
+Klasse bearbeiten:
+	Es öffnet sich ein Formular (ohne links einen neuen Reiter zu erzeugen)
+	gleiches wie neue Klasse anlegen + abbrechen Knopf
+
+Kursverwaltung:
+
+Kursübersicht:
+	Auflistung aller Kurse mit Kursnamen (Fach?) & Bearbeiten / Löschen Knopf
+
+Neuen Kurs anlegen:
+	Raum, Fach(, Kurszeitplan) kann eingetragen werden
+	Liste mit hinzugefügten Nutzern
+	Liste mit allen Nutzern
+		(Listen sind jeweils unerteilt nach Rolle (schüler / Lehrer) & Listenelement besteht jeweils aus username und ein [+] bzw [-] Knopf)
+	Speichern Knopf, Abbrechen Knopf
+
+Kurs bearbeiten:
+	Es öffnet sich ein Formular (ohne links einen neuen Reiter zu erzeugen)
+	gleiches wie neue Klasse anlegen + abbrechen Knopf
+
+Fächerverwaltung:
+	keine Untermenüpunkte
+	Fächer werden in Liste angezeigt
+		jedes Element enthält Fachnamen/löschen Knopf/editieren Knopf
+	hinzufügen knopf -> neues Listenelement wird erstellt, hier Kann name eingetragen werden
+
+

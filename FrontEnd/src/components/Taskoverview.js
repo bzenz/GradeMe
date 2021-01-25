@@ -7,12 +7,14 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import generalStyles from "../styles/GeneralStyles";
 import {connect} from "react-redux";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../index";
 import Button from "@material-ui/core/Button";
 import { setDetailsOfEditedTask, setIsTaskBeingEdited, SHOW_EVALUATE_TASK_PAGE, showEvaluateTaskPage, switchContent } from "../actions/teacherNavigationActions";
 import { setErrorData } from "../actions/errorActions";
+import Divider from '@material-ui/core/Divider';
 
 export const EDIT_TASK = "EDIT_TASK";
 
@@ -70,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Taskoverview(props) {
     const classes = useStyles();
+    const generalStyle = generalStyles();
     const[taskList, setTaskList] = useState([]);
 
     let requestBody = JSON.stringify({
@@ -89,7 +92,7 @@ function Taskoverview(props) {
     }
 
     function getTasksForCourse(data){
-        return data.filter((task)=>(task.course === props.courseId));
+        return data.filter((task)=>(task.courseId === props.courseId));
     }
 
   try {
@@ -102,22 +105,23 @@ function Taskoverview(props) {
         })
         .then(response => response.json())
         .then(data => props.forCourse ? setTaskList(getTasksForCourse(data)) : setTaskList(data))
-    }, [])
+    }, [props.forCourse])
 
-    const taskAccordionsList = taskList.map((task) =>
+    let currentTasksAccordionList= [];
+    let pastTasksAccordionList = [];
+    taskList.forEach((task) =>
       {
         let appropriateAccordionStyle;
         const currentDate = new Date();
         let  deadline = new Date(task.deadline);
 
         //berechnet den Unterschied in Tagen zwischen currentDate und deadline
-
         const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
         const currentDateWithoutTime = new Date(currentDate.toDateString());
         const deadlineDateWithoutTime = new Date(deadline.toDateString());
         const diffInDays = (deadlineDateWithoutTime - currentDateWithoutTime) / MILLISECONDS_IN_A_DAY;
 
-        if (props.role === "teacher" || diffInDays > 4) {
+        if (props.role === "teacher" || diffInDays > 4 || diffInDays < 0) {
           appropriateAccordionStyle = classes.accordion_normal;
         } else if(diffInDays > 2) {
           appropriateAccordionStyle = classes.accordion_yellow;
@@ -125,10 +129,12 @@ function Taskoverview(props) {
           appropriateAccordionStyle = classes.accordion_red;
         }
 
-        //Der Anzeigemonat muss hier berechnet werden, da man dort, wo das Datum berechnet wird nicht einfach getMonth()+1 machen
-        //kann, da ja dort ein String zusammengesetzt wird und dadurch einfach nur eine "1" angehangen wird
-        const displayMonth = deadline.getMonth()+1;
-      return (
+      //Der Anzeigemonat muss hier berechnet werden, da man dort, wo das Datum berechnet wird nicht einfach getMonth()+1 machen
+      //kann, da ja dort ein String zusammengesetzt wird und dadurch einfach nur eine "1" angehangen wird
+      const displayMonth = deadline.getMonth()+1;
+
+      //Hier wird das Accordion zu dem entsprechenden Task gebaut um es später dem entsprechenden Array (PastTasks bzw. currentTasks) hinzuzufügen
+      const accordionOfTask = (
         <Accordion key={task.taskId} className= { appropriateAccordionStyle }>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
@@ -165,18 +171,34 @@ function Taskoverview(props) {
             </AccordionDetails>
         </Accordion>
         )
+        if(diffInDays >= 0){
+          currentTasksAccordionList.push(accordionOfTask);
+        } else {
+          pastTasksAccordionList.push(accordionOfTask);
+        }
       }
     )
 
+    //Array wird reversed um die ältesten Aufgaben unten stehen zu lassen und die "aktuelleren" vergangenen Aufgaben weiter oben
+    pastTasksAccordionList.reverse();
     return (
       <div>
-        <Box p={ 4 } bgcolor="background.paper" align="center">
-          <Typography variant="h3" align="center" color="primary">
+        <Box p={ 4 } bgcolor="background.paper">
+          <Typography className={generalStyle.siteHeading}>
             Aufgabenübersicht
           </Typography>
         </Box>
         <Box className={ classes.mainContentBox }>
-        { taskAccordionsList }
+          { currentTasksAccordionList }
+          <Box paddingTop={ 3 }>
+            <Divider />
+          </Box>
+          <Box p={ 2 } >
+            <Typography className={generalStyle.siteSubHeading1}>
+              Aufgabenarchiv
+            </Typography>
+          </Box>
+          { pastTasksAccordionList }
         </Box>
 
       </div>
