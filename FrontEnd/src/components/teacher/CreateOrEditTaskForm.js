@@ -60,9 +60,11 @@ function CreateOrEditTaskForm(props){
         case "title": setTitle(event.target.value); break;
         case "graded": {
             let checkBoxValue = event.target.checked;
-            if(!checkBoxValue){
+            setIsWarningDialogOpen(true);
+            //Wird erst so gemacht, wenn die umsetzung im Backend abgeschlossen ist
+/*            if(!checkBoxValue){
                 setIsWarningDialogOpen(true);
-            }
+            }*/
             setGraded(checkBoxValue);
         } break;
         case "deadline": setDeadline(event.target.value); break;
@@ -187,8 +189,9 @@ function CreateOrEditTaskForm(props){
                 <DialogTitle id="warning-dialog-title">{"Warnung"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="warning-dialog-description">
-                        Wenn sie diese Aufgabe als unbewertet markieren, werden alle bisher gespeicherten Noten dieser Aufgabe
-                        für die Schüler unsichtbar. Die bisher gespeicherten Noten gehen jedoch nicht verloren.
+                        {/*Wenn sie diese Aufgabe als unbewertet markieren, werden alle bisher gespeicherten Noten dieser Aufgabe
+                        für die Schüler unsichtbar. Die bisher gespeicherten Noten gehen jedoch nicht verloren.*/}
+                        Änderungen der Benotbarkeit können zurzeit nicht vorgenommen werden.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
