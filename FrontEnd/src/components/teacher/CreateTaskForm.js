@@ -10,8 +10,8 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import {SERVER} from "../../../index";
-import {COURSE_VIEW_IDENTIFIER} from "./TeacherTabs";
 import {switchContent} from "../../actions/teacherNavigationActions";
+import {COURSE_VIEW_IDENTIFIER} from "../general/identifiers";
 
 const useStyles = makeStyles((theme) => ({
     root: {

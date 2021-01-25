@@ -9,9 +9,8 @@ import { SERVER } from "../../index";
 import {loginPostFailed, loginPostSuccessfull, responseParsed} from "../actions/loginActions";
 import { loop, Cmd } from 'redux-loop';
 import {switchContent} from "../actions/teacherNavigationActions";
-import {GRADES_OVERVIEW_IDENTIFIER} from "../components/student/StudentTabs";
-import {SUBJECT_OVERVIEW_IDENTIFIER} from "../components/teacher/TeacherTabs";
 import localStorage from "../../utils/localStorageMock";
+import {GRADES_OVERVIEW_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER} from "../components/general/identifiers";
 
 //FUNKTIONEN
 function postLoginAttempt(username, password){

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {KeyboardAvoidingView, TextInput} from "react-native";
 import { connect } from 'react-redux';
-import { init } from '../actions/loginActions';
+import { init } from '../../actions/loginActions';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
