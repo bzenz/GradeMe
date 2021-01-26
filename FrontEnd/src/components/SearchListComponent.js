@@ -20,32 +20,6 @@ import TableCell from "@material-ui/core/TableCell";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 
-const mock = [
-    {id: 1, username: "benitozenz", vorname: "Benito", name: "Zenz", role: "student"},
-    {id: 2, username: "maxmayer", vorname: "Max", name: "Mayer", role: "student"},
-    {id: 3, username: "florianlemnitzer", vorname: "Florian", name: "Lemnitzer", role: "student"},
-    {id: 4, username: "keineahnung", vorname: "Keine", name: "Ahnung", role: "teacher"},
-]
-const mock2 = [
-    {id: 1, username: "benitozenz2", vorname: "Benito", name: "Zenz", role: "student"},
-    {id: 3, username: "florianlemnitzer2", vorname: "Florian", name: "Lemnitzer", role: "student"},
-    {id: 4, username: "keineahnung2", vorname: "Keine", name: "Ahnung", role: "teacher"},
-    {id: 1, username: "benitozenz2", vorname: "Benito", name: "Zenz", role: "student"},
-    {id: 3, username: "florianlemnitzer2", vorname: "Florian", name: "Lemnitzer", role: "student"},
-    {id: 4, username: "keineahnung2", vorname: "Keine", name: "Ahnung", role: "teacher"},
-    {id: 1, username: "benitozenz2", vorname: "Benito", name: "Zenz", role: "student"},
-    {id: 3, username: "florianlemnitzer2", vorname: "Florian", name: "Lemnitzer", role: "student"},
-    {id: 4, username: "keineahnung2", vorname: "Keine", name: "Ahnung", role: "teacher"},
-    {id: 1, username: "benitozenz2", vorname: "Benito", name: "Zenz", role: "student"},
-    {id: 3, username: "florianlemnitzer2", vorname: "Florian", name: "Lemnitzer", role: "student"},
-    {id: 4, username: "keineahnung2", vorname: "Keine", name: "Ahnung", role: "teacher"},
-    {id: 1, username: "benitozenz2", vorname: "Benito", name: "Zenz", role: "student"},
-    {id: 3, username: "florianlemnitzer2", vorname: "Florian", name: "Lemnitzer", role: "student"},
-    {id: 4, username: "keineahnung2", vorname: "Keine", name: "Ahnung", role: "teacher"},
-    {id: 1, username: "benitozenz2", vorname: "Benito", name: "Zenz", role: "student"},
-    {id: 33456, username: "florianlemnitzer2", vorname: "Florian", name: "Lemnitzer", role: "teacher"},
-    {id: 4, username: "keineahnung2", vorname: "Keine", name: "Ahnung", role: "teacher"},
-]
 
 let screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -90,30 +64,9 @@ const useStylesCustom = makeStyles((theme) => ({
 
 }));
 
-/*
-Diese Optionen sind dafür da, dass die Komponente universeller einsetzbar ist
-(Zum einen für die Nutzerverwaltung aber auch für die Kursverwaltung etc.):
-  Welche props braucht die Komponente?--> geklammerte Nummern müssen nur bei einer TwoListComponent angegeben werden
-1.  isTwoListComponent: Die Komponente hat generell zwei Modi: oneListMode und twoListMode. Mit false wird die Komponente auf oneListMode gestellt.
-    D.h. es wird nur eine Liste geben, in der Sachen gesucht und bearbeitet (über entsprechende Buttons die übergeben werden) werden können.
-    Im twoListMode gibt es zwei Listen, wo es eine "normale" Liste gibt, die Keine besonderheiten Aufweist und in der zweiten (größeren) Liste
-    Einträge gesucht/gefiltert werden können. Zusätzlich können Einträge zwischen den beiden Listen hin und her geschoben werden.
-(2.)  normalListHeading: Überschrift der 1. Liste, in der nicht gesucht werden kann
-3.  searchListHeading: Überschrift der 2. Liste (Bzw. der einzigen Liste, wenn es nur eine Liste gibt) in der gesucht werden kann
-(4.)    normalList: Falls es eine twoListComponent ist, wird hier die normale Liste übergeben
-5.  searchList: Hier wird die Liste übergeben, in der gesucht und gefiltert werden kann
-6.  tableHeadWords: ein Array, aus welchem in dieser Reihenfolge die Überschriften für den Tabellenkopf übernommen werden
-7.  searchOptionArray: Optionen, nach welchen im Suchfeld gesucht werden kann (Array of Objects. Der erste wert ist der value, nach dem in den Datensätzen
-    gesucht wird (z.B. firstname oder username), der zweite Wert ist der dem User im Auswahlmenü angezeigte Wert, z.B. username und Benutzername)
-    die Objektkeys müssen wie folgt heißen: {value: "...", displayedString: "..."}
-8.  filterOptionArray: Optionen, nach denen gefiltert werden kann. (Array of Objects. Der erste wert ist der value, nach dem gefiltert wird, der
-    zweite Wert ist der dem User angezeigte Wert im Auswahlmenü, z.B. student und Schüler)
-    Die Objektkeys müssen wie folgt heißen: {value: "...", displayedString: "..."}.
-    Zusätzlich: der value "all" als Filter bewirkt, dass alle Ergebnisse angezeigt werden.
-9.  filterParameter: Parameter, nach dem in der Datenbasis gefiltert werden kann (z.B. role oder subject)
-(10.) buttonListForTableEntry: ein Array an Buttons, die bei einer single-List-Component für jede Row der Tabelle
-    eingefügt werden (zum Beispiel Bearbeiten/löschen Buttons)
- */
+//Für eine Ausführliche Dokumentation der benötigten Props der Komponente:
+//Im Ordner Dokumentation/Components/SearchAndList-Componentdoc.txt nachschlagen
+
 function SearchListComponent(props) {
     const classesCustom = useStylesCustom();
     const generalStyle = generalStyles();
@@ -126,10 +79,8 @@ function SearchListComponent(props) {
     const scrollRef = useRef();
 
         useEffect(() => {
-        setNormalList(mock);
-        setSearchList(mock2);
-        /*setNormalList(props.normalList);
-        setSearchList(props.searchList);*/
+        setNormalList(props.normalList);
+        setSearchList(props.searchList);
     })
 
     const handleSearchFieldChange = (event) => {
@@ -240,12 +191,12 @@ function SearchListComponent(props) {
                                         </IconButton>
                                     :props.buttonListForTableEntry
                                 }
-                        </TableRow>
+                            </TableRow>
                         )
-                            }
-                }
+                   }
+               }
                )
-                }
+               }
             </Table>
        )
     }
