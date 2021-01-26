@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\Robin\IdeaProjects\GradeMe\DB\gradeMe.db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="GradeMe.db" uuid="f219c15e-81b2-48f9-bf56-5fb9ebd6625c">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/DB/GradeMe.db</jdbc-url>
+    </data-source>
   </component>
 </project>

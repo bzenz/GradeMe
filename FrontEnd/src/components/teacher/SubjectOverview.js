@@ -6,10 +6,10 @@ import generalStyles from "../../styles/GeneralStyles";
 import Button from "@material-ui/core/Button";
 import {setSubject, unselectCourse} from "../../actions/subjectSelectActions";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import {COURSES_FOR_SUBJECT_IDENTIFIER} from "./TeacherTabs";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { setErrorData } from "../../actions/errorActions";
+import {COURSES_FOR_SUBJECT_IDENTIFIER} from "../general/identifiers";
 
 function SubjectOverview(props) {
 
