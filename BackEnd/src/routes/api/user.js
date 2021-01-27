@@ -1,6 +1,6 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
-const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask } = require('../../db/getAllUsers');
+const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/getAllUsers');
 
 const userRouter =
 createRoutes([
@@ -52,6 +52,37 @@ createRoutes([
             }
             // TODO: delete user from DB
             return res.status(200).json( { deletedUserId: args.userId } );
+        }
+    },
+    {
+        path: '/getAll',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) =>
+        {
+            try
+            {
+                const users = await getAllUsers();
+                for (const i in users)
+                {
+                    const user = users[i];
+                    users[i] =
+                    {
+                        userId: user.Id,
+                        loginName: user.LoginName,
+                        vorname: user.Vorname,
+                        name: user.Name,
+                        rolle: user.Type,
+                    };
+                }
+    
+                return res.status(200).json( users );
+            }
+            catch (err)
+            {
+                return res.status(400).json( {error: err.message} );
+            }
+
         }
     },
     {

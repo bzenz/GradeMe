@@ -1,5 +1,24 @@
 const executeOnDB = require('./core/execute');
 
+const getAllUsers = () => 
+{
+    return new Promise(async (resolve, reject) => 
+    {
+        const sql = `
+            SELECT Id, LoginName, Vorname, Name, Type 
+            FROM Users;
+        `;
+        await executeOnDB(db => 
+        {
+            db.all(sql, [], (err, row) => 
+            {
+                if (err) reject(err);
+                resolve(row);
+            });
+        });
+    });
+};
+
 const getAllUsersForCourse = courseId => 
 {
     return new Promise(async (resolve, reject) => 
@@ -61,6 +80,7 @@ const getAllEvaluatedUsersForTask = taskId =>
     });
 };
 
+exports.getAllUsers = getAllUsers;
 exports.getAllUsersForCourse = getAllUsersForCourse;
 exports.getAllUsersForTask = getAllUsersForTask;
 exports.getAllEvaluatedUsersForTask = getAllEvaluatedUsersForTask;
