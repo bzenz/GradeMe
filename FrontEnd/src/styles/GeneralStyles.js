@@ -39,4 +39,19 @@ export default makeStyles((theme) => ({
             size: 'large',
         }
     },
+    button2: {
+        size: 'medium',
+        [theme.breakpoints.down('xs')]: {
+            size: 'small',
+        },
+        [theme.breakpoints.only('sm')]: {
+            size: 'small',
+        },
+        [theme.breakpoints.up("lg")]: {
+            size: 'large',
+        },
+        backgroundColor: "#63a4ff",
+        boxShadow: '3',
+        width: '50%',
+    },
 }))

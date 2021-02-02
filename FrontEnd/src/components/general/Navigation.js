@@ -21,7 +21,7 @@ import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
 import Box from "@material-ui/core/Box";
 import Timetable from "./studentAndTeacher/Timetable";
 import {SERVER} from "../../../index";
-import ActionsForCourseList, {CREATE_NEW_TASK} from "../teacher/ActionsForCourseList";
+import ActionsForCourseList from "../teacher/ActionsForCourseList";
 import CreateTaskForm from "../teacher/CreateTaskForm";
 import CommunicationDashboard from "./studentAndTeacher/CommunicationDashboard";
 import GradesAccordions from "../student/GradesComponent";
@@ -29,8 +29,22 @@ import StudentsInCourseOverview from "../teacher/StudentsInCourseOverview";
 import { ERROR_CONTENT_IDENTIFIER } from "../../actions/errorActions";
 import ErrorContentPaper from "./ErrorContentPaper";
 import {setDrawerOpenState} from "../../actions/generalNavigationActions";
-import {ACTIONS_FOR_COURSE_IDENTIFIER, COMMUNICATION_DASHBOARD_IDENTIFIER, COURSE_VIEW_IDENTIFIER, COURSES_FOR_SUBJECT_IDENTIFIER, GRADES_OVERVIEW_IDENTIFIER, SCHEDULE_IDENTIFIER, STUDENTS_FOR_COURSE_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER, TASKS_FOR_COURSE_IDENTIFIER} from "./identifiers";
+import {
+    ACTIONS_FOR_COURSE_IDENTIFIER,
+    COMMUNICATION_DASHBOARD_IDENTIFIER,
+    COURSE_VIEW_IDENTIFIER,
+    COURSES_FOR_SUBJECT_IDENTIFIER, CREATE_NEW_TASK_IDENTIFIER, CREATE_OR_EDIT_USER_IDENTIFIER,
+    GRADES_OVERVIEW_IDENTIFIER,
+    SCHEDULE_IDENTIFIER,
+    STUDENTS_FOR_COURSE_IDENTIFIER,
+    SUBJECT_OVERVIEW_IDENTIFIER,
+    TASK_OVERVIEW_IDENTIFIER,
+    TASKS_FOR_COURSE_IDENTIFIER,
+    USER_ADMINISTRATION_IDENTIFIER
+} from "./identifiers";
 import { Tabs } from "./Tabs";
+import UserAdministration from "../admin/UserAdministration";
+import CreateUserForm from "../admin/CreateUserForm";
 
 function Dashboard(props) {
     const classes = useStyles();
@@ -54,7 +68,7 @@ function Dashboard(props) {
                 return <Taskoverview forCourse/>;
             case ACTIONS_FOR_COURSE_IDENTIFIER:
                 return <ActionsForCourseList/>;
-            case CREATE_NEW_TASK:
+            case CREATE_NEW_TASK_IDENTIFIER:
                 return <CreateTaskForm/>;
             case STUDENTS_FOR_COURSE_IDENTIFIER:
                 return <StudentsInCourseOverview/>;
@@ -64,6 +78,10 @@ function Dashboard(props) {
                 return <CommunicationDashboard/>;
             case GRADES_OVERVIEW_IDENTIFIER:
                 return <GradesAccordions/>
+            case USER_ADMINISTRATION_IDENTIFIER:
+                return <UserAdministration/>
+            case CREATE_OR_EDIT_USER_IDENTIFIER:
+                return <CreateUserForm/>
             default:
                 return <div>{props.activeContent}</div>
         }

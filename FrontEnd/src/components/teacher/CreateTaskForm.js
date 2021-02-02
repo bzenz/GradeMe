@@ -29,10 +29,6 @@ const useStyles = makeStyles((theme) => ({
     heading4: {
         margin: '8px',
     },
-    textfield: {
-        width: '100%',
-        marginTop: '1%',
-    },
     createIcon: {
         marginRight: '10px',
     }
@@ -100,7 +96,6 @@ function CreateTaskForm(props){
                     id={'title'}
                     error ={ !titleFieldFilled }
                     helperText={"Pflichtfeld"}
-                    className={classes.textfield}
                     variant={'outlined'}
                     label={'Titel'}
                     onChange={(e) => {handleFormChange(e, "title")}}
@@ -129,7 +124,6 @@ function CreateTaskForm(props){
                     />
                 </form>
                 <TextField
-                    className={classes.textfield}
                     id="description"
                     label="Beschreibung"
                     multiline
