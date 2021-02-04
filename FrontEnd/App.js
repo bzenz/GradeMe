@@ -15,12 +15,14 @@ import {Dimensions} from "react-native";
 import {mobileDeviceScreenWidthBreakpoint} from "./src/styles/NavigationStyle";
 import generalNavigationReducer from "./src/reducers/generalNavigationReducer";
 import {setDrawerOpenState} from "./src/actions/generalNavigationActions";
+import adminReducer from "./src/reducers/adminReducer";
 
 const reducer = combineReducers({
   loginReducer,
   teacherNavigationReducer,
   courseNavigationReducer,
   generalNavigationReducer,
+  adminReducer,
 })
 
 const store = createStore(reducer, install());

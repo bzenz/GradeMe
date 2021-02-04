@@ -32,7 +32,7 @@ const customStyles = makeStyles((theme) => ({
     },
 }))
 
-function CreateUserForm(props) {
+function CreateOrEditUserForm(props) {
     const generalStyle = generalStyles();
     const customStyle = customStyles();
     const [firstname, setFirstname] = useState("");
@@ -47,6 +47,10 @@ function CreateUserForm(props) {
             case "lastname": setLastname(event.target.value); break;
             case "role": setRole(event.target.value);
         }
+    }
+
+    if(props.isUserBeingEdited) {
+        
     }
 
     function submitTaskForm(){
@@ -131,4 +135,7 @@ function CreateUserForm(props) {
     )
 }
 
-export default connect((state) => ({request_token: state.loginReducer.request_token}), {switchContent})(CreateUserForm)
+export default connect((state) => ({
+    request_token: state.loginReducer.request_token,
+    isUserBeingEdited: state.adminReducer.isUserBeingEdited,
+}), {switchContent})(CreateOrEditUserForm)

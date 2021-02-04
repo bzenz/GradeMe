@@ -44,7 +44,7 @@ import {
 } from "./identifiers";
 import { Tabs } from "./Tabs";
 import UserAdministration from "../admin/UserAdministration";
-import CreateUserForm from "../admin/CreateUserForm";
+import CreateUserForm from "../admin/CreateOrEditUserForm";
 
 function Dashboard(props) {
     const classes = useStyles();

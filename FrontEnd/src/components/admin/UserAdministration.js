@@ -4,6 +4,7 @@ import {Button, Typography} from "@material-ui/core";
 import generalStyles from "./../../styles/GeneralStyles"
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {CREATE_OR_EDIT_USER_IDENTIFIER} from "../general/identifiers";
+import {setIsUserBeingEdited} from "../../actions/adminActions";
 
 function userAdministration(props) {
     const generalStyle = generalStyles();
@@ -13,9 +14,8 @@ function userAdministration(props) {
     }
 
     const handleEditUserClick = () => {
+        props.setIsUserBeingEdited(true);
         props.switchContent(CREATE_OR_EDIT_USER_IDENTIFIER);
-
-
     }
 
     const handleDeleteUserClick = () => {
@@ -50,4 +50,4 @@ function userAdministration(props) {
     )
 }
 
-export default connect((state) => ({}), {switchContent})(userAdministration)
+export default connect((state) => ({}), {switchContent, setIsUserBeingEdited})(userAdministration)
