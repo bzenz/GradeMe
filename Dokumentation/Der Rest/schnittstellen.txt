@@ -7,6 +7,7 @@
 -   /user
 -   -   /create POST (vorname, name, password, rolle, request_token) => userId (generiert aus vorn, name & evtl. nr)
 -   -   /delete POST (userId, request_token) => deletedUserId
+-   -   /getData (userId, request_token) => { userId, loginName, vorname, name, rolle }
 -   -   /getAll POST (request_token) => [{userId, loginName, vorname, name, rolle}]
 -   -   -   /forCourse POST (courseId, request_token) => [{userId, vorname, name, rolle}]
 -   -   -   /forTask POST (taskId, request_token) => [{userId, vorname, name, rolle, evaluation, annotation}]
