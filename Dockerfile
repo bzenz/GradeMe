@@ -20,9 +20,8 @@ FROM node:12.18-alpine
 
 WORKDIR /usr/share/html
 
-COPY --from=node /tmp/grademe/workdir/BackEnd .
-COPY --from=node /tmp/grademe/workdir/DB .
-
+COPY --from=node /tmp/grademe/workdir/BackEnd ./BackEnd
+COPY --from=node /tmp/grademe/workdir/DB ./DB
 
 EXPOSE 5000
 
