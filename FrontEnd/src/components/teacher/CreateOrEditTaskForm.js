@@ -60,7 +60,7 @@ function CreateOrEditTaskForm(props){
         case "title": setTitle(event.target.value); break;
         case "graded": {
             let checkBoxValue = event.target.checked;
-            setIsWarningDialogOpen(true);
+            {props.isTaskBeingEdited?setIsWarningDialogOpen(true):null}
             //Wird erst so gemacht, wenn die umsetzung im Backend abgeschlossen ist
 /*            if(!checkBoxValue){
                 setIsWarningDialogOpen(true);
