@@ -1,51 +1,69 @@
 import React, {useState} from "react";
+import { View, StyleSheet } from "react-native";
 import {connect} from "react-redux";
-import generalStyles from "./../../styles/GeneralStyles"
-import {Typography} from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
-import IconButton from "@material-ui/core/IconButton";
-import NoteAddIcon from "@material-ui/icons/NoteAdd";
+import {generalNativeStyles} from "../../styles/GeneralStyles"
+import { Button, Card, Input, Text} from "react-native-elements"
 import {SERVER} from "../../../index";
 import { USER_ADMINISTRATION_IDENTIFIER} from "../general/identifiers";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import {CheckBox} from "react-native-elements";
 
-const customStyles = makeStyles((theme) => ({
-    backgroundPaper: {
-        width: '100%',
-        maxWidth: '800px',
+const customstyles = StyleSheet.create({
+    checkBoxView: {
         display: 'flex',
-        flexDirection: 'column',
-        padding: theme.spacing(2),
-        justifyContent: "center",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
     },
-    formTextfield: {
-        marginTop: '2%',
+    checkBoxContainerStyle: {
+        backgroundColor: "#ffffff",
+        borderWidth: 0,
     },
-    formControl: {
-        marginTop: '2%',
-    },
-}))
+    cardStyle: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+})
 
 function CreateOrEditUserForm(props) {
-    const generalStyle = generalStyles();
-    const customStyle = customStyles();
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [role, setRole] = useState("student");
-    const [firstnameFieldFilled, setFirstnameFieldFilled] =useState(true);
-    const [lastnameFieldFilled, setLastnameFieldFilled] =useState(true);
+    const [firstnameFieldFilled, setFirstnameFieldFilled] = useState(true);
+    const [lastnameFieldFilled, setLastnameFieldFilled] = useState(true);
+    const [studentChecked, setStudentChecked] = useState(true);
+    const [teacherChecked, setTeacherChecked] = useState(false);
+    const [adminChecked, setAdminChecked] = useState(false);
 
-    function handleFormChange(event, type) {
+    function handleFormChange(value, type) {
         switch (type) {
-            case "firstname": setFirstname(event.target.value); break;
-            case "lastname": setLastname(event.target.value); break;
-            case "role": setRole(event.target.value);
+            case "firstname": setFirstname(value); break;
+            case "lastname": setLastname(value); break;
+        }
+    }
+    const handleRoleSelectionChange = (role) => {
+        setRole(role);
+        switch (role) {
+            case "student":
+                setStudentChecked(true);
+                setTeacherChecked(false);
+                setAdminChecked(false);
+                break;
+            case "teacher":
+                setStudentChecked(false);
+                setTeacherChecked(true);
+                setAdminChecked(false);
+                break;
+            case "admin":
+                setStudentChecked(false);
+                setTeacherChecked(false);
+                setAdminChecked(true);
+                break;
+            default:
+                setStudentChecked(false);
+                setTeacherChecked(false);
+                setAdminChecked(false);
         }
     }
 
@@ -86,52 +104,58 @@ function CreateOrEditUserForm(props) {
         props.switchContent(USER_ADMINISTRATION_IDENTIFIER)
     }
 
-    const handleRoleSelectionChange = (event) => {
-        setRole(event.target.value);
-    }
-
     return (
-        <div>
-            <Typography className={generalStyle.siteHeading}>
+        <View style={generalNativeStyles.root}>
+            <Text style={generalNativeStyles.siteHeading}>
                 Nutzer anlegen
-            </Typography>
-            <Paper className={customStyle.backgroundPaper}>
-                <TextField
-                    className={ customStyle.formTextfield }
+            </Text>
+            <Card containerStyle={customstyles.cardStyle} >
+                <Input
                     error={ !firstnameFieldFilled }
                     id="firstname"
                     label="Vorname"
                     variant="outlined"
-                    onChange={(e) => {handleFormChange(e, "firstname")}}
+                    onChangeText={(value) => {handleFormChange(value, "firstname")}}
                 />
 
-                <TextField
-                    className={customStyle.formTextfield}
+                <Input
                     error={ !lastnameFieldFilled }
                     id="lastname"
                     label="Nachname"
                     variant="outlined"
-                    onChange={(e) => {handleFormChange(e, "lastname")}}
+                    onChangeText={(value) => {handleFormChange(value, "lastname")}}
                 />
-                <FormControl variant={"standard"} className={customStyle.formControl}>
-                    <InputLabel id="Roleselectionlabel">Rolle auswählen</InputLabel>
-                    <Select
-                        labelId="filterSelect-label"
-                        id="filterSelect"
-                        value={role}
-                        onChange={handleRoleSelectionChange}
-                    >
-                        <MenuItem value={"student"}>Schüler</MenuItem>
-                        <MenuItem value={"teacher"}>Lehrer</MenuItem>
-                        <MenuItem value={"admin"}>Administrator</MenuItem>
-                    </Select>
-                </FormControl>
-                <IconButton color={'primary'} onClick={() => submitTaskForm()}>
-                    <NoteAddIcon />
-                    Nutzer erstellen
-                </IconButton>
-            </Paper>
-        </div>
+                <View style={customstyles.checkBoxView}>
+                    <CheckBox
+                        title='Schüler'
+                        checked={studentChecked}
+                        containerStyle={customstyles.checkBoxContainerStyle}
+                        onPress={() => handleRoleSelectionChange("student")}
+                    />
+                    <CheckBox
+                        title='Lehrer'
+                        checked={teacherChecked}
+                        containerStyle={customstyles.checkBoxContainerStyle}
+                        onPress={() => handleRoleSelectionChange("teacher")}
+                    />
+                    <CheckBox
+                        title='Administrator'
+                        checked={adminChecked}
+                        containerStyle={customstyles.checkBoxContainerStyle}
+                        onPress={() => handleRoleSelectionChange("admin")}
+                    />
+                </View>
+                    <Button
+                        title={"Nutzer erstellen"}
+                        buttonStyle={generalNativeStyles.button1}
+                        containerStyle={generalNativeStyles.buttonContainerStyle}
+                        onPress={() => submitTaskForm()}>
+                        {/*Kommt erst später, wenn die Icons für Mobilansicht umgesetzt sind*/}
+                        {/*icon={<NoteAddIcon/>}*/}
+
+                </Button>
+            </Card>
+        </View>
     )
 }
 

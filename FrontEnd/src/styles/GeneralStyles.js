@@ -59,13 +59,12 @@ export default makeStyles((theme) => ({
 
 export const generalNativeStyles = StyleSheet.create({
     root: {
-        justifyContent: "flex-end",
         display: "flex",
-        width: "50%",
+        justifyContent: "center",
+        width: "70%",
         padding: "2%",
         flexDirection: "column",
         alignItems: "center",
-
     },
     siteHeading: {
         fontSize: 50,
@@ -83,8 +82,10 @@ export const generalNativeStyles = StyleSheet.create({
     },
     button1: {
         backgroundColor: '#63a4ff',
-        borderRadius: 3,
+        borderRadius: 10,
         width: "100%",
-
+    },
+    buttonContainerStyle: {
+        width: '100%',
     }
 })

@@ -1,7 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import {connect} from "react-redux";
-//import {Button, Typography} from "@material-ui/core";
 import { Button, Text } from "react-native-elements"
 import generalStyles, {generalNativeStyles} from "./../../styles/GeneralStyles"
 import {switchContent} from "../../actions/teacherNavigationActions";
@@ -10,14 +9,10 @@ import {setIsUserBeingEdited} from "../../actions/adminActions";
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
     },
-    button: {
-        backgroundColor: '#00ae00',
-        borderColor: 'red',
-        borderWidth: 5,
-        borderRadius: 15
-    }
 })
 
 function userAdministration(props) {
@@ -56,12 +51,13 @@ function userAdministration(props) {
             <Text style={generalNativeStyles.siteHeading}>
                 Nutzerverwaltung
             </Text>
-            <Button
-                buttonStyle={generalNativeStyles.button1}
-                onPress={handleCreateUserClick}
-                title={"Nutzer anlegen"}
-            >
-            </Button>
+                <Button
+                    buttonStyle={generalNativeStyles.button1}
+                    containerStyle={generalNativeStyles.buttonContainerStyle}
+                    onPress={handleCreateUserClick}
+                    title={"Nutzer anlegen"}
+                >
+                </Button>
         </View>
     )
 }

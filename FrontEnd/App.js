@@ -16,7 +16,6 @@ import {mobileDeviceScreenWidthBreakpoint} from "./src/styles/NavigationStyle";
 import generalNavigationReducer from "./src/reducers/generalNavigationReducer";
 import {setDrawerOpenState} from "./src/actions/generalNavigationActions";
 import adminReducer from "./src/reducers/adminReducer";
-import UserAdministration from "./src/components/admin/UserAdministration";
 
 const reducer = combineReducers({
   loginReducer,
@@ -44,19 +43,16 @@ function App(props) {
 
     if(localStorage.getItem("userId")) {
         return(
-        <View style={styles.container}>
-           <Navigation/>
-            <StatusBar style="auto"/>
-        </View>
+            <View style={styles.container}>
+               <Navigation/>
+                <StatusBar style="auto"/>
+            </View>
         )
     }
 
     return (
       <View style={styles.loginScreen}>
-
-          <UserAdministration/>
-
-         {/* <LoginScreen />*/}
+          <LoginScreen />Nut
           <StatusBar style="auto"/>
       </View>
     );
