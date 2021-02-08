@@ -15,14 +15,13 @@ import CoursesForSubject from "../teacher/CoursesForSubject";
 import useStyles from "../../styles/NavigationStyle";
 import CourseView from "../teacher/CourseView";
 import LogoutButton from "./LogoutButton";
-import Taskoverview from "./studentAndTeacher/Taskoverview";
+import Taskoverview, {EDIT_TASK} from "./studentAndTeacher/Taskoverview";
 import EvaluateTaskPage from "../teacher/EvaluateTaskPage";
 import {SHOW_EVALUATE_TASK_PAGE} from "../../actions/teacherNavigationActions";
 import Box from "@material-ui/core/Box";
 import Timetable from "./studentAndTeacher/Timetable";
 import {SERVER} from "../../../index";
 import ActionsForCourseList, {CREATE_NEW_TASK} from "../teacher/ActionsForCourseList";
-import CreateTaskForm from "../teacher/CreateTaskForm";
 import CommunicationDashboard from "./studentAndTeacher/CommunicationDashboard";
 import GradesAccordions from "../student/GradesComponent";
 import StudentsInCourseOverview from "../teacher/StudentsInCourseOverview";
@@ -31,6 +30,7 @@ import ErrorContentPaper from "./ErrorContentPaper";
 import {setDrawerOpenState} from "../../actions/generalNavigationActions";
 import {ACTIONS_FOR_COURSE_IDENTIFIER, COMMUNICATION_DASHBOARD_IDENTIFIER, COURSE_VIEW_IDENTIFIER, COURSES_FOR_SUBJECT_IDENTIFIER, GRADES_OVERVIEW_IDENTIFIER, SCHEDULE_IDENTIFIER, STUDENTS_FOR_COURSE_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER, TASKS_FOR_COURSE_IDENTIFIER} from "./identifiers";
 import { Tabs } from "./Tabs";
+import CreateOrEditTaskForm from "../teacher/CreateOrEditTaskForm";
 
 function Dashboard(props) {
     const classes = useStyles();
@@ -55,7 +55,9 @@ function Dashboard(props) {
             case ACTIONS_FOR_COURSE_IDENTIFIER:
                 return <ActionsForCourseList/>;
             case CREATE_NEW_TASK:
-                return <CreateTaskForm/>;
+                return <CreateOrEditTaskForm/>;
+            case EDIT_TASK:
+                return <CreateOrEditTaskForm/>;
             case STUDENTS_FOR_COURSE_IDENTIFIER:
                 return <StudentsInCourseOverview/>;
             case ERROR_CONTENT_IDENTIFIER:

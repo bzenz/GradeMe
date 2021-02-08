@@ -12,9 +12,11 @@ import {connect} from "react-redux";
 import Box from "@material-ui/core/Box";
 import {SERVER} from "../../../../index";
 import Button from "@material-ui/core/Button";
-import {SHOW_EVALUATE_TASK_PAGE, showEvaluateTaskPage, switchContent} from "../../../actions/teacherNavigationActions";
+import {setDetailsOfEditedTask, setIsTaskBeingEdited, SHOW_EVALUATE_TASK_PAGE, showEvaluateTaskPage, switchContent} from "../../../actions/teacherNavigationActions";
 import { setErrorData } from "../../../actions/errorActions";
 import Divider from '@material-ui/core/Divider';
+
+export const EDIT_TASK = "EDIT_TASK";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,16 +39,25 @@ const useStyles = makeStyles((theme) => ({
     accordionSecondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
         color: theme.palette.text.secondary,
-        flexBasis: '20%',
+        flexBasis: '15%',
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
         width: '100%',
     },
-    button: {
+    gradeButton: {
         backgroundColor: '#63a4ff',
-        flexBasis: '20%'
+        flexBasis: '15%'
+    },
+    gradeButtonPlaceholder: {
+        backgroundColor: 'white',
+        flexBasis: '15%'
+    },
+    editButton: {
+      flexBasis: "15%",
+      backgroundColor: '#63a4ff',
+        marginLeft: '1%',
     },
     mainContentBox: {
         paddingRight: '5%',
@@ -62,6 +73,10 @@ const useStyles = makeStyles((theme) => ({
         alignSelf: "center",
         alignItems: "center",
     },
+    accordionDetails: {
+      display: "flex",
+      flexDirection: "column",
+    }
 }));
 
 
@@ -78,6 +93,12 @@ function Taskoverview(props) {
     function handleEvaluateTaskClick(taskId, taskTitle){
         props.switchContent(SHOW_EVALUATE_TASK_PAGE);
         props.showEvaluateTaskPage(taskId, taskTitle);
+    }
+
+    function handleEditTaskClick(taskId, title, graded, deadline, description, courseId){
+        props.switchContent(EDIT_TASK);
+        props.setDetailsOfEditedTask(taskId, title, graded, deadline, description, courseId);
+        props.setIsTaskBeeingEdited(true);
     }
 
     function getTasksForCourse(data){
@@ -132,22 +153,31 @@ function Taskoverview(props) {
             >
                 <Box className={classes.accordionHeaderFlexbox}>
                     <Typography className={classes.accordionPrimaryHeading}>{task.title}</Typography>
-                    <Typography className={classes.accordionSecondaryHeading}>{task.courseName}</Typography>
+                    <Typography className={classes.accordionSecondaryHeading}>{task.course}</Typography>
                     <Typography className={classes.accordionSecondaryHeading}>{diffInDays===0?"Heute":deadline.getDate() + "/" + displayMonth + "/" + deadline.getFullYear()}</Typography>
                     {props.role === "teacher" && task.graded?
-                        <Button className={classes.button}
-                                onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
-                            Aufgabe bewerten
-                        </Button> :null}
+                      <Button className={classes.gradeButton}
+                        onClick={() => handleEvaluateTaskClick(task.taskId, task.title)}>
+                        Bewerten
+                      </Button>:
+                      <Button className={classes.gradeButtonPlaceholder} disabled={true}>
+
+                      </Button>}
+                    {props.role === "teacher"?
+                        <Button className={classes.editButton}
+                                onClick={() => handleEditTaskClick(task.taskId, task.title, task.graded, task.deadline, task.description, task.course)}
+                                marginTop={'100pt'}>
+                            Bearbeiten
+                        </Button>:null}
                     {props.role === "student" && task.graded?
-                        <Tooltip title={"Diese Aufgabe wird benotet"} >
-                            <GradeIcon/>
-                        </Tooltip>: null
-                    }
+                    <Tooltip title={"Diese Aufgabe wird benotet"}>
+                      <GradeIcon/>
+                    </Tooltip>: null
+                  }
                 </Box>
             </AccordionSummary>
-            <AccordionDetails>
-                <Typography>
+            <AccordionDetails className={classes.accordionDetails}>
+                <Typography align={"left"}>
                     {task.description}
                 </Typography>
             </AccordionDetails>
@@ -201,4 +231,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect (mapStateToProps, {showEvaluateTaskPage, switchContent, setErrorData})(Taskoverview)
+export default connect (mapStateToProps, {showEvaluateTaskPage, switchContent, setErrorData, setDetailsOfEditedTask, setIsTaskBeeingEdited: setIsTaskBeingEdited})(Taskoverview)
