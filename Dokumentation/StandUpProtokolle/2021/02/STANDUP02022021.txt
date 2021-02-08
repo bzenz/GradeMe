@@ -1,2 +1,20 @@
 Standup vom 2.2.2021
 
+1. Zwischenpräsentation
+
+    Aktueller Stand der Arbeit:
+-> Benito?        Nochma kurz was wir machen
+-> Flol start
+        Admin Oberfläche
+            Feature Tree Diagramm
+            Wir haben issues gebastlet (= Wir haben Aufgaben angelegt und priorisiert)
+            fertige Elemente zeigen
+-> Flol Ende
+-> Robin start
+        Mobilansicht
+            aktullen Stand vorstellen
+            auf geschehene Fehler eingehen
+-> Robin Ende
+-> Benito Start
+        Wies dann weitergeht (u.a. wie wir uns auf den Testtag vorbereiten)
+-> Benito Ende

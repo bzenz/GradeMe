@@ -3,9 +3,9 @@ import {
     SHOW_EVALUATE_TASK_PAGE,
     SET_IS_TASK_BEING_EDITED
 } from '../actions/teacherNavigationActions';
-import {SUBJECT_OVERVIEW_IDENTIFIER} from '../components/teacher/TeacherTabs';
+import {SUBJECT_OVERVIEW_IDENTIFIER} from '../components/general/identifiers';
 import { ERROR_CONTENT_IDENTIFIER } from "../actions/errorActions";
-import { EDIT_TASK } from "../components/Taskoverview";
+import { EDIT_TASK } from "../components/general/studentAndTeacher/Taskoverview";
 
 //Active Content in Main Panel defaults zu diesem Wert. Für Testzwecke, kann die zu testende Seite hier eingetragen werden
 const DEFAULT_STATE = {activeContent: SUBJECT_OVERVIEW_IDENTIFIER}

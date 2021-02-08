@@ -7,13 +7,13 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import generalStyles from "../styles/GeneralStyles";
+import generalStyles from "../../../styles/GeneralStyles";
 import {connect} from "react-redux";
 import Box from "@material-ui/core/Box";
-import {SERVER} from "../../index";
+import {SERVER} from "../../../../index";
 import Button from "@material-ui/core/Button";
-import { setDetailsOfEditedTask, setIsTaskBeingEdited, SHOW_EVALUATE_TASK_PAGE, showEvaluateTaskPage, switchContent } from "../actions/teacherNavigationActions";
-import { setErrorData } from "../actions/errorActions";
+import {setDetailsOfEditedTask, setIsTaskBeingEdited, SHOW_EVALUATE_TASK_PAGE, showEvaluateTaskPage, switchContent} from "../../../actions/teacherNavigationActions";
+import { setErrorData } from "../../../actions/errorActions";
 import Divider from '@material-ui/core/Divider';
 
 export const EDIT_TASK = "EDIT_TASK";

@@ -1,8 +1,8 @@
 import React from "react";
-import Stundenplan from "../images/Stundenplan_Mock.jpg"
+import Stundenplan from "../../../images/Stundenplan_Mock.jpg"
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import generalStyles from "../styles/GeneralStyles";
+import generalStyles from "../../../styles/GeneralStyles";
 
 export default function Timetable() {
     const generalStyle = generalStyles();

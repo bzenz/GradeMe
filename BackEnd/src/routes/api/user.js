@@ -1,6 +1,7 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
-const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask } = require('../../db/getAllUsers');
+const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/getAllUsers');
+const { getUserById } = require('../../db/getUser');
 
 const userRouter =
 createRoutes([
@@ -55,6 +56,37 @@ createRoutes([
         }
     },
     {
+        path: '/getAll',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) =>
+        {
+            try
+            {
+                const users = await getAllUsers();
+                for (const i in users)
+                {
+                    const user = users[i];
+                    users[i] =
+                    {
+                        userId: user.Id,
+                        loginName: user.LoginName,
+                        vorname: user.Vorname,
+                        name: user.Name,
+                        rolle: user.Type,
+                    };
+                }
+    
+                return res.status(200).json( users );
+            }
+            catch (err)
+            {
+                return res.status(400).json( {error: err.message} );
+            }
+
+        }
+    },
+    {
         path: '/getAll/forCourse',
         method: 'post',
         strategy: 'jwt',
@@ -87,6 +119,38 @@ createRoutes([
             }
 
             return res.status(200).json( users );
+        }
+    },
+    {
+        path: '/getData',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) =>
+        {
+            try
+            {
+                const args = extractArguments(req.body,
+                [
+                    { key: 'userId', type: 'number' },
+                ]);
+
+                const dbUser = await getUserById(args.userId);
+                
+                const userData =
+                {
+                    userId: dbUser.Id,
+                    loginName: dbUser.LoginName,
+                    vorname: dbUser.Vorname,
+                    name: dbUser.Name,
+                    rolle: dbUser.Type,
+                };
+
+                return res.status(200).json( userData );
+            }
+            catch (err)
+            {
+                return res.status(400).json( {error: err.message} );
+            }
         }
     },
     {

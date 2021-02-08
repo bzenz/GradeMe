@@ -1,3 +1,6 @@
 Standup vom 26.1.2021
 
 1. Florian ist dafür, dass Issues, wenn sie beim Review ein Feedback bekommen haben nicht in der Feedback Spalte bleiben, sondern wieder in den Backlog kommen, oder wir legen noch eine Feedback Spalte an
+--> machen wir
+
+2. Standup immer ab 15 Uhr

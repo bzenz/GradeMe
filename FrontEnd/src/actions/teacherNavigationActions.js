@@ -1,4 +1,4 @@
-import { EDIT_TASK } from "../components/Taskoverview";
+import { EDIT_TASK } from "../components/general/studentAndTeacher/Taskoverview";
 
 export const SWITCH_TO_CONTENT = "SWITCH_TO_CONTENT";
 export const SHOW_EVALUATE_TASK_PAGE = "SHOW_EVALUATE_TASK_PAGE";

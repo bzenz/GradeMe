@@ -2,10 +2,10 @@ import React from 'react';
 import {connect} from "react-redux";
 import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import {logoutAction} from "../actions/loginActions";
-import localStorage from "../../utils/localStorageMock";
-import generalStyles from "../styles/GeneralStyles";
-import navigationStyles from "../styles/NavigationStyle";
+import {logoutAction} from "../../actions/loginActions";
+import localStorage from "../../../utils/localStorageMock";
+import generalStyles from "../../styles/GeneralStyles";
+import navigationStyles from "../../styles/NavigationStyle";
 import {Typography} from "@material-ui/core";
 
 function LogoutButton(props) {
