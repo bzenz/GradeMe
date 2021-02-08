@@ -6,7 +6,8 @@ import useStyles from "../../styles/NavigationStyle";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import {CREATE_NEW_TASK_IDENTIFIER} from "../general/identifiers";
+
+export const CREATE_NEW_TASK = "CREATE_NEW_TASK";
 
 const useStylesCustom = makeStyles((theme) => ({
     root: {
@@ -40,13 +41,14 @@ function ActionsForCourseList(props){
     const classesCustom = useStylesCustom();
 
     function handleCourseAction(actiontype){
-        props.switchContent(actiontype);
+      props.setIsTaskBeingEdited(false);
+      props.switchContent(actiontype);
     }
     return(
         <div>
             <Button
                 className={classesCustom.button}
-                onClick={() => handleCourseAction(CREATE_NEW_TASK_IDENTIFIER)}>
+                onClick={() => handleCourseAction(CREATE_NEW_TASK)}>
                 <AddIcon/>
                 <Typography variant={"button"} className={classes.buttonText}>
                     Neue Aufgabe für diesen Kurs anlegen
@@ -56,4 +58,4 @@ function ActionsForCourseList(props){
     )
 }
 
-export default connect(null, {switchContent})(ActionsForCourseList)
+export default connect(null, {switchContent, setIsTaskBeingEdited})(ActionsForCourseList)

@@ -68,7 +68,6 @@ function SubjectOverview(props) {
         <Box className={ classes.mainContentBox }>
           { subjectPapers }
         </Box>
-
       </div>
     )
   } catch(exception){
