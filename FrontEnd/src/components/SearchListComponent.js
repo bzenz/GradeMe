@@ -121,6 +121,46 @@ function SearchListComponent(props) {
         }
     }
 
+    const renderButtonsForList = (isFirstList, dataRecord) => {
+        if(props.isTwoListComponent){
+            if(isFirstList){
+                return (
+                    <IconButton
+                        aria-label="Delete"
+                        onFocus={(event) => event.stopPropagation()}
+                        onClick={(event) => {
+                            setScrollPosition(scrollPositionVariable);
+                            event.stopPropagation()
+                            const arrayObj = moveDataRecordFromOneArrayToAnotherArray(dataRecord, normalList, searchList);
+                            setNormalList(arrayObj.departureArray);
+                            setSearchList(arrayObj.destinationArray);
+                        }}>
+                        <DeleteIcon/>
+                    </IconButton>
+                )
+            } else {
+                return (
+                    <IconButton
+                        aria-label="Add"
+                        onFocus={(event) => event.stopPropagation()}
+                        onClick={(event) => {
+                            setScrollPosition(scrollPositionVariable);
+                            event.stopPropagation()
+                            const arrayObj = moveDataRecordFromOneArrayToAnotherArray(dataRecord, searchList, normalList);
+                            setNormalList(arrayObj.departureArray);
+                            setSearchList(arrayObj.destinationArray);
+                        }}>
+                        <AddIcon/>
+                    </IconButton>
+                )
+            }
+        } else {
+            return (
+                props.buttonListForTableEntry
+            )
+        }
+    }
+
     const buildTable = (arrayOfDataRecords, isFirstList, applyFilter) => {
         return (
             <Table>
@@ -155,42 +195,7 @@ function SearchListComponent(props) {
                                         </TableCell>
                                     )
                                 })}
-
-                                {/*Es wird hier geprüft, ob für jeden Dateneintrag in der Liste ein Button zum verschieben in
-                                die jeweils andere Liste eingefügt werden soll. Dafür muss zuerst geprüft werden, ob es überhaupt
-                                eine TwoListComponent ist und zusätzlich, ob es denn die erste oder zweite Liste ist, um dann
-                                den entsprechenden Button einzufügen.
-                                Wenn nicht, sollen die Buttons eingefügt werden, die von den Props der Komponente zur
-                                Verfügung gestellt werden.
-                                Ja, verschachtelte tertiäre Ausdrücke innerhalb von JSX sucken... aber muss ja manchmal sein*/}
-                                {isFirstList&&props.isTwoListComponent?
-                                    <IconButton
-                                        aria-label="Delete"
-                                        onFocus={(event) => event.stopPropagation()}
-                                        onClick={(event) => {
-                                            setScrollPosition(scrollPositionVariable);
-                                            event.stopPropagation()
-                                            const arrayObj = moveDataRecordFromOneArrayToAnotherArray(dataRecord, normalList, searchList);
-                                            setNormalList(arrayObj.departureArray);
-                                            setSearchList(arrayObj.destinationArray);
-                                        }}>
-                                        <DeleteIcon/>
-                                    </IconButton> :
-                                    props.isTwoListComponent?
-                                        <IconButton
-                                            aria-label="Add"
-                                            onFocus={(event) => event.stopPropagation()}
-                                            onClick={(event) => {
-                                            setScrollPosition(scrollPositionVariable);
-                                            event.stopPropagation()
-                                            const arrayObj = moveDataRecordFromOneArrayToAnotherArray(dataRecord, searchList, normalList);
-                                            setNormalList(arrayObj.departureArray);
-                                            setSearchList(arrayObj.destinationArray);
-                                        }}>
-                                            <AddIcon/>
-                                        </IconButton>
-                                    :props.buttonListForTableEntry
-                                }
+                                {renderButtonsForList(isFirstList, dataRecord)}
                             </TableRow>
                         )
                    }
