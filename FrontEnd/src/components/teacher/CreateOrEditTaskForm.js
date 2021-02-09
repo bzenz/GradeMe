@@ -16,6 +16,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
+import CancelButton from "../general/CancelButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -180,6 +181,7 @@ function CreateOrEditTaskForm(props){
                     <NoteAddIcon className={classes.createIcon} />
                   {props.isTaskBeingEdited?"Veränderte Aufgabendetails absenden":"Aufgabe erstellen"}
                 </IconButton>
+                <CancelButton/>
             </Paper>
             <Dialog
                 open={isWarningDialogOpen}
