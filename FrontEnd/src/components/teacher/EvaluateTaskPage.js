@@ -17,6 +17,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import generalStyles from "../../styles/GeneralStyles";
 import CancelButton from "../general/CancelButton";
+import { generalNativeStyles} from "../../styles/GeneralStyles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -225,7 +226,7 @@ function evaluateTaskPage(props) {
                     </Typography>
                     <CheckRoundedIcon/>
                 </Button>
-                <CancelButton className={classes.button}/>
+                <CancelButton style={[generalNativeStyles.halfWidth]}/>
             </Box>
           <Dialog
             open={open}

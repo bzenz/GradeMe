@@ -1,4 +1,5 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { StyleSheet } from 'react-native';
 
 export default makeStyles((theme) => ({
     siteHeading: {
@@ -40,3 +41,42 @@ export default makeStyles((theme) => ({
         }
     },
 }))
+
+export const generalNativeStyles = StyleSheet.create({
+    root: {
+        display: "flex",
+        justifyContent: "center",
+        width: "70%",
+        padding: "2%",
+        flexDirection: "column",
+        alignItems: "center",
+    },
+    siteHeading: {
+        fontSize: 50,
+        color: '#3F51B5',
+        //width: "100%",
+        /* [theme.breakpoints.down('xs')]: {
+             fontSize: '1.3rem',
+         },
+         [theme.breakpoints.only('sm')]: {
+             fontSize: '2.3rem',
+         },
+         [theme.breakpoints.up("lg")]: {
+             fontSize: '4rem',
+         }*/
+    },
+    button1: {
+        backgroundColor: '#63a4ff',
+        borderRadius: 10,
+        width: "100%",
+    },
+    withMarginTop: {
+        marginTop: '1%',
+    },
+    fullWidth: {
+        width: '100%',
+    },
+    halfWidth: {
+        width: '50%',
+    },
+})
