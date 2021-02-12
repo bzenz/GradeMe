@@ -1,12 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { View, StyleSheet } from "react-native";
 import {connect} from "react-redux";
 import {generalNativeStyles} from "../../styles/GeneralStyles"
-import { Button, Card, Input, Text} from "react-native-elements"
+import { Button, Card, Input, Text, CheckBox } from "react-native-elements"
 import {SERVER} from "../../../index";
 import { USER_ADMINISTRATION_IDENTIFIER} from "../general/identifiers";
 import {switchContent} from "../../actions/teacherNavigationActions";
-import {CheckBox} from "react-native-elements";
+import {setIsUserBeingEdited} from "../../actions/adminActions";
 
 const customstyles = StyleSheet.create({
     checkBoxView: {
@@ -26,15 +26,24 @@ const customstyles = StyleSheet.create({
     }
 })
 
+const teststyle = {
+    button1: {
+        container: {
+            background: 'green',
+        },
+    },
+}
+
 function CreateOrEditUserForm(props) {
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [role, setRole] = useState("student");
+    const [userData, setUserData] = useState({});
     const [firstnameFieldFilled, setFirstnameFieldFilled] = useState(true);
     const [lastnameFieldFilled, setLastnameFieldFilled] = useState(true);
-    const [studentChecked, setStudentChecked] = useState(true);
-    const [teacherChecked, setTeacherChecked] = useState(false);
-    const [adminChecked, setAdminChecked] = useState(false);
+    const [studentChecked, setStudentChecked] = useState(props.isUserBeingEdited&&userData.rolle==="student");
+    const [teacherChecked, setTeacherChecked] = useState(props.isUserBeingEdited&&userData.rolle==="teacher");
+    const [adminChecked, setAdminChecked] = useState(props.isUserBeingEdited&&userData.rolle==="admin");
 
     function handleFormChange(value, type) {
         switch (type) {
@@ -68,7 +77,19 @@ function CreateOrEditUserForm(props) {
     }
 
     if(props.isUserBeingEdited) {
-        
+        useEffect(() => {
+            fetch(SERVER + "/api/user/getData",
+                {
+                    "method": "POST",
+                    "headers": { 'Content-Type': 'application/json' },
+                    "body": JSON.stringify({
+                        request_token: props.request_token,
+                        userId: props.editedUserId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => setUserData(data))
+        }, [])
     }
 
     function submitTaskForm(){
@@ -111,10 +132,11 @@ function CreateOrEditUserForm(props) {
             </Text>
             <Card containerStyle={customstyles.cardStyle} >
                 <Input
-                    error={ !firstnameFieldFilled }
                     id="firstname"
                     label="Vorname"
+                    defaultValue={props.isUserBeingEdited?userData.vorname:""}
                     variant="outlined"
+                    error={ !firstnameFieldFilled }
                     onChangeText={(value) => {handleFormChange(value, "firstname")}}
                 />
 
@@ -122,6 +144,7 @@ function CreateOrEditUserForm(props) {
                     error={ !lastnameFieldFilled }
                     id="lastname"
                     label="Nachname"
+                    defaultValue={props.isUserBeingEdited?userData.name:""}
                     variant="outlined"
                     onChangeText={(value) => {handleFormChange(value, "lastname")}}
                 />
@@ -148,11 +171,7 @@ function CreateOrEditUserForm(props) {
                     <Button
                         title={"Nutzer erstellen"}
                         buttonStyle={generalNativeStyles.button1}
-                        containerStyle={generalNativeStyles.buttonContainerStyle}
                         onPress={() => submitTaskForm()}>
-                        {/*Kommt erst später, wenn die Icons für Mobilansicht umgesetzt sind*/}
-                        {/*icon={<NoteAddIcon/>}*/}
-
                 </Button>
             </Card>
         </View>
@@ -162,4 +181,5 @@ function CreateOrEditUserForm(props) {
 export default connect((state) => ({
     request_token: state.loginReducer.request_token,
     isUserBeingEdited: state.adminReducer.isUserBeingEdited,
+    editedUserId: state.adminReducer.editedUserId,
 }), {switchContent})(CreateOrEditUserForm)

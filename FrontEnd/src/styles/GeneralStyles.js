@@ -66,6 +66,9 @@ export const generalNativeStyles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
     },
+    fullWidth: {
+        width: '100%',
+    },
     siteHeading: {
         fontSize: 50,
         color: '#3F51B5',
@@ -83,9 +86,15 @@ export const generalNativeStyles = StyleSheet.create({
     button1: {
         backgroundColor: '#63a4ff',
         borderRadius: 10,
-        width: "100%",
     },
     buttonContainerStyle: {
-        width: '100%',
+        width: '60%',
+    },
+    buttonGroupContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    marginRight: {
+        marginRight: '1%',
     }
 })

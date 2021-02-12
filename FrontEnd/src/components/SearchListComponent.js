@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
+import { View, ScrollView } from "react-native";
 import {connect} from "react-redux";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Paper from "@material-ui/core/Paper";
+import {Button, Card} from "react-native-elements";
 import {Typography} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import generalStyles from "../styles/GeneralStyles";
+import generalStyles, {generalNativeStyles} from "../styles/GeneralStyles";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
@@ -14,11 +15,14 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import {Dimensions} from "react-native";
-import {ScrollView} from "react-native-web";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
+import {handleDeactivateUserClick, handleEditUserClick} from "./admin/UserAdministration";
+import {CREATE_OR_EDIT_USER_IDENTIFIER} from "./general/identifiers";
+import {switchContent} from "../actions/teacherNavigationActions";
+import {setIsUserBeingEdited} from "../actions/adminActions";
 
 
 let screenHeight = Math.round(Dimensions.get('window').height);
@@ -73,7 +77,7 @@ function SearchListComponent(props) {
     const[normalList, setNormalList] = useState([]);
     const[searchList, setSearchList] = useState([]);
     const[searchFieldValue, setSearchFieldValue] = useState("");
-    const[selectedSearchOption, setSelectedSearchOption] = useState("username");
+    const[selectedSearchOption, setSelectedSearchOption] = useState(props.defaultSelectedSearchOption);
     const[selectedFilterOption, setSelectedFilterOption] = useState("all");
     const[scrollPosition, setScrollPosition] = useState(0);
     const scrollRef = useRef();
@@ -82,6 +86,15 @@ function SearchListComponent(props) {
         setNormalList(props.normalList);
         setSearchList(props.searchList);
     })
+
+    const handleEditUserClick = (userId) => {
+        props.setIsUserBeingEdited(true, userId);
+        props.switchContent(CREATE_OR_EDIT_USER_IDENTIFIER);
+    }
+
+    const handleDeactivateUserClick = () => {
+
+    }
 
     const handleSearchFieldChange = (event) => {
         setSearchFieldValue(event.target.value);
@@ -156,7 +169,19 @@ function SearchListComponent(props) {
             }
         } else {
             return (
-                props.buttonListForTableEntry
+                <View style={generalNativeStyles.buttonGroupContainer}>
+                    {/*{props.buttonListForTableEntry(dataRecord.userId)}*/}
+                    <Button
+                        buttonStyle={[generalNativeStyles.button1, generalNativeStyles.marginRight]}
+                        title={"Bearbeiten"}
+                        onPress={() => handleEditUserClick(dataRecord.userId)}
+                    />
+                    <Button
+                        buttonStyle={generalNativeStyles.button1}
+                        title={"Deaktivieren"}
+                        onPress={() => handleDeactivateUserClick(dataRecord.userId)}
+                    />
+                </View>
             )
         }
     }
@@ -184,7 +209,7 @@ function SearchListComponent(props) {
                 (z.B. username des Nutzers entspricht dem im Suchfeld) und zusätzlich die Rolle der im Rollenfilter eingestellten Rolle entspricht */
                    if(!applyFilter||((dataRecord[selectedSearchOption].toLowerCase().includes(searchFieldValue.toLowerCase())) && (dataRecord[props.filterParameter]===selectedFilterOption||selectedFilterOption==="all"))) {
                         return (
-                            <TableRow className={dataRecord.role==="teacher"?classesCustom.dataRowTeacher:classesCustom.dataRow}>
+                            <TableRow className={dataRecord.rolle==="teacher"?classesCustom.dataRowTeacher:classesCustom.dataRow}>
                                 {/*Es wird hier über alle Einträge des dataRecord iteriert, uns aus jedem Eintrag wird eine Tabellenzelle gebastelt*/}
                                 {Object.values(dataRecord).map((dataRecordField) => {
                                     return (
@@ -195,7 +220,9 @@ function SearchListComponent(props) {
                                         </TableCell>
                                     )
                                 })}
-                                {renderButtonsForList(isFirstList, dataRecord)}
+                                <TableCell>
+                                    {renderButtonsForList(isFirstList, dataRecord)}
+                                </TableCell>
                             </TableRow>
                         )
                    }
@@ -207,8 +234,8 @@ function SearchListComponent(props) {
     }
 
     return (
-    <div>
-        <Paper>
+    <View style={generalNativeStyles.fullWidth}>
+        <Card>
            <ScrollView className={classesCustom.backgroundPaper} ref={scrollRef} onScroll={(event) => handleScroll(event)}>
                {scrollRef.current?.scrollTo({y:scrollPosition, animated: false})}
                {props.isTwoListComponent?
@@ -272,9 +299,9 @@ function SearchListComponent(props) {
                </Container>
                {buildTable(searchList, false, true)}
            </ScrollView>
-        </Paper>
-    </div>
+        </Card>
+    </View>
     )
 }
 
-export default connect ()(SearchListComponent)
+export default connect (null, {switchContent, setIsUserBeingEdited})(SearchListComponent)

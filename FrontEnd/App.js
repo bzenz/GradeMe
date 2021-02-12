@@ -52,7 +52,7 @@ function App(props) {
 
     return (
       <View style={styles.loginScreen}>
-          <LoginScreen />Nut
+          <LoginScreen />
           <StatusBar style="auto"/>
       </View>
     );
