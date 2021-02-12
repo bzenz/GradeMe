@@ -41,9 +41,9 @@ function CreateOrEditUserForm(props) {
     const [userData, setUserData] = useState({});
     const [firstnameFieldFilled, setFirstnameFieldFilled] = useState(true);
     const [lastnameFieldFilled, setLastnameFieldFilled] = useState(true);
-    const [studentChecked, setStudentChecked] = useState(props.isUserBeingEdited&&userData.rolle==="student");
-    const [teacherChecked, setTeacherChecked] = useState(props.isUserBeingEdited&&userData.rolle==="teacher");
-    const [adminChecked, setAdminChecked] = useState(props.isUserBeingEdited&&userData.rolle==="admin");
+    const [studentChecked, setStudentChecked] = useState(false);
+    const [teacherChecked, setTeacherChecked] = useState(false);
+    const [adminChecked, setAdminChecked] = useState(false);
 
     function handleFormChange(value, type) {
         switch (type) {
@@ -76,6 +76,16 @@ function CreateOrEditUserForm(props) {
         }
     }
 
+    const useFetchResponse = (data) => {
+        setUserData(data);
+        switch (data.rolle) {
+            case "student": setStudentChecked(true); break;
+            case "teacher": setTeacherChecked(true); break;
+            case "admin": setAdminChecked(true); break;
+            default: setStudentChecked(true);
+        }
+    }
+
     if(props.isUserBeingEdited) {
         useEffect(() => {
             fetch(SERVER + "/api/user/getData",
@@ -86,10 +96,13 @@ function CreateOrEditUserForm(props) {
                         request_token: props.request_token,
                         userId: props.editedUserId
                     })
-                })
-                .then(response => response.json())
-                .then(data => setUserData(data))
+                }).then(response => response.json())
+                .then(data => useFetchResponse(data))
         }, [])
+    } else {
+        useEffect(() => {
+            setStudentChecked(true);
+        })
     }
 
     function submitTaskForm(){
@@ -169,7 +182,7 @@ function CreateOrEditUserForm(props) {
                     />
                 </View>
                     <Button
-                        title={"Nutzer erstellen"}
+                        title={props.isUserBeingEdited?"Nutzer bearbeiten":"Nutzer erstellen"}
                         buttonStyle={generalNativeStyles.button1}
                         onPress={() => submitTaskForm()}>
                 </Button>

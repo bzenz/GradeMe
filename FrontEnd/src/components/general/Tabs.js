@@ -17,8 +17,17 @@ import PeopleIcon from "@material-ui/icons/People";
 import Typography from "@material-ui/core/Typography";
 import {Divider} from "@material-ui/core";
 import {PeopleAlt, PeopleOutline, Subject, SupervisorAccount} from "@material-ui/icons";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const style = makeStyles((theme) => ({
+    tabStyle: {
+        boxShadow: "0 0 15px #044ca4 inset",
+    },
+
+}))
 
 const tabs = (props) => {
+    const classes = style();
     const handleSwitchContent = (identifier) => {
         function switchContent() {
             props.switchContent(identifier);
@@ -33,7 +42,10 @@ const tabs = (props) => {
 
     const createTab = (label, identifier, icon) => {
         return(
-            <ListItem button onClick={handleSwitchContent(identifier)} key={`${label}-${identifier}`}>
+            <ListItem button
+                      onClick={handleSwitchContent(identifier)}
+                      key={`${label}-${identifier}`}
+                      className={props.activeContent === identifier && classes.tabStyle}>
                 <ListItemIcon>
                     {icon}
                 </ListItemIcon>
@@ -100,6 +112,7 @@ const tabs = (props) => {
 }
 
 export const Tabs = connect(state => ({
+    activeContent: state.teacherNavigationReducer.activeContent,
     courseName: state.courseNavigationReducer.courseName,
     isScreenWidthMobile: state.loginReducer.isScreenWidthMobile,
     courseSelected: state.courseNavigationReducer.courseSelected,
