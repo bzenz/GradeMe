@@ -19,11 +19,10 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
-import {handleDeactivateUserClick, handleEditUserClick} from "./admin/UserAdministration";
 import {CREATE_OR_EDIT_USER_IDENTIFIER} from "./general/identifiers";
 import {switchContent} from "../actions/teacherNavigationActions";
 import {setIsUserBeingEdited} from "../actions/adminActions";
-
+import {SERVER} from "../../index";
 
 let screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -87,14 +86,7 @@ function SearchListComponent(props) {
         setSearchList(props.searchList);
     })
 
-    const handleEditUserClick = (userId) => {
-        props.setIsUserBeingEdited(true, userId);
-        props.switchContent(CREATE_OR_EDIT_USER_IDENTIFIER);
-    }
 
-    const handleDeactivateUserClick = () => {
-
-    }
 
     const handleSearchFieldChange = (event) => {
         setSearchFieldValue(event.target.value);
@@ -134,6 +126,37 @@ function SearchListComponent(props) {
         }
     }
 
+    const handleEditDataRecordClick = (Id) => {
+        switch (props.componentDataRecordType) {
+            case "user":{
+                props.setIsUserBeingEdited(true, Id);
+                props.switchContent(CREATE_OR_EDIT_USER_IDENTIFIER);
+                break;
+            }
+            default: alert("Diese Funktion ist noch nicht verfügbar")
+        }
+
+    }
+
+    const handleDeactivateDataRecordClick = (Id) => {
+        switch (props.componentDataRecordType) {
+            case "user":{
+                let requestBody = {
+                    userId: Id,
+                    request_token: props.request_token,
+                };
+                fetch(SERVER + "/api/user/delete", {
+                    "method": "POST",
+                    "headers": {'Content-Type': 'application/json'},
+                    "body": JSON.stringify(requestBody)
+                })
+                alert("Nutzer wurde deaktiviert. Leider ist die Funktionalität im Backend noch nicht umgesetzt, daher konnten die Änderungen noch nicht gespeichert werden.")
+                break;
+            }
+            default: alert("Diese Funktion ist noch nicht verfügbar")
+        }
+       }
+
     const renderButtonsForList = (isFirstList, dataRecord) => {
         if(props.isTwoListComponent){
             if(isFirstList){
@@ -170,16 +193,15 @@ function SearchListComponent(props) {
         } else {
             return (
                 <View style={generalNativeStyles.buttonGroupContainer}>
-                    {/*{props.buttonListForTableEntry(dataRecord.userId)}*/}
                     <Button
                         buttonStyle={[generalNativeStyles.button1, generalNativeStyles.marginRight]}
                         title={"Bearbeiten"}
-                        onPress={() => handleEditUserClick(dataRecord.userId)}
+                        onPress={() => handleEditDataRecordClick(dataRecord[props.dataRecordIdentifierName])}
                     />
                     <Button
                         buttonStyle={generalNativeStyles.button1}
                         title={"Deaktivieren"}
-                        onPress={() => handleDeactivateUserClick(dataRecord.userId)}
+                        onPress={() => handleDeactivateDataRecordClick(dataRecord[props.dataRecordIdentifierName])}
                     />
                 </View>
             )
@@ -295,7 +317,6 @@ function SearchListComponent(props) {
                            })}
                        </Select>
                    </FormControl>
-
                </Container>
                {buildTable(searchList, false, true)}
            </ScrollView>
@@ -304,4 +325,4 @@ function SearchListComponent(props) {
     )
 }
 
-export default connect (null, {switchContent, setIsUserBeingEdited})(SearchListComponent)
+export default connect ((state) => ({request_token: state.loginReducer.request_token}), {switchContent, setIsUserBeingEdited})(SearchListComponent)

@@ -7,6 +7,7 @@ import {SERVER} from "../../../index";
 import { USER_ADMINISTRATION_IDENTIFIER} from "../general/identifiers";
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {setIsUserBeingEdited} from "../../actions/adminActions";
+import CancelButton from "../general/CancelButton";
 
 const customstyles = StyleSheet.create({
     checkBoxView: {
@@ -25,14 +26,6 @@ const customstyles = StyleSheet.create({
         alignItems: 'center',
     }
 })
-
-const teststyle = {
-    button1: {
-        container: {
-            background: 'green',
-        },
-    },
-}
 
 function CreateOrEditUserForm(props) {
     const [firstname, setFirstname] = useState("");
@@ -78,6 +71,8 @@ function CreateOrEditUserForm(props) {
 
     const useFetchResponse = (data) => {
         setUserData(data);
+        setFirstname(data.vorname);
+        setLastname(data.name);
         switch (data.rolle) {
             case "student": setStudentChecked(true); break;
             case "teacher": setTeacherChecked(true); break;
@@ -129,12 +124,29 @@ function CreateOrEditUserForm(props) {
             password: password,
             request_token: props.request_token,
         };
-        fetch(SERVER + "/api/user/create", {
-            "method": "POST",
-            "headers": {'Content-Type': 'application/json'},
-            "body": JSON.stringify(requestBody)
-        })
-        alert("Nutzer wurde erstellt");
+
+        if(props.isUserBeingEdited){
+            requestBody = {
+                vorname: firstname,
+                name: lastname,
+                rolle: role,
+                request_token: props.request_token,
+            };
+            fetch(SERVER + "/api/user/edit", {
+                "method": "POST",
+                "headers": {'Content-Type': 'application/json'},
+                "body": JSON.stringify(requestBody)
+            })
+            alert("Nutzerbearbeitung abgesendet. Leider ist die Funktionalität im Backend noch nicht umgesetzt, sodass die veränderten Userdaten nicht angezeigt werden");
+        } else {
+            fetch(SERVER + "/api/user/create", {
+                "method": "POST",
+                "headers": {'Content-Type': 'application/json'},
+                "body": JSON.stringify(requestBody)
+            })
+            alert("Nutzer erstellt. Leider ist die Funktionalität im Backend noch nicht umgesetzt, sodass der neu angelegte Nutzer noch nicht gespeicher werde konnte.");
+        }
+        props.setIsUserBeingEdited(false);
         props.switchContent(USER_ADMINISTRATION_IDENTIFIER)
     }
 
@@ -181,11 +193,12 @@ function CreateOrEditUserForm(props) {
                         onPress={() => handleRoleSelectionChange("admin")}
                     />
                 </View>
-                    <Button
-                        title={props.isUserBeingEdited?"Nutzer bearbeiten":"Nutzer erstellen"}
-                        buttonStyle={generalNativeStyles.button1}
-                        onPress={() => submitTaskForm()}>
+                <Button
+                    title={props.isUserBeingEdited?"Nutzer bearbeiten":"Nutzer erstellen"}
+                    buttonStyle={generalNativeStyles.button1}
+                    onPress={() => submitTaskForm()}>
                 </Button>
+                <CancelButton/>
             </Card>
         </View>
     )
@@ -195,4 +208,4 @@ export default connect((state) => ({
     request_token: state.loginReducer.request_token,
     isUserBeingEdited: state.adminReducer.isUserBeingEdited,
     editedUserId: state.adminReducer.editedUserId,
-}), {switchContent})(CreateOrEditUserForm)
+}), {switchContent, setIsUserBeingEdited})(CreateOrEditUserForm)

@@ -19,8 +19,9 @@ Die Komponente SearchAndListComponent kann folgende Props haben:
     Die Objektkeys müssen wie folgt heißen: {value: "...", displayedString: "..."}.
     Zusätzlich: der value "all" als Filter bewirkt, dass alle Ergebnisse angezeigt werden.
 10.  filterParameter: Parameter, nach dem in der Datenbasis gefiltert werden kann (z.B. role oder subject)
-(11.) buttonListForTableEntry: ein Array an Buttons, die bei einer single-List-Component für jede Row der Tabelle
-    eingefügt werden (zum Beispiel Bearbeiten/löschen Buttons)
+11. componentDataRecordType: Der Typ der Daten, die in der Komponente verwendet werden. (Bsp. "user" oder "course")
+    damit wird bei den bearbeiten/ deaktivieren Buttons durch ein switch-Statement entschieden, welche aktionen ausgeführt werden sollen
+12. dataRecordIdentifierName: der Name des Attributs, der die ID jedes einzelnen Eintrags der Liste darstellt
 
 Beispiel für eine twoListComponent:
 

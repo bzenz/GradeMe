@@ -1,26 +1,16 @@
 import React, {useEffect, useState} from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import {connect} from "react-redux";
 import { Button, Text } from "react-native-elements"
-import generalStyles, {generalNativeStyles} from "./../../styles/GeneralStyles"
+import {generalNativeStyles} from "../../styles/GeneralStyles"
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {CREATE_OR_EDIT_USER_IDENTIFIER} from "../general/identifiers";
 import {setIsUserBeingEdited} from "../../actions/adminActions";
 import SearchListComponent from "../SearchListComponent";
 import {setErrorData} from "../../actions/errorActions";
 import {SERVER} from "../../../index";
-import {usermockarray1} from "../../../utils/mocks";
-
-const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-    },
-})
 
 function userAdministration(props) {
-    const generalStyle = generalStyles();
     const [userList, setUserList] = useState([]);
 
     try {
@@ -45,27 +35,6 @@ function userAdministration(props) {
         props.switchContent(CREATE_OR_EDIT_USER_IDENTIFIER);
     }
 
-
-
-    const editUserButton = (userId) => {
-        return (
-            <Button
-                buttonStyle={[generalNativeStyles.button1, generalNativeStyles.marginRight]}
-                title={"Bearbeiten"}
-                onPress={(userId) => handleEditUserClick(userId)}
-            />
-        )
-    }
-    const deactivateUserButton = () => {
-        return (
-            <Button
-                buttonStyle={generalNativeStyles.button1}
-                title={"Deaktivieren"}
-                onPress={() => handleDeactivateUserClick()}
-            />
-        )
-    }
-
     return (
         <View id={"mainview"} style={[generalNativeStyles.root, generalNativeStyles.fullWidth]}>
             <Text style={generalNativeStyles.siteHeading}>
@@ -82,12 +51,13 @@ function userAdministration(props) {
                 isTwoListComponent={false}
                 searchListHeading={"Eingetragene Nutzer"}
                 searchList={userList}
-                tableHeadWords={["Id", "Benutzername", "vorname", "name", "Rolle"]}
+                tableHeadWords={["Id", "Benutzername", "Vorname", "Name", "Rolle"]}
                 searchOptionArray={[{value: "loginName", displayedString: "Benutzername"}, {value: "vorname", displayedString: "Vorname"}, {value: "name", displayedString: "Nachname"}]}
                 defaultSelectedSearchOption={"loginName"}
-                filterOptionArray={[{value: "all", displayedString: "Alle"}, {value: "student", displayedString: "Schüler"}, {value: "teacher", displayedString: "Lehrer"}]}
+                filterOptionArray={[{value: "all", displayedString: "Alle"}, {value: "student", displayedString: "Schüler"}, {value: "teacher", displayedString: "Lehrer"}, {value: "admin", displayedString: "Administrator"}]}
                 filterParameter={"rolle"}
-                buttonListForTableEntry={[editUserButton(), deactivateUserButton()]}
+                componentDataRecordType={"user"}
+                dataRecordIdentifierName={"userId"}
             />
         </View>
     )
