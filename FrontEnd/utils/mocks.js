@@ -16,7 +16,7 @@ export const usermockarray2 = [
     {id: 9, loginName: "drzoidberg", vorname: "Dr", name: "Zoidberg", rolle: "teacher"},
     {id: 10, loginName: "lisasauber", vorname: "Lisa", name: "Sauber", rolle: "student"},
     {id: 11, loginName: "peterlustig", vorname: "Peter", name: "Lustig", rolle: "teacher"},
-    {id: 12, loginName: "tomstehle", vorname: "Barack", name: "Obama", rolle: "admin"},
+    {id: 12, loginName: "barackobama", vorname: "Barack", name: "Obama", rolle: "admin"},
     {id: 13, loginName: "alinawong", vorname: "Alina", name: "Wong", rolle: "student"},
     {id: 14, loginName: "keineideenmehr", vorname: "Keineideen", name: "Mehr", rolle: "teacher"},
     {id: 15, loginName: "jetztreichtsaber", vorname: "Jetztreichts", name: "Aber", rolle: "student"},

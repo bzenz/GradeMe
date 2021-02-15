@@ -36,5 +36,6 @@ Beispiel für eine twoListComponent:
             defaultSelectedSearchOption={"loginName"}
             filterOptionArray={[{value: "all", displayedString: "Alle"}, {value: "student", displayedString: "Schüler"}, {value: "teacher", displayedString: "Lehrer"}]}
             filterParameter={"role"}
-            buttonListForTableEntry={[<Button onClick={() => alert("gut geklickt")}>Klick mich</Button>,<Button onClick={() => alert("Ey!")}>Klick mich bitte nicht</Button> ]}
+            componentDataRecordType={"user"}
+            dataRecordIdentifiername={"userId"}
         />
