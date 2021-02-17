@@ -10,7 +10,7 @@ import {loginPostFailed, loginPostSuccessfull, responseParsed} from "../actions/
 import { loop, Cmd } from 'redux-loop';
 import {switchContent} from "../actions/teacherNavigationActions";
 import localStorage from "../../utils/localStorageMock";
-import {GRADES_OVERVIEW_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER} from "../components/general/identifiers";
+import {GRADES_OVERVIEW_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, USER_ADMINISTRATION_IDENTIFIER} from "../components/general/identifiers";
 
 //FUNKTIONEN
 function postLoginAttempt(username, password){
@@ -24,6 +24,14 @@ function postLoginAttempt(username, password){
 
 function parseResponseToJson(res){
     return res.json();
+}
+
+function getDefaultContentForRole(role){
+    switch (role){
+        case "student": return GRADES_OVERVIEW_IDENTIFIER;
+        case "teacher": return SUBJECT_OVERVIEW_IDENTIFIER;
+        case "admin": return USER_ADMINISTRATION_IDENTIFIER;
+    }
 }
 
 //DEFAULT STATE
@@ -65,14 +73,17 @@ export default (state = DEFAULT_STATE, action) => {
             localStorage.setItem('role', action.res.rolle);
             localStorage.setItem('request_token', action.res.request_token);
             return loop({...state, userId, role: action.res.rolle, loggedIn: true, attemptingLogin: false, request_token: action.res.request_token},
-                Cmd.action(switchContent(action.res.rolle === "teacher" ? SUBJECT_OVERVIEW_IDENTIFIER:GRADES_OVERVIEW_IDENTIFIER)))
-
+                Cmd.action(switchContent(getDefaultContentForRole(action.res.rolle)))
+            );
         }
         case LOGIN_POST_FAILED:
             alert("Netzwerkfehler");
             return{...state, attemptingLogin: false}
         case LOAD_USER_DATA:
-            return{...state, userId: action.userId, role: action.role, request_token: action.request_token, loggedIn: true}
+            return loop(
+                {...state, userId: action.userId, role: action.role, request_token: action.request_token, loggedIn: true},
+                Cmd.action(switchContent(getDefaultContentForRole(action.role)))
+            );
         case LOGOUT_ACTION:
             return{...state, loggedIn: false}
         case SET_SCREEN_WIDTH_IS_MOBILE:
