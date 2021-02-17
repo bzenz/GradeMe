@@ -1,21 +1,21 @@
-const executeOnDB = require('./core/execute');
-const getMaxValue = require('./getMaxValue');
+const executeOnDB = require('../core/execute');
+const getMaxValue = require('../util/getMaxValue');
 
-const createTask = (title, description, date, courseId, graded) => 
+const createTask = (title, description, date, courseId, graded) =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
-        try 
+        try
         {
             const newId = (await getMaxValue('Tasks', 'Id')).Value + 1;
-            
+
             // (Id, Title, Description, Date, CourseId, Graded)
             const sql = `
             INSERT INTO Tasks 
             VALUES (?, ?, ?, ?, ?, ?);
             `;
             console.log(`Create new Task ${newId} for course ${courseId}`);
-            await executeOnDB(db => 
+            await executeOnDB(db =>
             {
                 const runner = db.prepare(sql);
                 runner.run(
@@ -24,8 +24,8 @@ const createTask = (title, description, date, courseId, graded) =>
                     runner.finalize();
             }, true);
             resolve(newId);
-        } 
-        catch (err) 
+        }
+        catch (err)
         {
             reject(err);
         }

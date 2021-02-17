@@ -1,16 +1,16 @@
 const jwt = require('jsonwebtoken');
 const createRoutes = require('../createRoutes');
-const { getUserById } = require('../../db/getUser');
+const { getUserById } = require('../../db/user/getUser');
 
-const authRouter = 
+const authRouter =
 createRoutes([
     {
-        path: '/login', 
-        method: 'post', 
+        path: '/login',
+        method: 'post',
         strategy: 'local',
-        callback: (req, res, user) => 
+        callback: (req, res, user) =>
         {
-            req.logIn(user, { session: false }, err => 
+            req.logIn(user, { session: false }, err =>
                 {
                     if (err) return res.status(400).json({ errors: err });
 
@@ -26,10 +26,10 @@ createRoutes([
         }
     },
     {
-        path: '/woAmI', 
-        method: 'post', 
+        path: '/woAmI',
+        method: 'post',
         strategy: 'jwt',
-        callback: async (req, res, user) => 
+        callback: async (req, res, user) =>
         {
             const userFromDB = await getUserById(user._id);
 

@@ -1,7 +1,7 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
-const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/getAllUsers');
-const { getUserById } = require('../../db/getUser');
+const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/user/getAllUsers');
+const { getUserById } = require('../../db/user/getUser');
 
 const userRouter =
 createRoutes([
@@ -76,7 +76,7 @@ createRoutes([
                         rolle: user.Type,
                     };
                 }
-    
+
                 return res.status(200).json( users );
             }
             catch (err)
@@ -135,7 +135,7 @@ createRoutes([
                 ]);
 
                 const dbUser = await getUserById(args.userId);
-                
+
                 const userData =
                 {
                     userId: dbUser.Id,

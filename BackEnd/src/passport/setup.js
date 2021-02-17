@@ -1,18 +1,18 @@
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt');
-const { getUserById, getUserByLoginName } = require('../db/getUser');
+const { getUserById, getUserByLoginName } = require('../db/user/getUser');
 
 const bcrypt = require('bcryptjs'),
     passport = require('passport'),
     { Strategy: LocalStrategy } = require('passport-local');
 
-const register = (id, password, done) => 
+const register = (id, password, done) =>
 {
-    bcrypt.genSalt(10, (err, salt) => 
+    bcrypt.genSalt(10, (err, salt) =>
     {
-        bcrypt.hash(password, salt, (err, hash) => 
+        bcrypt.hash(password, salt, (err, hash) =>
         {
             if (err) throw err;
-            
+
             // TODO: save the user in the DB
             const newUser = {};
 
@@ -21,7 +21,7 @@ const register = (id, password, done) =>
     });
 };
 
-passport.serializeUser((user, done) => 
+passport.serializeUser((user, done) =>
 {
     done(null, user.Id);
 });
@@ -35,13 +35,13 @@ passport.deserializeUser(async (id, done) =>
 passport.use(new LocalStrategy({usernameField: 'userId'}, async (loginName, password, done) =>
 {
     const user = await getUserByLoginName(loginName);
-    if (user) 
+    if (user)
     {
         // passwort match?
         bcrypt.compare(password, user.PwHash, (err, isMatch) =>
         {
             if (err) throw err;
-            
+
             if (isMatch) return done(null, user);
             return done(null, false, { message: 'Name oder Passwort falsch!' });
         });

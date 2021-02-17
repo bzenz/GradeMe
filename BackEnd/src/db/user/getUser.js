@@ -1,17 +1,17 @@
-const executeOnDB = require('./core/execute');
+const executeOnDB = require('../core/execute');
 
-const getUserById = userId => 
+const getUserById = userId =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
         const sql = `
             SELECT * 
             FROM Users
             WHERE Id = ?;
         `;
-        await executeOnDB(db => 
+        await executeOnDB(db =>
         {
-            db.get(sql, [userId], (err, row) => 
+            db.get(sql, [userId], (err, row) =>
             {
                 if (err) reject(err);
                 resolve(row);
@@ -20,18 +20,18 @@ const getUserById = userId =>
     });
 };
 
-const getUserByLoginName = loginName => 
+const getUserByLoginName = loginName =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
         const sql = `
             SELECT * 
             FROM Users
             WHERE LoginName = ?;
         `;
-        await executeOnDB(db => 
+        await executeOnDB(db =>
         {
-            db.get(sql, [loginName], (err, row) => 
+            db.get(sql, [loginName], (err, row) =>
             {
                 if (err) reject(err);
                 resolve(row);
