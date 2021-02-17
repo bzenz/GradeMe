@@ -28,9 +28,23 @@ import StudentsInCourseOverview from "../teacher/StudentsInCourseOverview";
 import { ERROR_CONTENT_IDENTIFIER } from "../../actions/errorActions";
 import ErrorContentPaper from "./ErrorContentPaper";
 import {setDrawerOpenState} from "../../actions/generalNavigationActions";
-import {ACTIONS_FOR_COURSE_IDENTIFIER, COMMUNICATION_DASHBOARD_IDENTIFIER, COURSE_VIEW_IDENTIFIER, COURSES_FOR_SUBJECT_IDENTIFIER, GRADES_OVERVIEW_IDENTIFIER, SCHEDULE_IDENTIFIER, STUDENTS_FOR_COURSE_IDENTIFIER, SUBJECT_OVERVIEW_IDENTIFIER, TASK_OVERVIEW_IDENTIFIER, TASKS_FOR_COURSE_IDENTIFIER} from "./identifiers";
+import {
+    ACTIONS_FOR_COURSE_IDENTIFIER,
+    COMMUNICATION_DASHBOARD_IDENTIFIER,
+    COURSE_VIEW_IDENTIFIER,
+    COURSES_FOR_SUBJECT_IDENTIFIER, CREATE_OR_EDIT_USER_IDENTIFIER,
+    GRADES_OVERVIEW_IDENTIFIER,
+    SCHEDULE_IDENTIFIER,
+    STUDENTS_FOR_COURSE_IDENTIFIER,
+    SUBJECT_OVERVIEW_IDENTIFIER,
+    TASK_OVERVIEW_IDENTIFIER,
+    TASKS_FOR_COURSE_IDENTIFIER,
+    USER_ADMINISTRATION_IDENTIFIER
+} from "./identifiers";
 import { Tabs } from "./Tabs";
 import CreateOrEditTaskForm from "../teacher/CreateOrEditTaskForm";
+import UserAdministration from "../admin/UserAdministration";
+import CreateUserForm from "../admin/CreateOrEditUserForm";
 
 function Dashboard(props) {
     const classes = useStyles();
@@ -66,6 +80,10 @@ function Dashboard(props) {
                 return <CommunicationDashboard/>;
             case GRADES_OVERVIEW_IDENTIFIER:
                 return <GradesAccordions/>
+            case USER_ADMINISTRATION_IDENTIFIER:
+                return <UserAdministration/>
+            case CREATE_OR_EDIT_USER_IDENTIFIER:
+                return <CreateUserForm/>
             default:
                 return <div>{props.activeContent}</div>
         }
