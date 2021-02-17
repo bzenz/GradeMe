@@ -46,27 +46,9 @@ function CreateOrEditUserForm(props) {
     }
     const handleRoleSelectionChange = (role) => {
         setRole(role);
-        switch (role) {
-            case "student":
-                setStudentChecked(true);
-                setTeacherChecked(false);
-                setAdminChecked(false);
-                break;
-            case "teacher":
-                setStudentChecked(false);
-                setTeacherChecked(true);
-                setAdminChecked(false);
-                break;
-            case "admin":
-                setStudentChecked(false);
-                setTeacherChecked(false);
-                setAdminChecked(true);
-                break;
-            default:
-                setStudentChecked(false);
-                setTeacherChecked(false);
-                setAdminChecked(false);
-        }
+        setStudentChecked(role === "student");
+        setTeacherChecked(role === "teacher");
+        setAdminChecked(role === "admin");
     }
 
     const useFetchResponse = (data) => {
@@ -96,7 +78,13 @@ function CreateOrEditUserForm(props) {
         }, [])
     } else {
         useEffect(() => {
-            setStudentChecked(true);
+            //role ist standardmäßig auf "student" gesetzt. Daher kann man das hier prüfen und initial die Checkbox "Schüler" anhaken
+            //Wird die rolle aber verändert (indem eine andere Checkbox angeklickt wird) dann ändert sich die Rolle und beim
+            //Laden der Component wird nicht Schüler standardmäßig abgehakt selbst wenn die Rolle eine andere ist
+            if(role === "student"){
+                setStudentChecked(true);
+            }
+
         })
     }
 
@@ -153,7 +141,7 @@ function CreateOrEditUserForm(props) {
     return (
         <View style={generalNativeStyles.root}>
             <Text style={generalNativeStyles.siteHeading}>
-                Nutzer anlegen
+                {props.isUserBeingEdited?"Nutzer bearbeiten":"Nutzer anlegen"}
             </Text>
             <Card containerStyle={customstyles.cardStyle} >
                 <Input
@@ -198,7 +186,9 @@ function CreateOrEditUserForm(props) {
                     buttonStyle={generalNativeStyles.button1}
                     onPress={() => submitTaskForm()}>
                 </Button>
-                <CancelButton/>
+                {props.isUserBeingEdited?
+                    <CancelButton executeFunction={() => props.setIsUserBeingEdited(false)}/>:
+                    <CancelButton/>}
             </Card>
         </View>
     )

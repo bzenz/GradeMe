@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {Button} from 'react-native-elements';
 import { generalNativeStyles } from "../../styles/GeneralStyles";
-import {setIsUserBeingEdited} from "../../actions/adminActions";
 
 const cancelButton = (props) => {
-    const message = "Sind sie sicher, dass sie die Bearbeitung abbrechen wollen? Alle eingegebenen Daten gehen dabei verloren.";
+    const message = "Wenn Sie die Bearbeitung beenden, gehen Ihre eingegebenen Daten verloren. \n \n Drücken sie 'Ok' um die Bearbeitung endgültig abzubrechen. \n \n Drücken sie 'abbrechen' um zurück zum Bearbeitungsformular zu gehen";
     const onClick = () => {
         if (confirm(message)) props.switchContent(props.previousContent);
-        props.setIsUserBeingEdited(false);
+
+        //Die executeFunction ist eine Prop, in der eine Funktion übergeben werden kann, die beim abbrechen
+        //ausgeführt werden soll, wie zum Beispiel den Bearbeitungsstatus eines Formulares auf false setzen
+        if(props.executeFunction){
+            props.executeFunction();
+        }
     }
 
     let gns = generalNativeStyles;
@@ -25,5 +29,5 @@ const cancelButton = (props) => {
 
 export default connect(
     state => ({previousContent: state.teacherNavigationReducer.previousContent}),
-    {switchContent, setIsUserBeingEdited}
+    {switchContent}
 )(cancelButton)
