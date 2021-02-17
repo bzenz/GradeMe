@@ -13,13 +13,15 @@ Die Komponente SearchAndListComponent kann folgende Props haben:
 7.  searchOptionArray: Optionen, nach welchen im Suchfeld gesucht werden kann (Array of Objects. Der erste wert ist der value, nach dem in den Datensätzen
     gesucht wird (z.B. firstname oder username), der zweite Wert ist der dem User im Auswahlmenü angezeigte Wert, z.B. username und Benutzername)
     die Objektkeys müssen wie folgt heißen: {value: "...", displayedString: "..."}
-8.  filterOptionArray: Optionen, nach denen gefiltert werden kann. (Array of Objects. Der erste wert ist der value, nach dem gefiltert wird, der
+8.  defaultSelectedSearchOption: Die Suchoption, die standartmäßig beim laden der Komponente ausgewählt ist
+9.  filterOptionArray: Optionen, nach denen gefiltert werden kann. (Array of Objects. Der erste wert ist der value, nach dem gefiltert wird, der
     zweite Wert ist der dem User angezeigte Wert im Auswahlmenü, z.B. student und Schüler)
     Die Objektkeys müssen wie folgt heißen: {value: "...", displayedString: "..."}.
     Zusätzlich: der value "all" als Filter bewirkt, dass alle Ergebnisse angezeigt werden.
-9.  filterParameter: Parameter, nach dem in der Datenbasis gefiltert werden kann (z.B. role oder subject)
-(10.) buttonListForTableEntry: ein Array an Buttons, die bei einer single-List-Component für jede Row der Tabelle
-    eingefügt werden (zum Beispiel Bearbeiten/löschen Buttons)
+10.  filterParameter: Parameter, nach dem in der Datenbasis gefiltert werden kann (z.B. role oder subject)
+11. componentDataRecordType: Der Typ der Daten, die in der Komponente verwendet werden. (Bsp. "user" oder "course")
+    damit wird bei den bearbeiten/ deaktivieren Buttons durch ein switch-Statement entschieden, welche aktionen ausgeführt werden sollen
+12. dataRecordIdentifierName: der Name des Attributs, der die ID jedes einzelnen Eintrags der Liste darstellt
 
 Beispiel für eine twoListComponent:
 
@@ -31,7 +33,9 @@ Beispiel für eine twoListComponent:
             searchList={usermockarray2}
             tableHeadWords={["Id", "Benutzername", "vorname", "name", "Rolle"]}
             searchOptionArray={[{value: "username", displayedString: "Benutzername"}, {value: "vorname", displayedString: "Vorname"}, {value: "name", displayedString: "Nachname"}]}
+            defaultSelectedSearchOption={"loginName"}
             filterOptionArray={[{value: "all", displayedString: "Alle"}, {value: "student", displayedString: "Schüler"}, {value: "teacher", displayedString: "Lehrer"}]}
             filterParameter={"role"}
-            buttonListForTableEntry={[<Button onClick={() => alert("gut geklickt")}>Klick mich</Button>,<Button onClick={() => alert("Ey!")}>Klick mich bitte nicht</Button> ]}
+            componentDataRecordType={"user"}
+            dataRecordIdentifiername={"userId"}
         />

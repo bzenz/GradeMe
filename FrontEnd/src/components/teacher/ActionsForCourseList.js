@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import useStyles from "../../styles/NavigationStyle";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { setIsTaskBeingEdited, switchContent } from "../../actions/teacherNavigationActions";
+import {setIsTaskBeingEdited, switchContent} from "../../actions/teacherNavigationActions";
 
 export const CREATE_NEW_TASK = "CREATE_NEW_TASK";
 
