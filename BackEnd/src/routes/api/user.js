@@ -47,7 +47,7 @@ createRoutes([
                     { key: 'userId', type: 'string' },
                 ]);
                 await deactivateUser(args.userId);
-                return res.status(200).json( { deletedUserId: args.userId } );
+                return res.status(200).json( { deactivatedUserId: args.userId } );
             }
             catch (err)
             {
