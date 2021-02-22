@@ -40,20 +40,19 @@ createRoutes([
         strategy: 'jwt',
         callback: async (req, res, user) =>
         {
-            let args;
             try
             {
-                args = extractArguments(req.body,
+                const args = extractArguments(req.body,
                 [
                     { key: 'userId', type: 'string' },
                 ]);
+                await deactivateUser(args.userId);
+                return res.status(200).json( { deletedUserId: args.userId } );
             }
             catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
-            await deactivateUser(args.userId);
-            return res.status(200).json( { deletedUserId: args.userId } );
         }
     },
     {
