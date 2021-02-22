@@ -1,8 +1,8 @@
-const executeOnDB = require('./core/execute');
+const executeOnDB = require('../core/execute');
 
-const getSubject = subjectId => 
+const getSubject = subjectId =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
         if (typeof subjectId !== 'number' || subjectId < 0) throw new Error('subjectId must be a positive number');
         const sql = `
@@ -10,9 +10,9 @@ const getSubject = subjectId =>
             FROM Subjects
             WHERE Id = ?;
         `;
-        await executeOnDB(db => 
+        await executeOnDB(db =>
         {
-            db.get(sql, [subjectId], (err, row) => 
+            db.get(sql, [subjectId], (err, row) =>
             {
                 if (err) reject(err);
                 resolve(row);

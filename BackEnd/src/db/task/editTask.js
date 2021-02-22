@@ -1,11 +1,11 @@
-const { generateSETParameters } = require('../utils/sqlGenerators');
-const executeOnDB = require('./core/execute');
+const { generateSETParameters } = require('../../utils/sqlGenerators');
+const executeOnDB = require('../core/execute');
 
-const editTask = (taskId, options={title, description, deadline}) => 
+const editTask = (taskId, options={title, description, deadline}) =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
-        try 
+        try
         {
             if (Object.keys(options).length === 0) {
                 // Skip whole procedure, if nothing has to change
@@ -20,19 +20,19 @@ const editTask = (taskId, options={title, description, deadline}) =>
             `;
             args.push(taskId);
 
-            await executeOnDB(db => 
+            await executeOnDB(db =>
             {
-                return new Promise((taskUpdateResolve, taskUpdateReject) => 
+                return new Promise((taskUpdateResolve, taskUpdateReject) =>
                 {
                     try {
                         console.log(`Task ${taskId} gets updated`);
-                        db.run(updateTaskSQL, args, (err, rows) => 
+                        db.run(updateTaskSQL, args, (err, rows) =>
                         {
                             if (err) throw err;
                             taskUpdateResolve(rows);
                         });
-                    } 
-                    catch (e) 
+                    }
+                    catch (e)
                     {
                         taskUpdateReject(e);
                     }
@@ -40,7 +40,7 @@ const editTask = (taskId, options={title, description, deadline}) =>
             }, true);
             resolve();
         }
-        catch (err) 
+        catch (err)
         {
             reject(err);
         }

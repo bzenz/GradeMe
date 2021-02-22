@@ -1,7 +1,8 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
-const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/getAllUsers');
-const { getUserById } = require('../../db/getUser');
+const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/user/getAllUsers');
+const { getUserById } = require('../../db/user/getUser');
+const { deactivateUser } = require('../../db/user/deactivateUser')
 
 const userRouter =
 createRoutes([
@@ -34,25 +35,24 @@ createRoutes([
         }
     },
     {
-        path: '/delete',
+        path: '/deactivate',
         method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) =>
+        callback: async (req, res, user) =>
         {
-            let args;
             try
             {
-                args = extractArguments(req.body,
+                const args = extractArguments(req.body,
                 [
                     { key: 'userId', type: 'string' },
                 ]);
+                await deactivateUser(args.userId);
+                return res.status(200).json( { deactivatedUserId: args.userId } );
             }
             catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: delete user from DB
-            return res.status(200).json( { deletedUserId: args.userId } );
         }
     },
     {
@@ -76,7 +76,7 @@ createRoutes([
                         rolle: user.Type,
                     };
                 }
-    
+
                 return res.status(200).json( users );
             }
             catch (err)
@@ -135,7 +135,7 @@ createRoutes([
                 ]);
 
                 const dbUser = await getUserById(args.userId);
-                
+
                 const userData =
                 {
                     userId: dbUser.Id,
