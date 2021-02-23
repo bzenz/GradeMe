@@ -17,7 +17,7 @@ const cancelButton = (props) => {
     }
 
     let gns = generalNativeStyles;
-    const defaultStyle = [gns.button1, gns.withMarginTop];
+    const defaultStyle = [gns.button1, gns.marginTop];
     let myStyle = defaultStyle.concat(props.style);
     return (
         <Button buttonStyle={myStyle}

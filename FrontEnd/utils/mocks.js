@@ -21,3 +21,12 @@ export const usermockarray2 = [
     {id: 14, loginName: "keineideenmehr", vorname: "Keineideen", name: "Mehr", rolle: "teacher"},
     {id: 15, loginName: "jetztreichtsaber", vorname: "Jetztreichts", name: "Aber", rolle: "student"},
 ]
+
+export const subjectMockArray = [
+    {Id: 1, name: "Mathe"},
+    {Id: 2, name: "Deutsch"},
+    {Id: 3, name: "Verteidigung gegen die dunklen Künste"},
+    {Id: 4, name: "Verwandlung"},
+    {Id: 5, name: "Zaubertränke"},
+    {Id: 6, name: "Geschichte der Zauberei"},
+]

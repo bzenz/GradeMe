@@ -90,9 +90,6 @@ export const generalNativeStyles = StyleSheet.create({
         backgroundColor: '#63a4ff',
         borderRadius: 10,
     },
-    buttonContainerStyle: {
-        width: '60%',
-    },
     buttonGroupContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -100,7 +97,7 @@ export const generalNativeStyles = StyleSheet.create({
     marginRight: {
         marginRight: '1%',
     },
-    withMarginTop: {
+    marginTop: {
         marginTop: '1%',
     },
 })
