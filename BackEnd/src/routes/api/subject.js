@@ -60,7 +60,8 @@ createRoutes([
                 const subjects = await getAllSubjects();
                 const refinedSubjects = subjects.map(subject => ({
                         subjectId: subject.Id,
-                        subjectName: subject.Name
+                        subjectName: subject.Name,
+                        deactivated: !!subject.Deactivated
                     }));
                 return res.status(200).json( refinedSubjects )
             } catch (e) {
