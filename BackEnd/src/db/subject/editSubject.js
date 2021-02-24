@@ -5,7 +5,7 @@ const editSubject = (id, name) => {
         const sql = `
         UPDATE Subjects
         SET Name = ?
-        WHERE Id = ?
+        WHERE Id = ?;
         `;
         try {
             await executeOnDB( db => {
