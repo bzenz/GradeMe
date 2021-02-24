@@ -7,10 +7,14 @@ const getAllSubjects = () => {
         FROM subjects;
         `;
         await executeOnDB(db => {
-            db.all(sql, [], (err, data) => {
-                if (err) reject(err);
-                resolve(data);
-            });
+            try {
+                db.all(sql, [], (err, data) => {
+                    if (err) throw err;
+                    resolve(data);
+                });
+            } catch (e) {
+                reject(e)
+            }
         });
     });
 };
