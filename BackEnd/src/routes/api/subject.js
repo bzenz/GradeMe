@@ -1,6 +1,7 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 const {createSubject} = require("../../db/subject/createSubject");
+const {getAllSubjects} = require('../../db/subject/getAllSubjects')
 
 const userRouter =
 createRoutes([
@@ -47,5 +48,23 @@ createRoutes([
             return res.status(200).json( { deletedSubjectId: args.subjectId } );
         }
     },
+    {
+        path: '/getAll',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) => {
+            try{
+                const subjects = await getAllSubjects();
+                const refinedSubjects = subjects.map(subject => ({
+                        subjectId: subject.Id,
+                        subjectName: subject.Name,
+                        deactivated: !!subject.Deactivated
+                    }));
+                return res.status(200).json( refinedSubjects )
+            } catch (e) {
+                return res.status(400).json({error: e.message})
+            }
+        }
+    }
 ]);
 module.exports = userRouter;
