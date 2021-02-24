@@ -1,24 +1,25 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
+const {editSubject} = require("../../db/subject/editSubject");
 const {getAllSubjects} = require('../../db/subject/getAllSubjects')
 
-const userRouter = 
+const userRouter =
 createRoutes([
     {
-        path: '/create', 
-        method: 'post', 
-        strategy: 'jwt', 
-        callback: (req, res, user) => 
+        path: '/create',
+        method: 'post',
+        strategy: 'jwt',
+        callback: (req, res, user) =>
         {
             let args;
-            try 
-            {  
-                args = extractArguments(req.body, 
+            try
+            {
+                args = extractArguments(req.body,
                 [
                     { key: 'name', type: 'string' },
                 ]);
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
@@ -30,20 +31,20 @@ createRoutes([
         }
     },
     {
-        path: '/delete', 
-        method: 'post', 
+        path: '/delete',
+        method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: (req, res, user) =>
         {
             let args;
-            try 
-            {  
-                args = extractArguments(req.body, 
+            try
+            {
+                args = extractArguments(req.body,
                 [
                     { key: 'subjectId', type: 'number' },
                 ]);
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
@@ -64,6 +65,24 @@ createRoutes([
                         deactivated: !!subject.Deactivated
                     }));
                 return res.status(200).json( refinedSubjects )
+            } catch (e) {
+                return res.status(400).json({error: e.message})
+            }
+        }
+    },
+    {
+        path: '/edit',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) => {
+            try{
+                const args = extractArguments(req.body,
+                    [
+                        { key: 'subjectId', type: 'number' },
+                        { key: 'newName', type: 'string'}
+                    ]);
+                await editSubject(args.subjectId, args.newName);
+                return res.status(200).json( {editedSubjectId: args.subjectId} )
             } catch (e) {
                 return res.status(400).json({error: e.message})
             }
