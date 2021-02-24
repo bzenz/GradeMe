@@ -16,11 +16,11 @@ INSERT INTO Users VALUES (5, 'florianlemnitzer',     'Florian',  'Lemnitzer',   
 INSERT INTO Users VALUES (6, 'florianlemnitzer2',    'Flori',    'Anlemnitzer',  'admin',   '$2a$10$LR/OAMvn1CRivJDWIiL6fOdLqPdd/Sbpzvp1SWw16rFng793EQ/PW', false); -- pw: fa
 INSERT INTO Users VALUES (7, 'sebastianbach',        'Sebastian','Bach',         'student', '$2a$10$flu1kHhcQgibMNUp3lILFuc/2pic4c/qw7t3tdyni8FFALFimU.3K', false); -- pw: sb
 
--- INSERT INTO Subjects VALUES (Id, Name);
-INSERT INTO Subjects VALUES (0, 'Deutsch');
-INSERT INTO Subjects VALUES (1, 'Mathe');
-INSERT INTO Subjects VALUES (2, 'Englisch');
-INSERT INTO Subjects VALUES (3, 'Wirtschaft');
+-- INSERT INTO Subjects VALUES (Id, Name, Deactivated);
+INSERT INTO Subjects VALUES (0, 'Deutsch', false);
+INSERT INTO Subjects VALUES (1, 'Mathe', false);
+INSERT INTO Subjects VALUES (2, 'Englisch', false);
+INSERT INTO Subjects VALUES (3, 'Wirtschaft', false);
 
 -- INSERT INTO Courses VALUES (Id, SubjectId, Year);
 INSERT INTO Courses VALUES (0, 0, 2019); -- Deutsch19

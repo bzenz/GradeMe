@@ -20,7 +20,8 @@ CREATE TABLE Users
 CREATE TABLE Subjects
 (
     Id          INTEGER PRIMARY KEY,
-    Name        VARCHAR(32)
+    Name        VARCHAR(32),
+    Deactivated INTEGER
 );
 
 CREATE TABLE Courses

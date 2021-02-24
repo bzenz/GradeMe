@@ -1,5 +1,7 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
+const {getAllSubjects} = require('../../db/subject/getAllSubjects');
+const {deactivateIdInTable} = require('../../db/util/deactivateIdInTable');
 
 const userRouter = 
 createRoutes([
@@ -29,25 +31,24 @@ createRoutes([
         }
     },
     {
-        path: '/delete', 
-        method: 'post', 
+        path: '/deactivate',
+        method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) => 
+        callback: async (req, res, user) =>
         {
-            let args;
-            try 
-            {  
-                args = extractArguments(req.body, 
+            try
+            {
+                const args = extractArguments(req.body,
                 [
                     { key: 'subjectId', type: 'number' },
                 ]);
+                await deactivateIdInTable(args.subjectId, "Subjects");
+                return res.status(200).json( { deactivatedSubjectId: args.subjectId } );
             }
             catch (err) 
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: delete subject from DB
-            return res.status(200).json( { deletedSubjectId: args.subjectId } );
         }
     },
 ]);
