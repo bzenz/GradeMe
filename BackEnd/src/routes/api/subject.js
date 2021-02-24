@@ -1,25 +1,24 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
-const {getAllSubjects} = require('../../db/subject/getAllSubjects');
 const {deactivateIdInTable} = require('../../db/util/deactivateIdInTable');
 
-const userRouter = 
+const userRouter =
 createRoutes([
     {
-        path: '/create', 
-        method: 'post', 
-        strategy: 'jwt', 
-        callback: (req, res, user) => 
+        path: '/create',
+        method: 'post',
+        strategy: 'jwt',
+        callback: (req, res, user) =>
         {
             let args;
-            try 
-            {  
-                args = extractArguments(req.body, 
+            try
+            {
+                args = extractArguments(req.body,
                 [
                     { key: 'name', type: 'string' },
                 ]);
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
@@ -45,7 +44,7 @@ createRoutes([
                 await deactivateIdInTable(args.subjectId, "Subjects");
                 return res.status(200).json( { deactivatedSubjectId: args.subjectId } );
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }

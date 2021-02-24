@@ -38,6 +38,6 @@
 
 -   /subject
 -   -   /create POST (name, request_token) => subjectId
--   -   /edit POST (subjectId, newName, request_token) => subjectId
+-   -   /edit POST (subjectId, newName, request_token) => editedSubjectId
 -   -   /deactivate POST (subjectId, request_token) => deactivatedSubjectId
 -   -   /getAll POST (request_token) => [{subjectId, subjectName, deactivated}]
