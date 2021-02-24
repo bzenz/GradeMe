@@ -5,7 +5,7 @@ const getAllUsers = () =>
     return new Promise(async (resolve, reject) =>
     {
         const sql = `
-            SELECT Id, LoginName, Vorname, Name, Type 
+            SELECT Id, LoginName, Vorname, Name, Type, Deactivated 
             FROM Users;
         `;
         await executeOnDB(db =>
