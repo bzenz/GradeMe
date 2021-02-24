@@ -1,6 +1,7 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 const {editSubject} = require("../../db/subject/editSubject");
+const {createSubject} = require("../../db/subject/createSubject");
 const {getAllSubjects} = require('../../db/subject/getAllSubjects')
 
 const userRouter =
@@ -9,25 +10,21 @@ createRoutes([
         path: '/create',
         method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) =>
+        callback: async (req, res, user) =>
         {
-            let args;
             try
             {
-                args = extractArguments(req.body,
+                const args = extractArguments(req.body,
                 [
                     { key: 'name', type: 'string' },
                 ]);
+                const id = await createSubject(args.name);
+                return res.status(200).json( { subjectId: id } );
             }
             catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
-
-            const id = Math.floor(Math.random()*15+5);
-
-            // TODO: create subject and save in DB
-            return res.status(200).json( { subjectId: id } );
         }
     },
     {
