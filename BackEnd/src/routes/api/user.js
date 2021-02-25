@@ -1,8 +1,8 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
+const {deactivateIdInTable} = require("../../db/util/deactivateIdInTable");
 const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/user/getAllUsers');
 const { getUserById } = require('../../db/user/getUser');
-const { deactivateUser } = require('../../db/user/deactivateUser')
 
 const userRouter =
 createRoutes([
@@ -44,9 +44,9 @@ createRoutes([
             {
                 const args = extractArguments(req.body,
                 [
-                    { key: 'userId', type: 'string' },
+                    { key: 'userId', type: 'number' },
                 ]);
-                await deactivateUser(args.userId);
+                await deactivateIdInTable(args.userId, "Users");
                 return res.status(200).json( { deactivatedUserId: args.userId } );
             }
             catch (err)
@@ -74,6 +74,7 @@ createRoutes([
                         vorname: user.Vorname,
                         name: user.Name,
                         rolle: user.Type,
+                        deactivated: !!user.Deactivated
                     };
                 }
 

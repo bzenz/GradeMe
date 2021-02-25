@@ -1,6 +1,7 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 const {deactivateIdInTable} = require('../../db/util/deactivateIdInTable');
+const {editSubject} = require("../../db/subject/editSubject");
 const {createSubject} = require("../../db/subject/createSubject");
 const {getAllSubjects} = require('../../db/subject/getAllSubjects')
 
@@ -61,6 +62,24 @@ createRoutes([
                         deactivated: !!subject.Deactivated
                     }));
                 return res.status(200).json( refinedSubjects )
+            } catch (e) {
+                return res.status(400).json({error: e.message})
+            }
+        }
+    },
+    {
+        path: '/edit',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) => {
+            try{
+                const args = extractArguments(req.body,
+                    [
+                        { key: 'subjectId', type: 'number' },
+                        { key: 'newName', type: 'string'}
+                    ]);
+                await editSubject(args.subjectId, args.newName);
+                return res.status(200).json( {editedSubjectId: args.subjectId} )
             } catch (e) {
                 return res.status(400).json({error: e.message})
             }
