@@ -28,7 +28,7 @@ const getAllEvaluationsForTask = taskId =>
         const sql = `
             SELECT HasEvaluation.UserId AS UserId, u.Vorname AS UserVorname, u.Name AS UserName, HasEvaluation.Grade AS Evaluation, t.Graded AS Graded, HasEvaluation.Annotation AS Annotation 
             FROM HasEvaluation, Tasks t, Users u 
-            WHERE HasEvaluation.TaskId = ? AND HasEvaluation.TaskId = t.Id AND HasEvaluation.UserId = u.Id;        
+            WHERE HasEvaluation.TaskId = ? AND HasEvaluation.TaskId = t.Id AND HasEvaluation.UserId = u.Id AND u.Deactivated IS NOT TRUE;        
         `;
         await executeOnDB(db =>
         {

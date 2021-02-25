@@ -26,7 +26,7 @@ const getAllUsersForCourse = courseId =>
         const sql = `
             SELECT UserId as Id, Vorname, Name, Type 
             FROM Users u, Courses c, IsIn
-            WHERE u.Id = IsIn.UserId AND c.Id = IsIn.CourseId AND c.Id = ?
+            WHERE u.Id = IsIn.UserId AND c.Id = IsIn.CourseId AND c.Id = ? AND u.Deactivated IS NOT TRUE
             ORDER BY Name ASC, Vorname ASC;
         `;
         await executeOnDB(db =>
@@ -47,7 +47,7 @@ const getAllUsersForTask = taskId =>
         const sql = `
             SELECT u.Id AS Id, Vorname, Name, Type
             FROM Users u, Tasks t, Courses c, IsIn 
-            WHERE t.Id = ? AND t.CourseId = c.Id AND u.Id = IsIn.UserId AND c.Id = IsIn.CourseId
+            WHERE t.Id = ? AND t.CourseId = c.Id AND u.Id = IsIn.UserId AND c.Id = IsIn.CourseId AND u.Deactivated IS NOT TRUE
             ORDER BY Name ASC, Vorname ASC;
         `;
         await executeOnDB(db =>
