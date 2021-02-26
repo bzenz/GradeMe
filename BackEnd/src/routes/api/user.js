@@ -3,6 +3,7 @@ const extractArguments = require('../extractArguments');
 const {deactivateIdInTable} = require("../../db/util/deactivateIdInTable");
 const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/user/getAllUsers');
 const { getUserById } = require('../../db/user/getUser');
+const { registerNewUser } = require('../../passport/registration');
 
 const userRouter =
 createRoutes([
@@ -10,28 +11,27 @@ createRoutes([
         path: '/create',
         method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) =>
+        callback: async (req, res, user) =>
         {
-            let args;
             try
             {
-                args = extractArguments(req.body,
+                const args = extractArguments(req.body,
                 [
                     { key: 'vorname', type: 'string' },
                     { key: 'name', type: 'string' },
                     { key: 'password', type: 'string' }, // Note: password can't consist of only numbers using this method
                     { key: 'rolle', type: 'string' },
                 ]);
+    
+                const newUser = await registerNewUser(args);
+    
+                return res.status(200).json( newUser );
             }
             catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
 
-            const id = args.vorname + args.name + Math.ceil(Math.random()*3);
-
-            // TODO: create user and save in DB
-            return res.status(200).json( { userId: id } );
         }
     },
     {
