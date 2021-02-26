@@ -11,7 +11,7 @@ const createUser = (vorname, name, type, pwHash) =>
             const nextId = (await getMaxValue('Users', 'Id')).Value + 1;
             const loginName = await generateLoginName(vorname, name);
 
-            // (Id, Title, Description, Date, CourseId, Graded)
+            // (Id, LoginName, Vorname, Name, Type, PwHash, Deactivated)
             const sql = `
             INSERT INTO Users 
             VALUES (?, ?, ?, ?, ?, ?, ?);
