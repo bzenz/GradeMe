@@ -5,7 +5,7 @@
 -   -   /woAmI POST (request_token) => {userId, vorname, name}
 
 -   /user
--   -   /create POST (vorname, name, password, rolle, request_token) => userId (generiert aus vorn, name & evtl. nr)
+-   -   /create POST (vorname, name, password, rolle, request_token) => { userId, loginName, vorname, name, rolle }
 -   -   /deactivate POST (userId, request_token) => deactivatedUserId
 -   -   /getData (userId, request_token) => { userId, loginName, vorname, name, rolle }
 -   -   /getAll POST (request_token) => [{userId, loginName, vorname, name, rolle}]
