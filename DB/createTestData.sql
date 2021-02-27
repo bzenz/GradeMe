@@ -6,21 +6,21 @@ DELETE FROM Subjects;
 DELETE FROM IsIn;
 DELETE FROM HasEvaluation;
 
--- INSERT INTO Users VALUES (Id, LoginName, Vorname, Name, Type, PwHash);
-INSERT INTO Users VALUES (0, 'benitozenz',           'Benito',   'Zenz',         'student', '$2a$10$zydsoKERlGRff9gFaXGBzu87tC8rIS1pnTW/FwBFLM5mbnHjypM.O'); -- pw: bz
-INSERT INTO Users VALUES (1, 'robinhöntsch',         'Robin',    'Höntsch',      'student', '$2a$10$W22aWrgmstgOCbea27V3lOyRPzXGtjeKzKvInjVIn2I.GNeT10OVG'); -- pw: rh
-INSERT INTO Users VALUES (2, 'gertrudzimmermann',    'Gertrud',  'Zimmermann',   'teacher', '$2a$10$BJRf//mOiq1cM8zPKbl2a.53HHxbgrq7zhTTE74BkgL3ZNw/5n4oK'); -- pw: gz
-INSERT INTO Users VALUES (3, 'erwinbock',            'Erwin',    'Bock',         'teacher', '$2a$10$FVyxN/0y0ROdc/HfDw2eJeVwU0lkz9XZMSwhqaKGowxbgwLXohGlS'); -- pw: eb
-INSERT INTO Users VALUES (4, 'kevinmorgenthaler',    'Kevin',    'Morgenthaler', 'student', '$2a$10$YlIvmp.zt5u4Q4q2DLc0SOXyavp9uc868MMfuzUyjyWiahg.BqEVy'); -- pw: km
-INSERT INTO Users VALUES (5, 'florianlemnitzer',     'Florian',  'Lemnitzer',    'student', '$2a$10$18Dv0Fvkcvsvk.OTj/oBLezNGw.aoNqDDRDk8x8kQ/Bc95szp6FwK'); -- pw: fl
-INSERT INTO Users VALUES (6, 'florianlemnitzer2',    'Flori',    'Anlemnitzer',  'admin',   '$2a$10$LR/OAMvn1CRivJDWIiL6fOdLqPdd/Sbpzvp1SWw16rFng793EQ/PW'); -- pw: fa
-INSERT INTO Users VALUES (7, 'sebastianbach',        'Sebastian','Bach',         'student', '$2a$10$flu1kHhcQgibMNUp3lILFuc/2pic4c/qw7t3tdyni8FFALFimU.3K'); -- pw: sb
+-- INSERT INTO Users VALUES (Id, LoginName, Vorname, Name, Type, PwHash, Deactivated);
+INSERT INTO Users VALUES (0, 'benitozenz',           'Benito',   'Zenz',         'student', '$2a$10$zydsoKERlGRff9gFaXGBzu87tC8rIS1pnTW/FwBFLM5mbnHjypM.O', false); -- pw: bz
+INSERT INTO Users VALUES (1, 'robinhöntsch',         'Robin',    'Höntsch',      'student', '$2a$10$W22aWrgmstgOCbea27V3lOyRPzXGtjeKzKvInjVIn2I.GNeT10OVG', false); -- pw: rh
+INSERT INTO Users VALUES (2, 'gertrudzimmermann',    'Gertrud',  'Zimmermann',   'teacher', '$2a$10$BJRf//mOiq1cM8zPKbl2a.53HHxbgrq7zhTTE74BkgL3ZNw/5n4oK', false); -- pw: gz
+INSERT INTO Users VALUES (3, 'erwinbock',            'Erwin',    'Bock',         'teacher', '$2a$10$FVyxN/0y0ROdc/HfDw2eJeVwU0lkz9XZMSwhqaKGowxbgwLXohGlS', false); -- pw: eb
+INSERT INTO Users VALUES (4, 'kevinmorgenthaler',    'Kevin',    'Morgenthaler', 'student', '$2a$10$YlIvmp.zt5u4Q4q2DLc0SOXyavp9uc868MMfuzUyjyWiahg.BqEVy', false); -- pw: km
+INSERT INTO Users VALUES (5, 'florianlemnitzer',     'Florian',  'Lemnitzer',    'student', '$2a$10$18Dv0Fvkcvsvk.OTj/oBLezNGw.aoNqDDRDk8x8kQ/Bc95szp6FwK', false); -- pw: fl
+INSERT INTO Users VALUES (6, 'florianlemnitzer2',    'Flori',    'Anlemnitzer',  'admin',   '$2a$10$LR/OAMvn1CRivJDWIiL6fOdLqPdd/Sbpzvp1SWw16rFng793EQ/PW', false); -- pw: fa
+INSERT INTO Users VALUES (7, 'sebastianbach',        'Sebastian','Bach',         'student', '$2a$10$flu1kHhcQgibMNUp3lILFuc/2pic4c/qw7t3tdyni8FFALFimU.3K', false); -- pw: sb
 
--- INSERT INTO Subjects VALUES (Id, Name);
-INSERT INTO Subjects VALUES (0, 'Deutsch');
-INSERT INTO Subjects VALUES (1, 'Mathe');
-INSERT INTO Subjects VALUES (2, 'Englisch');
-INSERT INTO Subjects VALUES (3, 'Wirtschaft');
+-- INSERT INTO Subjects VALUES (Id, Name, Deactivated);
+INSERT INTO Subjects VALUES (0, 'Deutsch', false);
+INSERT INTO Subjects VALUES (1, 'Mathe', false);
+INSERT INTO Subjects VALUES (2, 'Englisch', false);
+INSERT INTO Subjects VALUES (3, 'Wirtschaft', false);
 
 -- INSERT INTO Courses VALUES (Id, SubjectId, Year);
 INSERT INTO Courses VALUES (0, 0, 2019); -- Deutsch19

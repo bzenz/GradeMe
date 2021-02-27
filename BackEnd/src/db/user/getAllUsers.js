@@ -1,16 +1,16 @@
-const executeOnDB = require('./core/execute');
+const executeOnDB = require('../core/execute');
 
-const getAllUsers = () => 
+const getAllUsers = () =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
         const sql = `
-            SELECT Id, LoginName, Vorname, Name, Type 
+            SELECT Id, LoginName, Vorname, Name, Type, Deactivated 
             FROM Users;
         `;
-        await executeOnDB(db => 
+        await executeOnDB(db =>
         {
-            db.all(sql, [], (err, row) => 
+            db.all(sql, [], (err, row) =>
             {
                 if (err) reject(err);
                 resolve(row);
@@ -19,19 +19,19 @@ const getAllUsers = () =>
     });
 };
 
-const getAllUsersForCourse = courseId => 
+const getAllUsersForCourse = courseId =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
         const sql = `
             SELECT UserId as Id, Vorname, Name, Type 
             FROM Users u, Courses c, IsIn
-            WHERE u.Id = IsIn.UserId AND c.Id = IsIn.CourseId AND c.Id = ?
+            WHERE u.Id = IsIn.UserId AND c.Id = IsIn.CourseId AND c.Id = ? AND u.Deactivated IS NOT TRUE
             ORDER BY Name ASC, Vorname ASC;
         `;
-        await executeOnDB(db => 
+        await executeOnDB(db =>
         {
-            db.all(sql, [courseId], (err, row) => 
+            db.all(sql, [courseId], (err, row) =>
             {
                 if (err) reject(err);
                 resolve(row);
@@ -40,19 +40,19 @@ const getAllUsersForCourse = courseId =>
     });
 };
 
-const getAllUsersForTask = taskId => 
+const getAllUsersForTask = taskId =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
         const sql = `
             SELECT u.Id AS Id, Vorname, Name, Type
             FROM Users u, Tasks t, Courses c, IsIn 
-            WHERE t.Id = ? AND t.CourseId = c.Id AND u.Id = IsIn.UserId AND c.Id = IsIn.CourseId
+            WHERE t.Id = ? AND t.CourseId = c.Id AND u.Id = IsIn.UserId AND c.Id = IsIn.CourseId AND u.Deactivated IS NOT TRUE
             ORDER BY Name ASC, Vorname ASC;
         `;
-        await executeOnDB(db => 
+        await executeOnDB(db =>
         {
-            db.all(sql, [taskId], (err, row) => 
+            db.all(sql, [taskId], (err, row) =>
             {
                 if (err) reject(err);
                 resolve(row);
@@ -60,18 +60,18 @@ const getAllUsersForTask = taskId =>
         });
     });
 };
-const getAllEvaluatedUsersForTask = taskId => 
+const getAllEvaluatedUsersForTask = taskId =>
 {
-    return new Promise(async (resolve, reject) => 
+    return new Promise(async (resolve, reject) =>
     {
         const sql = `
             SELECT u.Id AS Id, Vorname, Name, Type, HasEvaluation.Grade AS Evaluation, HasEvaluation.Annotation AS Annotation, HasEvaluation.Id AS EvaluationId 
             FROM Users u, Tasks t, Courses c, IsIn, HasEvaluation 
             WHERE t.Id = ? AND t.CourseId = c.Id AND u.Id = IsIn.UserId AND c.Id = IsIn.CourseId AND u.Id = HasEvaluation.UserId AND t.Id = HasEvaluation.TaskId;
         `;
-        await executeOnDB(db => 
+        await executeOnDB(db =>
         {
-            db.all(sql, [taskId], (err, row) => 
+            db.all(sql, [taskId], (err, row) =>
             {
                 if (err) reject(err);
                 resolve(row);

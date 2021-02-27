@@ -13,13 +13,15 @@ CREATE TABLE Users
     Vorname     VARCHAR(16),
     Name        VARCHAR(16),
     Type        VARCHAR(8),
-    PwHash      VARCHAR(64)
+    PwHash      VARCHAR(64),
+    Deactivated INTEGER
 );
 
 CREATE TABLE Subjects
 (
     Id          INTEGER PRIMARY KEY,
-    Name        VARCHAR(32)
+    Name        VARCHAR(32),
+    Deactivated INTEGER
 );
 
 CREATE TABLE Courses

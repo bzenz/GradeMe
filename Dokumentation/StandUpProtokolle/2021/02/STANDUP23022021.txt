@@ -1,2 +1,8 @@
 Standup vom 23.2.2021
 
+1. user/deactivate: wie wird mit deaktivierten Nutzern und anderen Deaktivierten Entitäten umgegangen?
+
+Flols Vorschlag:
+1. Ich halte eine Funktion um Nutzer (o.ä.) zu löschen für unnötig. Wir werden keine Speicherplatzprobleme haben. 
+2. Ich würde deaktivierte Nutzer aus allen Schnittstellen herausfiltern, bei denen keine userId übergeben wird, aber eine userId zurückgegeben wird (Mit Ausnahme von user/create, da erübrigt sich das). Dadurch tauchen keine Daten über den Nutzer mehr auf, es sei denn es wird explizit nach ihm gefragt.
+3. Es sollte trotzdem für Administratoren möglich sein, sich eine Liste aller deakivierten Nuzter anzeigen zu lassen. In dieser Liste sollten die Nutzer auch reaktivierbar sein (falls versehentlich etwas falsches deaktiviert wird). Zudem sollte über diese Liste auch auf alle Daten der Schüler zugegriffen werden können. Dafür lohnt sich evtl ein eigener Tab für Admins "Datenwiederherstellung" oder "Datenarchiv" o.ä. Hier sollte dann vermutlich auch ein Zugriff auf die Daten von noch aktiven Schülern möglich sein.

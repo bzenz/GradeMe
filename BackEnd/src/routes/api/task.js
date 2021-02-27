@@ -1,21 +1,21 @@
-const createTask = require('../../db/createTask');
-const editTask = require('../../db/editTask');
-const { getAllTasksForCourse, getAllTasksForUser } = require('../../db/getAllTasks');
+const createTask = require('../../db/task/createTask');
+const editTask = require('../../db/task/editTask');
+const { getAllTasksForCourse, getAllTasksForUser } = require('../../db/task/getAllTasks');
 const { generateCourseName } = require('../../utils/nameGenerators');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
 
-const userRouter = 
+const userRouter =
 createRoutes([
     {
-        path: '/create', 
-        method: 'post', 
-        strategy: 'jwt', 
-        callback: async (req, res, user) => 
+        path: '/create',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) =>
         {
-            try 
+            try
             {
-                const args = extractArguments(req.body, 
+                const args = extractArguments(req.body,
                 [
                     { key: 'title', type: 'string' },
                     { key: 'description', type: 'string' },
@@ -24,28 +24,28 @@ createRoutes([
                     { key: 'graded', type: 'boolean' },
                 ]);
                 // TODO: check deadline is date
-                
+
                 const taskId = await createTask(
                     args.title, args.description, args.deadline, args.course, args.graded
                 );
                 return res.status(200).json( { taskId } );
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
-                
+
         }
     },
     {
-        path: '/edit', 
-        method: 'post', 
-        strategy: 'jwt', 
-        callback: (req, res, user) => 
+        path: '/edit',
+        method: 'post',
+        strategy: 'jwt',
+        callback: (req, res, user) =>
         {
-            try 
+            try
             {
-                const args = extractArguments(req.body, 
+                const args = extractArguments(req.body,
                 [
                     { key: 'taskId',        type: 'number' },
                     { key: 'title',         type: 'string', optional: true },
@@ -66,26 +66,26 @@ createRoutes([
                     const value = dbArgs[key];
                     if (value != undefined) options[key] = value;
                 }
-                
+
                 editTask(args.taskId, options);
 
                 return res.status(200).json( { taskId: args.taskId } );
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
         }
     },
     {
-        path: '/getAll/forCourse', 
-        method: 'post', 
+        path: '/getAll/forCourse',
+        method: 'post',
         strategy: 'jwt',
-        callback: async (req, res, user) => 
+        callback: async (req, res, user) =>
         {
-            try 
-            {  
-                const args = extractArguments(req.body, 
+            try
+            {
+                const args = extractArguments(req.body,
                 [
                     { key: 'courseId', type: 'number' },
                 ]);
@@ -94,19 +94,19 @@ createRoutes([
                 prepareTasks(tasks);
                 return res.status(200).json( tasks );
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
         }
     },
     {
-        path: '/getAll/forUser', 
-        method: 'post', 
+        path: '/getAll/forUser',
+        method: 'post',
         strategy: 'jwt',
-        callback: async (req, res, user) => 
+        callback: async (req, res, user) =>
         {
-            try 
+            try
             {
                 const args = extractArguments(req.body,
                 [
@@ -117,7 +117,7 @@ createRoutes([
                 prepareTasks(tasks);
                 return res.status(200).json( tasks );
             }
-            catch (err) 
+            catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
@@ -125,19 +125,19 @@ createRoutes([
     },
 ]);
 
-const prepareTasks = tasks => 
+const prepareTasks = tasks =>
 {
-    for (const i in tasks) 
+    for (const i in tasks)
     {
         const task = tasks[i];
-        tasks[i] = 
+        tasks[i] =
         {
-            taskId: task.Id, 
-            title: task.Title, 
-            description: task.Description, 
-            courseId: task.CourseId, 
-            courseName: generateCourseName(task.SubjectName, task.CourseYear), 
-            deadline: task.Date, 
+            taskId: task.Id,
+            title: task.Title,
+            description: task.Description,
+            courseId: task.CourseId,
+            courseName: generateCourseName(task.SubjectName, task.CourseYear),
+            deadline: task.Date,
             graded: Boolean(task.Graded),
         };
     }

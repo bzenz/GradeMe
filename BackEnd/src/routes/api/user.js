@@ -1,7 +1,9 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
-const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/getAllUsers');
-const { getUserById } = require('../../db/getUser');
+const {deactivateIdInTable} = require("../../db/util/deactivateIdInTable");
+const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/user/getAllUsers');
+const { getUserById } = require('../../db/user/getUser');
+const { registerNewUser } = require('../../passport/registration');
 
 const userRouter =
 createRoutes([
@@ -9,50 +11,48 @@ createRoutes([
         path: '/create',
         method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) =>
+        callback: async (req, res, user) =>
         {
-            let args;
             try
             {
-                args = extractArguments(req.body,
+                const args = extractArguments(req.body,
                 [
                     { key: 'vorname', type: 'string' },
                     { key: 'name', type: 'string' },
                     { key: 'password', type: 'string' }, // Note: password can't consist of only numbers using this method
                     { key: 'rolle', type: 'string' },
                 ]);
+    
+                const newUser = await registerNewUser(args);
+    
+                return res.status(200).json( newUser );
             }
             catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
 
-            const id = args.vorname + args.name + Math.ceil(Math.random()*3);
-
-            // TODO: create user and save in DB
-            return res.status(200).json( { userId: id } );
         }
     },
     {
-        path: '/delete',
+        path: '/deactivate',
         method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) =>
+        callback: async (req, res, user) =>
         {
-            let args;
             try
             {
-                args = extractArguments(req.body,
+                const args = extractArguments(req.body,
                 [
-                    { key: 'userId', type: 'string' },
+                    { key: 'userId', type: 'number' },
                 ]);
+                await deactivateIdInTable(args.userId, "Users");
+                return res.status(200).json( { deactivatedUserId: args.userId } );
             }
             catch (err)
             {
                 return res.status(400).json( {error: err.message} );
             }
-            // TODO: delete user from DB
-            return res.status(200).json( { deletedUserId: args.userId } );
         }
     },
     {
@@ -74,9 +74,10 @@ createRoutes([
                         vorname: user.Vorname,
                         name: user.Name,
                         rolle: user.Type,
+                        deactivated: !!user.Deactivated
                     };
                 }
-    
+
                 return res.status(200).json( users );
             }
             catch (err)
@@ -135,7 +136,7 @@ createRoutes([
                 ]);
 
                 const dbUser = await getUserById(args.userId);
-                
+
                 const userData =
                 {
                     userId: dbUser.Id,
