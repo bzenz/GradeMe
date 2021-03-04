@@ -1,6 +1,6 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
-const {deactivateIdInTable} = require('../../db/util/deactivateIdInTable');
+const {setDeactivatedForIdInTable} = require('../../db/util/setDeactivatedForIdInTable');
 const {editSubject} = require("../../db/subject/editSubject");
 const {createSubject} = require("../../db/subject/createSubject");
 const {getAllSubjects} = require('../../db/subject/getAllSubjects')
@@ -29,7 +29,7 @@ createRoutes([
         }
     },
     {
-        path: '/deactivate',
+        path: '/setDeactivated',
         method: 'post',
         strategy: 'jwt',
         callback: async (req, res, user) =>
@@ -39,8 +39,9 @@ createRoutes([
                 const args = extractArguments(req.body,
                 [
                     { key: 'subjectId', type: 'number' },
+                    { key: 'deactivated', type: 'boolean' }
                 ]);
-                await deactivateIdInTable(args.subjectId, "Subjects");
+                await setDeactivatedForIdInTable(args.subjectId, args.deactivated, "Subjects");
                 return res.status(200).json( { deactivatedSubjectId: args.subjectId } );
             }
             catch (err)
