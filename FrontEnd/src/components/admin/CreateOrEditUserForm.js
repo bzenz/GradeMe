@@ -132,7 +132,7 @@ function CreateOrEditUserForm(props) {
                 "headers": {'Content-Type': 'application/json'},
                 "body": JSON.stringify(requestBody)
             })
-            alert("Nutzer erstellt. Leider ist die Funktionalität im Backend noch nicht umgesetzt, sodass der neu angelegte Nutzer noch nicht gespeicher werde konnte.");
+            alert("Nutzer erstellt.");
         }
         props.setIsUserBeingEdited(false);
         props.switchContent(USER_ADMINISTRATION_IDENTIFIER)

@@ -8,7 +8,7 @@
 -   -   /create POST (vorname, name, password, rolle, request_token) => { userId, loginName, vorname, name, rolle }
 -   -   /deactivate POST (userId, request_token) => deactivatedUserId
 -   -   /getData (userId, request_token) => { userId, loginName, vorname, name, rolle }
--   -   /getAll POST (request_token) => [{userId, loginName, vorname, name, rolle}]
+-   -   /getAll POST (request_token) => [{userId, loginName, vorname, name, rolle, deactivated}]
 -   -   -   /forCourse POST (courseId, request_token) => [{userId, vorname, name, rolle}]
 -   -   -   /forTask POST (taskId, request_token) => [{userId, vorname, name, rolle, evaluation, annotation}]
 

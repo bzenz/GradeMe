@@ -23,6 +23,7 @@ import {CREATE_OR_EDIT_USER_IDENTIFIER} from "./general/identifiers";
 import {switchContent} from "../actions/teacherNavigationActions";
 import {setIsUserBeingEdited} from "../actions/adminActions";
 import {SERVER} from "../../index";
+import { CheckBox } from "react-native-elements";
 
 let screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -51,8 +52,8 @@ const useStylesCustom = makeStyles((theme) => ({
     },
     dataRow: {
     },
-    dataRowTeacher: {
-        backgroundColor: "#E1F5FE",
+    deactivatedDataRow: {
+        backgroundColor: "##bdbdbd",
     },
     accordionSummaryStyle: {
         display: "flex",
@@ -79,6 +80,7 @@ function SearchListComponent(props) {
     const[selectedSearchOption, setSelectedSearchOption] = useState(props.defaultSelectedSearchOption);
     const[selectedFilterOption, setSelectedFilterOption] = useState("all");
     const[scrollPosition, setScrollPosition] = useState(0);
+    const[checkBoxIsEnabled, setCheckBoxIsEnabled] = useState(false);
     const scrollRef = useRef();
 
         useEffect(() => {
@@ -145,12 +147,12 @@ function SearchListComponent(props) {
                     userId: Id,
                     request_token: props.request_token,
                 };
-                fetch(SERVER + "/api/user/delete", {
+                fetch(SERVER + "/api/user/deactivate", {
                     "method": "POST",
                     "headers": {'Content-Type': 'application/json'},
                     "body": JSON.stringify(requestBody)
                 })
-                alert("Nutzer wurde deaktiviert. Leider ist die Funktionalität im Backend noch nicht umgesetzt, daher konnten die Änderungen noch nicht gespeichert werden.")
+                alert("Nutzer wurde deaktiviert.")
                 break;
             }
             default: alert("Diese Funktion ist noch nicht verfügbar")
@@ -229,24 +231,29 @@ function SearchListComponent(props) {
                 /*Der Nutzer wird nur an die TableRow gegeben, wenn entweder nicht gefiltert wird (Für die erste Liste)
                 ODER wenn die Eingabe im Suchfeld dem Parameter des Nutzers entspricht, der im Radiocontrol eingestellt ist
                 (z.B. username des Nutzers entspricht dem im Suchfeld) und zusätzlich die Rolle der im Rollenfilter eingestellten Rolle entspricht */
-                   if(!applyFilter||((dataRecord[selectedSearchOption].toLowerCase().includes(searchFieldValue.toLowerCase())) && (dataRecord[props.filterParameter]===selectedFilterOption||selectedFilterOption==="all"))) {
-                        return (
-                            <TableRow className={dataRecord.rolle==="teacher"?classesCustom.dataRowTeacher:classesCustom.dataRow}>
-                                {/*Es wird hier über alle Einträge des dataRecord iteriert, uns aus jedem Eintrag wird eine Tabellenzelle gebastelt*/}
-                                {Object.values(dataRecord).map((dataRecordField) => {
-                                    return (
-                                        <TableCell align={"center"}>
-                                            <Typography >
-                                                {dataRecordField}
-                                            </Typography>
-                                        </TableCell>
-                                    )
-                                })}
-                                <TableCell>
-                                    {renderButtonsForList(isFirstList, dataRecord)}
-                                </TableCell>
-                            </TableRow>
-                        )
+                   if(!applyFilter||
+                       ((dataRecord[selectedSearchOption].toLowerCase().includes(searchFieldValue.toLowerCase())) &&
+                           (dataRecord[props.filterParameter]===selectedFilterOption||selectedFilterOption==="all"))) {
+                       if(checkBoxIsEnabled||!dataRecord.deactivated){
+                           return (
+                               <TableRow className={dataRecord.rolle==="teacher"?classesCustom.deactivatedDataRow:classesCustom.dataRow}>
+                                   {/*Es wird hier über alle Einträge des dataRecord iteriert, uns aus jedem Eintrag wird eine Tabellenzelle gebastelt*/}
+                                   {Object.values(dataRecord).map((dataRecordField) => {
+                                       return (
+                                           <TableCell align={"center"}>
+                                               <Typography >
+                                                   {dataRecordField}
+                                               </Typography>
+                                           </TableCell>
+                                       )
+                                   })}
+                                   <TableCell>
+                                       {renderButtonsForList(isFirstList, dataRecord)}
+                                   </TableCell>
+                               </TableRow>
+                           )
+                       }
+
                    }
                }
                )
@@ -255,10 +262,27 @@ function SearchListComponent(props) {
        )
     }
 
+    function getDeactivatedCheckboxLabel(){
+        switch (props.componentDataRecordType) {
+            case "user": return "Deaktivierte Benutzer anzeigen";
+            case "course": return "Deaktivierte Kurse anzeigen";
+            default: return "Deaktivierte Datensätze anzeigen";
+        }
+    }
+
     return (
     <View style={generalNativeStyles.fullWidth}>
         <Card>
            <ScrollView className={classesCustom.backgroundPaper} ref={scrollRef} onScroll={(event) => handleScroll(event)}>
+               <CheckBox
+                   title={getDeactivatedCheckboxLabel()}
+                   checked={checkBoxIsEnabled}
+                   center={true}
+                   containerStyle={{backgroundColor: "white", borderWidth: 0}}
+                   onPress={() => (setCheckBoxIsEnabled(!checkBoxIsEnabled))}
+               />
+
+
                {scrollRef.current?.scrollTo({y:scrollPosition, animated: false})}
                {props.isTwoListComponent?
                    <Typography className={generalStyle.siteSubHeading1}>
