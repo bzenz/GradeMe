@@ -4,6 +4,9 @@ const {deactivateIdInTable} = require("../../db/util/deactivateIdInTable");
 const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/user/getAllUsers');
 const { getUserById } = require('../../db/user/getUser');
 const { registerNewUser } = require('../../passport/registration');
+const editUser = require('../../db/user/editUser');
+const generatePwHash = require('../../passport/generatePwHash');
+const { generateLoginName } = require('../../utils/nameGenerators');
 
 const userRouter =
 createRoutes([
@@ -29,6 +32,52 @@ createRoutes([
             }
             catch (err)
             {
+                return res.status(400).json( {error: err.message} );
+            }
+
+        }
+    },
+    {
+        path: '/edit',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) =>
+        {
+            try
+            {
+                const args = extractArguments(req.body,
+                [
+                    { key: 'id', type: 'number' },
+                    { key: 'vorname', type: 'string', optional: true },
+                    { key: 'name', type: 'string', optional: true },
+                    { key: 'password', type: 'string', optional: true }, // Note: password can't consist of only numbers using this method
+                    { key: 'rolle', type: 'string', optional: true },
+                ]);
+
+                const dbArgs = 
+                {
+                    Vorname: args.vorname,
+                    Name: args.name,
+                    Type: args.rolle,
+                };
+    
+                if (args.vorname || args.name) 
+                {
+                    const oldUser = await getUserById(args.id);
+                    const vorname = args.vorname || oldUser.Vorname; 
+                    const name = args.name || oldUser.Name; 
+                    dbArgs.LoginName = await generateLoginName(vorname, name, args.id);
+                }
+                if (args.password) dbArgs.pwHash = await generatePwHash(args.password);
+
+
+                await editUser(args.id, dbArgs);
+    
+                return res.status(200).json( args.id );
+            }
+            catch (err)
+            {
+                console.log(err);
                 return res.status(400).json( {error: err.message} );
             }
 
