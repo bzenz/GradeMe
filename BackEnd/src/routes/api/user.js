@@ -1,6 +1,6 @@
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
-const {deactivateIdInTable} = require("../../db/util/deactivateIdInTable");
+const {setDeactivatedForIdInTable} = require("../../db/util/setDeactivatedForIdInTable");
 const { getAllUsersForCourse, getAllEvaluatedUsersForTask, getAllUsersForTask, getAllUsers } = require('../../db/user/getAllUsers');
 const { getUserById } = require('../../db/user/getUser');
 const { registerNewUser } = require('../../passport/registration');
@@ -84,7 +84,7 @@ createRoutes([
         }
     },
     {
-        path: '/deactivate',
+        path: '/setDeactivated',
         method: 'post',
         strategy: 'jwt',
         callback: async (req, res, user) =>
@@ -94,8 +94,9 @@ createRoutes([
                 const args = extractArguments(req.body,
                 [
                     { key: 'userId', type: 'number' },
+                    { key: 'deactivated', type: 'boolean'}
                 ]);
-                await deactivateIdInTable(args.userId, "Users");
+                await setDeactivatedForIdInTable(args.userId, args.deactivated, "Users");
                 return res.status(200).json( { deactivatedUserId: args.userId } );
             }
             catch (err)
