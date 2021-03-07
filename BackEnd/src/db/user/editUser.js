@@ -13,7 +13,7 @@ const editUser = (userId, options={vorname: '', name: '', rolle: '', pwHash: ''}
                 return;
             }
             const { setterString, args } = generateSETParameters(options);
-            const updateTaskSQL = `
+            const updateUserSQL = `
                 UPDATE Users 
                 ${setterString} 
                 WHERE Id = ?;
@@ -26,7 +26,7 @@ const editUser = (userId, options={vorname: '', name: '', rolle: '', pwHash: ''}
                 {
                     try {
                         console.log(`User ${userId} gets updated`);
-                        db.run(updateTaskSQL, args, (err, rows) =>
+                        db.run(updateUserSQL, args, (err, rows) =>
                         {
                             if (err) throw err;
                             userUpdateResolve(rows);
