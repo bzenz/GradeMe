@@ -1,28 +1,12 @@
-const bcrypt = require('bcryptjs');
-const createUser = require('../db/user/createUser');
 
-const registerNewUser = userdata =>
+const createUser = require('../db/user/createUser');
+const generatePwHash = require('./generatePwHash');
+
+const registerNewUser = async userdata =>
 {
-    return new Promise((resolve, reject) => 
-    {
-        try 
-        {
-            bcrypt.genSalt(10, (err, salt) =>
-            {
-                bcrypt.hash(userdata.password, salt, async (err, hash) =>
-                {
-                    if (err) throw err;
-        
-                    const newUser = await createUser(userdata.vorname, userdata.name, userdata.rolle, hash);
-                    resolve(newUser);
-                });
-            });
-        }
-        catch (e) 
-        {
-            reject(e);
-        }
-    });
+    const hash = await generatePwHash(userdata.password);
+    const newUser = await createUser(userdata.vorname, userdata.name, userdata.rolle, hash);
+    return newUser;
 };
 
 exports.registerNewUser = registerNewUser;

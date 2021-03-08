@@ -1,18 +1,18 @@
 const executeOnDB = require('../core/execute');
 
-const deactivateIdInTable = (id, table) => {
+const setDeactivatedForIdInTable = (id, deactivated, table) => {
     return new Promise( async (resolve, reject) => {
         try {
             const sql = `
                 UPDATE ${table}
-                SET Deactivated = true
+                SET Deactivated = ?
                 WHERE Id = ?;
             `;
             await  executeOnDB( db => {
                 return new Promise((dbResolve, dbReject) => {
                     try {
-                        console.log(`${table} ${id} gets deactivated`);
-                        db.run(sql, [id], (err, rows) => {
+                        console.log(`${table} with id ${id} deactivation set to ${deactivated}`);
+                        db.run(sql, [deactivated, id], (err, rows) => {
                             if (err) throw err;
                             dbResolve(rows);
                         });
@@ -28,4 +28,4 @@ const deactivateIdInTable = (id, table) => {
     });
 };
 
-exports.deactivateIdInTable = deactivateIdInTable;
+exports.setDeactivatedForIdInTable = setDeactivatedForIdInTable;

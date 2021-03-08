@@ -9,7 +9,7 @@ const createUser = (vorname, name, type, pwHash) =>
         try
         {
             const nextId = (await getMaxValue('Users', 'Id')).Value + 1;
-            const loginName = await generateLoginName(vorname, name);
+            const loginName = await generateLoginName(vorname, name, nextId);
 
             // (Id, LoginName, Vorname, Name, Type, PwHash, Deactivated)
             const sql = `

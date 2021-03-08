@@ -6,7 +6,8 @@
 
 -   /user
 -   -   /create POST (vorname, name, password, rolle, request_token) => { userId, loginName, vorname, name, rolle }
--   -   /deactivate POST (userId, request_token) => deactivatedUserId
+-   -   /edit POST (userId, request_token, vorname?, name?, password?, rolle? ) => userId
+-   -   /setDeactivated POST (userId, deactivated, request_token) => deactivatedUserId
 -   -   /getData (userId, request_token) => { userId, loginName, vorname, name, rolle }
 -   -   /getAll POST (request_token) => [{userId, loginName, vorname, name, rolle}]
 -   -   -   /forCourse POST (courseId, request_token) => [{userId, vorname, name, rolle}]
@@ -39,5 +40,5 @@
 -   /subject
 -   -   /create POST (name, request_token) => subjectId
 -   -   /edit POST (subjectId, newName, request_token) => editedSubjectId
--   -   /deactivate POST (subjectId, request_token) => deactivatedSubjectId
+-   -   /setDeactivated POST (subjectId, deactivated, request_token) => deactivatedSubjectId
 -   -   /getAll POST (request_token) => [{subjectId, subjectName, deactivated}]
