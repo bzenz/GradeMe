@@ -89,8 +89,6 @@ function SearchListComponent(props) {
         setSearchList(props.searchList);
     })
 
-
-
     const handleSearchFieldChange = (event) => {
         setSearchFieldValue(event.target.value);
     }
@@ -141,31 +139,36 @@ function SearchListComponent(props) {
 
     }
 
-    const handleDeactivateDataRecordClick = (Id) => {
+    const handleSetDeactivateStatusClick = (Id, deactivatedStatus) => {
         switch (props.componentDataRecordType) {
             case "user":{
                 let requestBody = {
                     userId: Id,
+                    deactivated: deactivatedStatus,
                     request_token: props.request_token,
                 };
-                fetch(SERVER + "/api/user/deactivate", {
+                fetch(SERVER + "/api/user/setDeactivated", {
                     "method": "POST",
                     "headers": {'Content-Type': 'application/json'},
                     "body": JSON.stringify(requestBody)
                 })
-                alert("Nutzer wurde deaktiviert.")
+
+                //In der Forschleife wird der Datensatz direkt in der Liste im DOM verändert, damit nicht nach jedem aktivieren/deaktivieren
+                //Die Liste neu aus den Backend geladen werden muss, um sie zu aktualiesieren
+                for(let i = 0; i < searchList.length; i++) {
+                    if(searchList[i].userId === Id){
+                        let newList = searchList;
+                        newList[i].deactivated = deactivatedStatus;
+                        setSearchList(newList);
+                        //setSearchList Updated die Komponente aus irgenenem Grund noch nicht. Daher hier: Forceupdate mit setState({})
+                        setState({});
+                    }
+                }
                 break;
             }
             default: alert("Diese Funktion ist noch nicht verfügbar")
         }
-        for(let i = 0; i < searchList.length; i++) {
-            if(searchList[i].userId === Id){
-                let newList = searchList;
-                newList[i].deactivated = true;
-                setSearchList(newList);
-                setState({});
-            }
-        }
+
        }
 
     const renderButtonsForList = (isFirstList, dataRecord) => {
@@ -211,8 +214,8 @@ function SearchListComponent(props) {
                     />
                     <Button
                         buttonStyle={generalNativeStyles.button1}
-                        title={"Deaktivieren"}
-                        onPress={() => handleDeactivateDataRecordClick(dataRecord[props.dataRecordIdentifierName])}
+                        title={dataRecord.deactivated?"Aktivieren":"Deaktivieren"}
+                        onPress={() => handleSetDeactivateStatusClick(dataRecord[props.dataRecordIdentifierName], !dataRecord.deactivated)}
                     />
                 </View>
             )
@@ -290,8 +293,6 @@ function SearchListComponent(props) {
                    containerStyle={{backgroundColor: "white", borderWidth: 0}}
                    onPress={() => (setCheckBoxIsEnabled(!checkBoxIsEnabled))}
                />
-
-
                {scrollRef.current?.scrollTo({y:scrollPosition, animated: false})}
                {props.isTwoListComponent?
                    <Typography className={generalStyle.siteSubHeading1}>

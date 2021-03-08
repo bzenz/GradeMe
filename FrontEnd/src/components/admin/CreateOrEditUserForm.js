@@ -115,6 +115,7 @@ function CreateOrEditUserForm(props) {
 
         if(props.isUserBeingEdited){
             requestBody = {
+                id: userData.userId,
                 vorname: firstname,
                 name: lastname,
                 rolle: role,
@@ -125,7 +126,7 @@ function CreateOrEditUserForm(props) {
                 "headers": {'Content-Type': 'application/json'},
                 "body": JSON.stringify(requestBody)
             })
-            alert("Nutzerbearbeitung abgesendet. Leider ist die Funktionalität im Backend noch nicht umgesetzt, sodass die veränderten Userdaten nicht angezeigt werden");
+            alert("Nutzerbearbeitung abgesendet.");
         } else {
             fetch(SERVER + "/api/user/create", {
                 "method": "POST",
