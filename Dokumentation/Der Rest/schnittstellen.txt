@@ -6,6 +6,7 @@
 
 -   /user
 -   -   /create POST (vorname, name, password, rolle, request_token) => { userId, loginName, vorname, name, rolle }
+-   -   /edit POST (userId, request_token, vorname?, name?, password?, rolle? ) => userId
 -   -   /setDeactivated POST (userId, deactivated, request_token) => deactivatedUserId
 -   -   /getData (userId, request_token) => { userId, loginName, vorname, name, rolle }
 -   -   /getAll POST (request_token) => [{userId, loginName, vorname, name, rolle}]

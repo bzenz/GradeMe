@@ -41,7 +41,7 @@ createRoutes([
         path: '/edit',
         method: 'post',
         strategy: 'jwt',
-        callback: (req, res, user) =>
+        callback: async (req, res, user) =>
         {
             try
             {
@@ -67,7 +67,7 @@ createRoutes([
                     if (value != undefined) options[key] = value;
                 }
 
-                editTask(args.taskId, options);
+                await editTask(args.taskId, options);
 
                 return res.status(200).json( { taskId: args.taskId } );
             }

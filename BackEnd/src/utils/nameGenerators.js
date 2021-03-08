@@ -10,12 +10,13 @@ exports.generateCourseName = (subjectName='', courseYear=0) =>
     return `${subjectName}-${courseYear}`;
 };
 
-exports.generateLoginName = async (vorname='', name='') => 
+exports.generateLoginName = async (vorname='', name='', userId=0) => 
 {
     if (!validateArgs([
         {value: vorname, type: 'string'},
         {value: name, type: 'string'},
-        ])) throw new Error('vorname and name must be of type String');
+        {value: userId, type: 'number'},
+        ])) throw new Error('vorname and name must be of type String and userId must be of type number');
 
     let loginName;
     let alreadyExistingUser;
@@ -27,7 +28,7 @@ exports.generateLoginName = async (vorname='', name='') =>
         loginName = `${vorname.toLowerCase()}${name.toLowerCase()}${offset>1 ? offset : ''}`;
         alreadyExistingUser = await getUserByLoginName(loginName);
     }
-    while (alreadyExistingUser);
+    while (alreadyExistingUser && alreadyExistingUser.Id !== userId);
 
     return loginName;
 };
