@@ -10,10 +10,14 @@ const customStyles = StyleSheet.create({
     subjectCard: {
         width: '100%',
     },
+    deactivatedSubjectCard: {
+        width: '100%',
+        backgroundColor: "#e0e0e0",
+    },
     listItemContent: {
         display: 'flex',
         flexDirection: "row",
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
     button1: {
        padding: "40px",
@@ -103,8 +107,13 @@ function subjectAdministration(props) {
     //Fach aktivieren/deaktivieren
     const changeSubjectStatus = (subjectId, deactivate) => {
 
-        const requestBody = JSON.stringify({subjectId: subjectId ,request_token: props.request_token})
-        fetch(SERVER + "/api/subject/deactivate",
+        const requestBody = JSON.stringify(
+            {
+                subjectId: subjectId ,
+                deactivated: deactivate,
+                request_token: props.request_token,
+            })
+        fetch(SERVER + "/api/subject/setDeactivated",
             {
                 "method": "POST",
                 "headers": {'Content-Type': 'application/json'},
@@ -122,12 +131,6 @@ function subjectAdministration(props) {
                 // subject direkt aus der Liste zu streichen...deshalb jetzt die (nach 1.5h nicht mehr so quick) and dirty Methode
                 break;
             }
-        }
-
-        if(deactivate){
-            alert("Fach wurde deaktiviert");
-        } else {
-            alert("Fach wurde Aktiviert");
         }
     }
 
@@ -167,8 +170,8 @@ function subjectAdministration(props) {
                 if(checkBoxIsEnabled || !listItem.deactivated) {
                     console.log(listItem.subjectName + " wird gerendert")
                     return (
-                        <Card containerStyle={customStyles.subjectCard}>
-                            <ListItem>
+                        <Card containerStyle={listItem.deactivated?customStyles.deactivatedSubjectCard:customStyles.subjectCard}>
+                            <ListItem containerStyle={listItem.deactivated?{backgroundColor: "#e0e0e0"}:null}>
                                 <ListItem.Content style={customStyles.listItemContent}>
                                     <ListItem.Content style={{maxWidth: "25%"}}>
                                         <Text style={{fontSize: 22}}>
