@@ -53,7 +53,7 @@ const useStylesCustom = makeStyles((theme) => ({
     dataRow: {
     },
     deactivatedDataRow: {
-        backgroundColor: "##bdbdbd",
+        backgroundColor: "#e0e0e0",
     },
     accordionSummaryStyle: {
         display: "flex",
@@ -74,6 +74,7 @@ const useStylesCustom = makeStyles((theme) => ({
 function SearchListComponent(props) {
     const classesCustom = useStylesCustom();
     const generalStyle = generalStyles();
+    const [,setState] = useState();
     const[normalList, setNormalList] = useState([]);
     const[searchList, setSearchList] = useState([]);
     const[searchFieldValue, setSearchFieldValue] = useState("");
@@ -157,6 +158,14 @@ function SearchListComponent(props) {
             }
             default: alert("Diese Funktion ist noch nicht verfügbar")
         }
+        for(let i = 0; i < searchList.length; i++) {
+            if(searchList[i].userId === Id){
+                let newList = searchList;
+                newList[i].deactivated = true;
+                setSearchList(newList);
+                setState({});
+            }
+        }
        }
 
     const renderButtonsForList = (isFirstList, dataRecord) => {
@@ -236,7 +245,7 @@ function SearchListComponent(props) {
                            (dataRecord[props.filterParameter]===selectedFilterOption||selectedFilterOption==="all"))) {
                        if(checkBoxIsEnabled||!dataRecord.deactivated){
                            return (
-                               <TableRow className={dataRecord.rolle==="teacher"?classesCustom.deactivatedDataRow:classesCustom.dataRow}>
+                               <TableRow className={dataRecord.deactivated?classesCustom.deactivatedDataRow:classesCustom.dataRow}>
                                    {/*Es wird hier über alle Einträge des dataRecord iteriert, uns aus jedem Eintrag wird eine Tabellenzelle gebastelt*/}
                                    {Object.values(dataRecord).map((dataRecordField) => {
                                        return (
