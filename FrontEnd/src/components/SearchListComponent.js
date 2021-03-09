@@ -136,7 +136,6 @@ function SearchListComponent(props) {
             }
             default: alert("Diese Funktion ist noch nicht verfügbar")
         }
-
     }
 
     const handleSetDeactivateStatusClick = (Id, deactivatedStatus) => {
@@ -168,7 +167,6 @@ function SearchListComponent(props) {
             }
             default: alert("Diese Funktion ist noch nicht verfügbar")
         }
-
        }
 
     const renderButtonsForList = (isFirstList, dataRecord) => {
@@ -222,6 +220,28 @@ function SearchListComponent(props) {
         }
     }
 
+    //Prüft, welche Datensätze rausgefiltert werden sollen, abhängig nach welchem Kriterium gesucht
+    //wird (z.B. username oder vorname) und ob der Wert dieses Datensatzes den Wert, der im Suchfeld steht beinhaltet
+    const checkForSearchFieldCriteria = (dataRecord) => {
+        return dataRecord[selectedSearchOption].toLowerCase().includes(searchFieldValue.toLowerCase())
+    }
+
+    const checkIfDataRecordMeetsFilterCriteria = (dataRecord) => {
+        return (dataRecord[props.filterParameter]===selectedFilterOption||selectedFilterOption==="all")
+    }
+
+    /*Es wird hier über alle Einträge des dataRecord iteriert, uns aus jedem Eintrag wird eine Tabellenzelle gebastelt*/
+    const buildTableCellsForDataRecordFields = (dataRecord) => {
+        return Object.values(dataRecord).map((dataRecordField) => {
+            return (
+                <TableCell align={"center"}>
+                    <Typography >
+                        {dataRecordField}
+                    </Typography>
+                </TableCell>
+            )
+    })}
+
     const buildTable = (arrayOfDataRecords, isFirstList, applyFilter) => {
         return (
             <Table>
@@ -243,22 +263,11 @@ function SearchListComponent(props) {
                 /*Der Nutzer wird nur an die TableRow gegeben, wenn entweder nicht gefiltert wird (Für die erste Liste)
                 ODER wenn die Eingabe im Suchfeld dem Parameter des Nutzers entspricht, der im Radiocontrol eingestellt ist
                 (z.B. username des Nutzers entspricht dem im Suchfeld) und zusätzlich die Rolle der im Rollenfilter eingestellten Rolle entspricht */
-                   if(!applyFilter||
-                       ((dataRecord[selectedSearchOption].toLowerCase().includes(searchFieldValue.toLowerCase())) &&
-                           (dataRecord[props.filterParameter]===selectedFilterOption||selectedFilterOption==="all"))) {
+                   if(!applyFilter||(checkForSearchFieldCriteria(dataRecord) && checkIfDataRecordMeetsFilterCriteria(dataRecord))) {
                        if(checkBoxIsEnabled||!dataRecord.deactivated){
                            return (
                                <TableRow className={dataRecord.deactivated?classesCustom.deactivatedDataRow:classesCustom.dataRow}>
-                                   {/*Es wird hier über alle Einträge des dataRecord iteriert, uns aus jedem Eintrag wird eine Tabellenzelle gebastelt*/}
-                                   {Object.values(dataRecord).map((dataRecordField) => {
-                                       return (
-                                           <TableCell align={"center"}>
-                                               <Typography >
-                                                   {dataRecordField}
-                                               </Typography>
-                                           </TableCell>
-                                       )
-                                   })}
+                                   {buildTableCellsForDataRecordFields(dataRecord)}
                                    <TableCell>
                                        {renderButtonsForList(isFirstList, dataRecord)}
                                    </TableCell>
