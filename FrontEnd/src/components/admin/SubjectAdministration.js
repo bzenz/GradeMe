@@ -34,7 +34,7 @@ function subjectAdministration(props) {
     const [subjectList, setSubjectList] = useState([]);
     const [newSubjectInputFieldErrorMessage, setNewSubjectInputFieldErrorMessage] = useState("");
     const [editedSubjectId, setEditedSubjectId] = useState(null);
-    const [checkBoxIsEnabled, setCheckBoxIsEnabled] = useState(false);
+    const [showDeactivatedSubjectsCheckBoxIsEnabled, setShowDeactivatedSubjectsCheckBoxIsEnabled] = useState(false);
 
     useEffect(() => {
         const requestBody = JSON.stringify({request_token: props.request_token})
@@ -122,21 +122,18 @@ function subjectAdministration(props) {
 
         for (let i = 0; i < subjectList.length; i++){
             if(subjectList[i].subjectId === subjectId){
-                const newSubjectList = subjectList;
-                console.log("deactivated value: " + newSubjectList[i].deactivated)
-                newSubjectList[i].deactivated = deactivate;
-                console.log("deactivated value: " + newSubjectList[i].deactivated)
-                setSubjectList(newSubjectList);
-                setState({}); //ForceUpdate. Aus irgendeinem Grund reicht setSubjectList nicht, um das deaktivierte
-                // subject direkt aus der Liste zu streichen...deshalb jetzt die (nach 1.5h nicht mehr so quick) and dirty Methode
+                /*Macht man eigentlich nicht so. Um Hooks zu setzen sollte man die entsprechende setHook-Methode aufrufen
+                Deshalb brauchts hier auch den Forcererender.
+                Es gibt ne Möglichkeit das sauberer zu machen, aber so funktioniert es halt erstmal...quick and dirty */
+                subjectList[i].deactivated = deactivate;
+                setState({});
                 break;
             }
         }
     }
 
-
-
     return (
+        //Header
         <View style={generalNativeStyles.root}>
             <Text style={generalNativeStyles.siteHeading}>
                 Fächerverwaltung
@@ -149,9 +146,9 @@ function subjectAdministration(props) {
             />
             <CheckBox
                 title={"Deaktivierte Fächer anzeigen"}
-                checked={checkBoxIsEnabled}
+                checked={showDeactivatedSubjectsCheckBoxIsEnabled}
                 containerStyle={customStyles.checkBoxContainerStyle}
-                onPress={() => (setCheckBoxIsEnabled(!checkBoxIsEnabled))}
+                onPress={() => (setShowDeactivatedSubjectsCheckBoxIsEnabled(!showDeactivatedSubjectsCheckBoxIsEnabled))}
             />
             {showNewSubjectInputField?
                 <Card containerStyle={customStyles.subjectCard}>
@@ -164,11 +161,9 @@ function subjectAdministration(props) {
                 </Card>
            : null}
 
-
+            {/*SubjectList*/}
             {subjectList.map((listItem) => {
-                console.log("neurender")
-                if(checkBoxIsEnabled || !listItem.deactivated) {
-                    console.log(listItem.subjectName + " wird gerendert")
+                if(showDeactivatedSubjectsCheckBoxIsEnabled || !listItem.deactivated) {
                     return (
                         <Card containerStyle={listItem.deactivated?customStyles.deactivatedSubjectCard:customStyles.subjectCard}>
                             <ListItem containerStyle={listItem.deactivated?{backgroundColor: "#e0e0e0"}:null}>
