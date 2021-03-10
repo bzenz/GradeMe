@@ -104,7 +104,8 @@ function CreateOrEditUserForm(props) {
             return;
         }
 
-        const password = firstname.substring(0, 1) + lastname.substring(0, 1);
+        let password = firstname.substring(0, 1) + lastname.substring(0, 1);
+        password = password.toLowerCase();
         let requestBody = {
             vorname: firstname,
             name: lastname,
