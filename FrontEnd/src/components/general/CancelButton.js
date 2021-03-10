@@ -7,12 +7,13 @@ import { generalNativeStyles } from "../../styles/GeneralStyles";
 const cancelButton = (props) => {
     const message = "Wenn Sie die Bearbeitung beenden, gehen Ihre eingegebenen Daten verloren. \n \n Drücken sie 'Ok' um die Bearbeitung endgültig abzubrechen. \n \n Drücken sie 'abbrechen' um zurück zum Bearbeitungsformular zu gehen";
     const onClick = () => {
-        if (confirm(message)) props.switchContent(props.previousContent);
-
-        //Die executeFunction ist eine Prop, in der eine Funktion übergeben werden kann, die beim abbrechen
-        //ausgeführt werden soll, wie zum Beispiel den Bearbeitungsstatus eines Formulares auf false setzen
-        if(props.executeFunction){
-            props.executeFunction();
+        if (confirm(message)) {
+            props.switchContent(props.previousContent);
+            //Die executeFunction ist eine Prop, in der eine Funktion übergeben werden kann, die beim abbrechen
+            //ausgeführt werden soll, wie zum Beispiel den Bearbeitungsstatus eines Formulares auf false setzen
+            if(props.executeFunction){
+                props.executeFunction();
+            }
         }
     }
 

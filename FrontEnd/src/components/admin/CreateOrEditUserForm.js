@@ -115,6 +115,7 @@ function CreateOrEditUserForm(props) {
 
         if(props.isUserBeingEdited){
             requestBody = {
+                id: userData.userId,
                 vorname: firstname,
                 name: lastname,
                 rolle: role,
@@ -125,14 +126,14 @@ function CreateOrEditUserForm(props) {
                 "headers": {'Content-Type': 'application/json'},
                 "body": JSON.stringify(requestBody)
             })
-            alert("Nutzerbearbeitung abgesendet. Leider ist die Funktionalität im Backend noch nicht umgesetzt, sodass die veränderten Userdaten nicht angezeigt werden");
+            alert("Nutzerbearbeitung abgesendet.");
         } else {
             fetch(SERVER + "/api/user/create", {
                 "method": "POST",
                 "headers": {'Content-Type': 'application/json'},
                 "body": JSON.stringify(requestBody)
             })
-            alert("Nutzer erstellt. Leider ist die Funktionalität im Backend noch nicht umgesetzt, sodass der neu angelegte Nutzer noch nicht gespeicher werde konnte.");
+            alert("Nutzer erstellt.");
         }
         props.setIsUserBeingEdited(false);
         props.switchContent(USER_ADMINISTRATION_IDENTIFIER)

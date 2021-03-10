@@ -23,6 +23,7 @@ import {CREATE_OR_EDIT_USER_IDENTIFIER} from "./general/identifiers";
 import {switchContent} from "../actions/teacherNavigationActions";
 import {setIsUserBeingEdited} from "../actions/adminActions";
 import {SERVER} from "../../index";
+import { CheckBox } from "react-native-elements";
 
 let screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -51,8 +52,8 @@ const useStylesCustom = makeStyles((theme) => ({
     },
     dataRow: {
     },
-    dataRowTeacher: {
-        backgroundColor: "#E1F5FE",
+    deactivatedDataRow: {
+        backgroundColor: "#e0e0e0",
     },
     accordionSummaryStyle: {
         display: "flex",
@@ -73,20 +74,20 @@ const useStylesCustom = makeStyles((theme) => ({
 function SearchListComponent(props) {
     const classesCustom = useStylesCustom();
     const generalStyle = generalStyles();
+    const [,setState] = useState();
     const[normalList, setNormalList] = useState([]);
     const[searchList, setSearchList] = useState([]);
     const[searchFieldValue, setSearchFieldValue] = useState("");
     const[selectedSearchOption, setSelectedSearchOption] = useState(props.defaultSelectedSearchOption);
     const[selectedFilterOption, setSelectedFilterOption] = useState("all");
     const[scrollPosition, setScrollPosition] = useState(0);
+    const[checkBoxIsEnabled, setCheckBoxIsEnabled] = useState(false);
     const scrollRef = useRef();
 
         useEffect(() => {
         setNormalList(props.normalList);
         setSearchList(props.searchList);
     })
-
-
 
     const handleSearchFieldChange = (event) => {
         setSearchFieldValue(event.target.value);
@@ -135,22 +136,33 @@ function SearchListComponent(props) {
             }
             default: alert("Diese Funktion ist noch nicht verfügbar")
         }
-
     }
 
-    const handleDeactivateDataRecordClick = (Id) => {
+    const handleSetDeactivateStatusClick = (Id, deactivatedStatus) => {
         switch (props.componentDataRecordType) {
             case "user":{
                 let requestBody = {
                     userId: Id,
+                    deactivated: deactivatedStatus,
                     request_token: props.request_token,
                 };
-                fetch(SERVER + "/api/user/delete", {
+                fetch(SERVER + "/api/user/setDeactivated", {
                     "method": "POST",
                     "headers": {'Content-Type': 'application/json'},
                     "body": JSON.stringify(requestBody)
                 })
-                alert("Nutzer wurde deaktiviert. Leider ist die Funktionalität im Backend noch nicht umgesetzt, daher konnten die Änderungen noch nicht gespeichert werden.")
+
+                //In der Forschleife wird der Datensatz direkt in der Liste im DOM verändert, damit nicht nach jedem aktivieren/deaktivieren
+                //Die Liste neu aus den Backend geladen werden muss, um sie zu aktualiesieren
+                for(let i = 0; i < searchList.length; i++) {
+                    if(searchList[i].userId === Id){
+                        let newList = searchList;
+                        newList[i].deactivated = deactivatedStatus;
+                        setSearchList(newList);
+                        //setSearchList Updated die Komponente aus irgenenem Grund noch nicht. Daher hier: Forceupdate mit setState({})
+                        setState({});
+                    }
+                }
                 break;
             }
             default: alert("Diese Funktion ist noch nicht verfügbar")
@@ -200,13 +212,35 @@ function SearchListComponent(props) {
                     />
                     <Button
                         buttonStyle={generalNativeStyles.button1}
-                        title={"Deaktivieren"}
-                        onPress={() => handleDeactivateDataRecordClick(dataRecord[props.dataRecordIdentifierName])}
+                        title={dataRecord.deactivated?"Aktivieren":"Deaktivieren"}
+                        onPress={() => handleSetDeactivateStatusClick(dataRecord[props.dataRecordIdentifierName], !dataRecord.deactivated)}
                     />
                 </View>
             )
         }
     }
+
+    //Prüft, welche Datensätze rausgefiltert werden sollen, abhängig nach welchem Kriterium gesucht
+    //wird (z.B. username oder vorname) und ob der Wert dieses Datensatzes den Wert, der im Suchfeld steht beinhaltet
+    const checkForSearchFieldCriteria = (dataRecord) => {
+        return dataRecord[selectedSearchOption].toLowerCase().includes(searchFieldValue.toLowerCase())
+    }
+
+    const checkIfDataRecordMeetsFilterCriteria = (dataRecord) => {
+        return (dataRecord[props.filterParameter]===selectedFilterOption||selectedFilterOption==="all")
+    }
+
+    /*Es wird hier über alle Einträge des dataRecord iteriert, uns aus jedem Eintrag wird eine Tabellenzelle gebastelt*/
+    const buildTableCellsForDataRecordFields = (dataRecord) => {
+        return Object.values(dataRecord).map((dataRecordField) => {
+            return (
+                <TableCell align={"center"}>
+                    <Typography >
+                        {dataRecordField}
+                    </Typography>
+                </TableCell>
+            )
+    })}
 
     const buildTable = (arrayOfDataRecords, isFirstList, applyFilter) => {
         return (
@@ -229,24 +263,18 @@ function SearchListComponent(props) {
                 /*Der Nutzer wird nur an die TableRow gegeben, wenn entweder nicht gefiltert wird (Für die erste Liste)
                 ODER wenn die Eingabe im Suchfeld dem Parameter des Nutzers entspricht, der im Radiocontrol eingestellt ist
                 (z.B. username des Nutzers entspricht dem im Suchfeld) und zusätzlich die Rolle der im Rollenfilter eingestellten Rolle entspricht */
-                   if(!applyFilter||((dataRecord[selectedSearchOption].toLowerCase().includes(searchFieldValue.toLowerCase())) && (dataRecord[props.filterParameter]===selectedFilterOption||selectedFilterOption==="all"))) {
-                        return (
-                            <TableRow className={dataRecord.rolle==="teacher"?classesCustom.dataRowTeacher:classesCustom.dataRow}>
-                                {/*Es wird hier über alle Einträge des dataRecord iteriert, uns aus jedem Eintrag wird eine Tabellenzelle gebastelt*/}
-                                {Object.values(dataRecord).map((dataRecordField) => {
-                                    return (
-                                        <TableCell align={"center"}>
-                                            <Typography >
-                                                {dataRecordField}
-                                            </Typography>
-                                        </TableCell>
-                                    )
-                                })}
-                                <TableCell>
-                                    {renderButtonsForList(isFirstList, dataRecord)}
-                                </TableCell>
-                            </TableRow>
-                        )
+                   if(!applyFilter||(checkForSearchFieldCriteria(dataRecord) && checkIfDataRecordMeetsFilterCriteria(dataRecord))) {
+                       if(checkBoxIsEnabled||!dataRecord.deactivated){
+                           return (
+                               <TableRow className={dataRecord.deactivated?classesCustom.deactivatedDataRow:classesCustom.dataRow}>
+                                   {buildTableCellsForDataRecordFields(dataRecord)}
+                                   <TableCell>
+                                       {renderButtonsForList(isFirstList, dataRecord)}
+                                   </TableCell>
+                               </TableRow>
+                           )
+                       }
+
                    }
                }
                )
@@ -255,10 +283,25 @@ function SearchListComponent(props) {
        )
     }
 
+    function getDeactivatedCheckboxLabel(){
+        switch (props.componentDataRecordType) {
+            case "user": return "Deaktivierte Benutzer anzeigen";
+            case "course": return "Deaktivierte Kurse anzeigen";
+            default: return "Deaktivierte Datensätze anzeigen";
+        }
+    }
+
     return (
     <View style={generalNativeStyles.fullWidth}>
         <Card>
            <ScrollView className={classesCustom.backgroundPaper} ref={scrollRef} onScroll={(event) => handleScroll(event)}>
+               <CheckBox
+                   title={getDeactivatedCheckboxLabel()}
+                   checked={checkBoxIsEnabled}
+                   center={true}
+                   containerStyle={{backgroundColor: "white", borderWidth: 0}}
+                   onPress={() => (setCheckBoxIsEnabled(!checkBoxIsEnabled))}
+               />
                {scrollRef.current?.scrollTo({y:scrollPosition, animated: false})}
                {props.isTwoListComponent?
                    <Typography className={generalStyle.siteSubHeading1}>
