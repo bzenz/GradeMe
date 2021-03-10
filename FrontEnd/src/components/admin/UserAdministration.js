@@ -42,7 +42,7 @@ function userAdministration(props) {
             </Text>
                 <Button
                     buttonStyle={generalNativeStyles.button1}
-                    containerStyle={generalNativeStyles.buttonContainerStyle}
+                    containerStyle={{width: "70%"}}
                     onPress={handleCreateUserClick}
                     title={"Nutzer anlegen"}
                 >

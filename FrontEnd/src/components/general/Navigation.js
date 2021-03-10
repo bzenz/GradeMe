@@ -35,7 +35,7 @@ import {
     COURSES_FOR_SUBJECT_IDENTIFIER, CREATE_OR_EDIT_USER_IDENTIFIER,
     GRADES_OVERVIEW_IDENTIFIER,
     SCHEDULE_IDENTIFIER,
-    STUDENTS_FOR_COURSE_IDENTIFIER,
+    STUDENTS_FOR_COURSE_IDENTIFIER, SUBJECT_ADMINISTRATION_IDENTIFIER,
     SUBJECT_OVERVIEW_IDENTIFIER,
     TASK_OVERVIEW_IDENTIFIER,
     TASKS_FOR_COURSE_IDENTIFIER,
@@ -45,6 +45,7 @@ import { Tabs } from "./Tabs";
 import CreateOrEditTaskForm from "../teacher/CreateOrEditTaskForm";
 import UserAdministration from "../admin/UserAdministration";
 import CreateUserForm from "../admin/CreateOrEditUserForm";
+import SubjectAdministration from "../admin/SubjectAdministration";
 
 function Dashboard(props) {
     const classes = useStyles();
@@ -84,6 +85,8 @@ function Dashboard(props) {
                 return <UserAdministration/>
             case CREATE_OR_EDIT_USER_IDENTIFIER:
                 return <CreateUserForm/>
+            case SUBJECT_ADMINISTRATION_IDENTIFIER:
+                return <SubjectAdministration/>
             default:
                 return <div>{props.activeContent}</div>
         }
