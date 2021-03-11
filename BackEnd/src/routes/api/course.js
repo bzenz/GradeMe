@@ -1,9 +1,10 @@
 const createCourse = require('../../db/course/createCourse');
-const { getAllCoursesForUser } = require('../../db/course/getAllCourses');
+const { getAllCoursesForUser, getAllCourses } = require('../../db/course/getAllCourses');
 const getSubject = require('../../db/subject/getSubject');
 const { generateCourseName } = require('../../utils/nameGenerators');
 const createRoutes = require('../createRoutes');
 const extractArguments = require('../extractArguments');
+const addUsersToCourse = require("../../db/course/addUsersToCourse");
 
 const userRouter =
 createRoutes([
@@ -61,6 +62,59 @@ createRoutes([
                 }
 
                 return res.status(200).json( courses );
+            }
+            catch (err)
+            {
+                return res.status(400).json( {error: err.message} );
+            }
+        }
+    },
+    {
+        path: '/users/add',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) =>
+        {
+            try
+            {
+                const args = extractArguments(req.body,
+                    [
+                        { key: 'courseId', type: 'number' },
+                        { key: 'users', type: 'object'} //TODO check correct array content
+                    ]);
+
+                await addUsersToCourse(args.users, args.courseId).catch(err => {throw err});
+
+
+                return res.status(200).json( args.courseId );
+            }
+            catch (err)
+            {
+                return res.status(400).json( {error: err.message} );
+            }
+        }
+    },
+    {
+        path: '/getAll',
+        method: 'post',
+        strategy: 'jwt',
+        callback: async (req, res, user) =>
+        {
+            try
+            {
+               const courses = await getAllCourses().catch(err=>{throw err});
+
+               const refinedCourses = courses.map(course => {
+                   return {
+                       courseId: course.CourseId,
+                       courseName: generateCourseName(course.SubjectName, course.Year),
+                       year: course.Year,
+                       subjectId: course.SubjectId,
+                       subjectName: course.SubjectName,
+                   };
+               });
+
+               return res.status(200).json( refinedCourses );
             }
             catch (err)
             {
