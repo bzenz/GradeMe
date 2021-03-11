@@ -34,7 +34,7 @@ const useStyles = makeStyles(() => ({
 
 function CreateOrEditCourseForm(props) {
     const customClasses = useStyles();
-    const [selectedSubjectId, setSelectedSubjectId] = useState();
+    const [selectedSubjectId, setSelectedSubjectId] = useState("");
     const [year, setYear] = useState();
     const [subjectList, setSubjectList] = useState([]);
     const [allUser, setAllUser] = useState([]);
@@ -75,8 +75,7 @@ function CreateOrEditCourseForm(props) {
         //(Dann ist das Feld nämlich nicht korrekt ausgefüllt)
         const isYearFieldFilledOutRight = (yearInteger && (yearInteger.toString() === year));
 
-        //setIsFilledOut(isYearFieldFilledOutRight)
-        if( !isYearFieldFilledOutRight || !selectedSubjectId ){
+        if( !isYearFieldFilledOutRight || selectedSubjectId === "" ){
             alert("Nicht alle Pflichtfelder wurden korrekt ausgefüllt.");
             return;
         }
@@ -123,9 +122,11 @@ function CreateOrEditCourseForm(props) {
                         onChange={handleSelectedSubjectChange}
                     >
                         {subjectList.map((subject) => {
-                            return (
-                                <MenuItem value={subject.subjectId}>{subject.subjectName}</MenuItem>
-                            )
+                            if(!subject.deactivated){
+                                return (
+                                    <MenuItem value={subject.subjectId}>{subject.subjectName}</MenuItem>
+                                )
+                            }
                         })}
                     </Select>
                 </FormControl>

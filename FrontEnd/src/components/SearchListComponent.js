@@ -110,7 +110,7 @@ function SearchListComponent(props) {
 
     const findItemInListById = (Id, list) => {
         for (let i = 0; i < list.length; i++) {
-            if(Id === list[i].id){
+            if(Id === list[i][props.dataRecordIdentifierName]){
                 return i;
             }
         }
@@ -118,7 +118,7 @@ function SearchListComponent(props) {
 
     const moveDataRecordFromOneArrayToAnotherArray = (dataRecord, departureArray, destinationArray) => {
         destinationArray.push(dataRecord);
-        let index = findItemInListById(dataRecord.id, departureArray);
+        let index = findItemInListById(dataRecord[props.dataRecordIdentifierName], departureArray);
         departureArray.splice(index, 1);
         return {
             departureArray: departureArray,

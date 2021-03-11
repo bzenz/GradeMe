@@ -7,14 +7,14 @@ import {View} from "react-native";
 import {CREATE_OR_EDIT_COURSE_IDENTIFIER} from "../general/identifiers";
 import {switchContent} from "../../actions/teacherNavigationActions";
 import {setErrorData} from "../../actions/errorActions";
-import {courseMockArray} from "../../../utils/mocks";
 import {setUserInCurrentCourse} from "../../actions/adminActions";
+import {SERVER} from "../../../index";
 
 function courseAdministration(props) {
     const [allCourses, setAllCourses] = useState([]);
 
     useEffect(() => {
-        /*fetch(SERVER + "/api/course/getAll",
+        fetch(SERVER + "/api/course/getAll",
             {
                 "method": "POST",
                 "headers": { 'Content-Type': 'application/json' },
@@ -22,8 +22,7 @@ function courseAdministration(props) {
                     request_token: props.request_token,
                 })
             }).then(response => response.json())
-            .then(data => setAllCourses(data))*/
-        setAllCourses(courseMockArray);
+            .then(data => setAllCourses(data))
     }, [])
 
     const handleCreateCourseClick = () => {
