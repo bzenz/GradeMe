@@ -21,9 +21,11 @@ const cancelButton = (props) => {
     const defaultStyle = [gns.button1, gns.marginTop];
     let myStyle = defaultStyle.concat(props.style);
     return (
-        <Button buttonStyle={myStyle}
-                onPress={onClick}
-                title={"Abbrechen"}/>
+        <Button
+            buttonStyle={myStyle}
+            containerStyle={props.containerStyle}
+            onPress={onClick}
+            title={"Abbrechen"}/>
     )
 
 }

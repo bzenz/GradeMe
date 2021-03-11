@@ -14,14 +14,15 @@ Die Komponente SearchAndListComponent kann folgende Props haben:
     gesucht wird (z.B. firstname oder username), der zweite Wert ist der dem User im Auswahlmenü angezeigte Wert, z.B. username und Benutzername)
     die Objektkeys müssen wie folgt heißen: {value: "...", displayedString: "..."}
 8.  defaultSelectedSearchOption: Die Suchoption, die standartmäßig beim laden der Komponente ausgewählt ist
-9.  filterOptionArray: Optionen, nach denen gefiltert werden kann. (Array of Objects. Der erste wert ist der value, nach dem gefiltert wird, der
+9.  componentHasFilter: Soll die 2. Lister eine Möglichkeit zum Filtern haben? (true/false)
+10.  filterOptionArray: Optionen, nach denen gefiltert werden kann. (Array of Objects. Der erste wert ist der value, nach dem gefiltert wird, der
     zweite Wert ist der dem User angezeigte Wert im Auswahlmenü, z.B. student und Schüler)
     Die Objektkeys müssen wie folgt heißen: {value: "...", displayedString: "..."}.
     Zusätzlich: der value "all" als Filter bewirkt, dass alle Ergebnisse angezeigt werden.
-10.  filterParameter: Parameter, nach dem in der Datenbasis gefiltert werden kann (z.B. role oder subject)
-11. componentDataRecordType: Der Typ der Daten, die in der Komponente verwendet werden. (Bsp. "user" oder "course")
+11.  filterParameter: Parameter, nach dem in der Datenbasis gefiltert werden kann (z.B. role oder subject)
+12. componentDataRecordType: Der Typ der Daten, die in der Komponente verwendet werden. (Bsp. "user" oder "course")
     damit wird bei den bearbeiten/ deaktivieren Buttons durch ein switch-Statement entschieden, welche aktionen ausgeführt werden sollen
-12. dataRecordIdentifierName: der Name des Attributs, der die ID jedes einzelnen Eintrags der Liste darstellt
+13. dataRecordIdentifierName: der Name des Attributs, der die ID jedes einzelnen Eintrags der Liste darstellt
 
 Beispiel für eine twoListComponent:
 

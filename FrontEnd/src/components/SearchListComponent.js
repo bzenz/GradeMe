@@ -21,7 +21,7 @@ import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import {CREATE_OR_EDIT_USER_IDENTIFIER} from "./general/identifiers";
 import {switchContent} from "../actions/teacherNavigationActions";
-import {setIsUserBeingEdited} from "../actions/adminActions";
+import {setIsUserBeingEdited, setUserInCurrentCourse} from "../actions/adminActions";
 import {SERVER} from "../../index";
 import { CheckBox } from "react-native-elements";
 
@@ -65,7 +65,6 @@ const useStylesCustom = makeStyles((theme) => ({
         minWidth: 140,
         marginRight: "1.5%"
     },
-
 }));
 
 //Für eine Ausführliche Dokumentation der benötigten Props der Komponente:
@@ -104,7 +103,7 @@ function SearchListComponent(props) {
     * Bei jedem Scrollen wird die scrollPositionVariable auf den aktuellen Wert gesetzt und wenn ein Nutzer übertragen
     * wird, dann wird durch den Buttonklick dieser Wert in die scrollPosition-Hook gespeichert, um sie nach dem neurendern
     * als Startpunkt für den Scrollview zu nutzen*/
-    let scrollPositionVariable = 0;
+    let scrollPositionVariable = scrollPosition;
     const handleScroll = (event) => {
         scrollPositionVariable = event.nativeEvent.contentOffset.y;
     }
@@ -120,7 +119,7 @@ function SearchListComponent(props) {
     const moveDataRecordFromOneArrayToAnotherArray = (dataRecord, departureArray, destinationArray) => {
         destinationArray.push(dataRecord);
         let index = findItemInListById(dataRecord.id, departureArray);
-        departureArray = departureArray.splice(index, 1);
+        departureArray.splice(index, 1);
         return {
             departureArray: departureArray,
             destinationArray: destinationArray,
@@ -139,6 +138,7 @@ function SearchListComponent(props) {
     }
 
     const handleSetDeactivateStatusClick = (Id, deactivatedStatus) => {
+        setScrollPosition(scrollPositionVariable);
         switch (props.componentDataRecordType) {
             case "user":{
                 let requestBody = {
@@ -176,12 +176,13 @@ function SearchListComponent(props) {
                     <IconButton
                         aria-label="Delete"
                         onFocus={(event) => event.stopPropagation()}
-                        onClick={(event) => {
+                        onClick={() => {
                             setScrollPosition(scrollPositionVariable);
-                            event.stopPropagation()
                             const arrayObj = moveDataRecordFromOneArrayToAnotherArray(dataRecord, normalList, searchList);
                             setNormalList(arrayObj.departureArray);
                             setSearchList(arrayObj.destinationArray);
+                            props.setUserInCurrentCourse(arrayObj.departureArray)
+                            setState({})
                         }}>
                         <DeleteIcon/>
                     </IconButton>
@@ -191,12 +192,13 @@ function SearchListComponent(props) {
                     <IconButton
                         aria-label="Add"
                         onFocus={(event) => event.stopPropagation()}
-                        onClick={(event) => {
+                        onClick={() => {
                             setScrollPosition(scrollPositionVariable);
-                            event.stopPropagation()
                             const arrayObj = moveDataRecordFromOneArrayToAnotherArray(dataRecord, searchList, normalList);
-                            setNormalList(arrayObj.departureArray);
-                            setSearchList(arrayObj.destinationArray);
+                            setNormalList(arrayObj.destinationArray)
+                            setSearchList(arrayObj.departureArray)
+                            props.setUserInCurrentCourse(arrayObj.destinationArray)
+                            setState({})
                         }}>
                         <AddIcon/>
                     </IconButton>
@@ -223,7 +225,7 @@ function SearchListComponent(props) {
     //Prüft, welche Datensätze rausgefiltert werden sollen, abhängig nach welchem Kriterium gesucht
     //wird (z.B. username oder vorname) und ob der Wert dieses Datensatzes den Wert, der im Suchfeld steht beinhaltet
     const checkForSearchFieldCriteria = (dataRecord) => {
-        return dataRecord[selectedSearchOption].toLowerCase().includes(searchFieldValue.toLowerCase())
+        return dataRecord[selectedSearchOption].toString().toLowerCase().includes(searchFieldValue.toLowerCase())
     }
 
     const checkIfDataRecordMeetsFilterCriteria = (dataRecord) => {
@@ -269,7 +271,9 @@ function SearchListComponent(props) {
                                <TableRow className={dataRecord.deactivated?classesCustom.deactivatedDataRow:classesCustom.dataRow}>
                                    {buildTableCellsForDataRecordFields(dataRecord)}
                                    <TableCell>
-                                       {renderButtonsForList(isFirstList, dataRecord)}
+                                       <View style={{width: "100%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
+                                           {renderButtonsForList(isFirstList, dataRecord)}
+                                       </View>
                                    </TableCell>
                                </TableRow>
                            )
@@ -340,26 +344,29 @@ function SearchListComponent(props) {
                        variant="standard"
                        onChange={handleSearchFieldChange}
                    />
-
-                   <Typography className={classesCustom.searchPanelComponent}>
-                       Filtern nach:
-                   </Typography>
-
-                   <FormControl variant={"standard"} className={classesCustom.formControl}>
-                       <InputLabel id="Filterlabel">Filteroptionen</InputLabel>
-                       <Select
-                           labelId="filterSelect-label"
-                           id="filterSelect"
-                           value={selectedFilterOption}
-                           onChange={handleFilterOptionChange}
-                       >
-                           {props.filterOptionArray.map((filterOption) => {
-                               return (
-                                   <MenuItem value={filterOption.value}>{filterOption.displayedString}</MenuItem>
-                               )
-                           })}
-                       </Select>
-                   </FormControl>
+                   {props.componentHasFilter ?
+                       <View>
+                           <Typography className={classesCustom.searchPanelComponent}>
+                               Filtern nach:
+                           </Typography>
+                           <FormControl variant={"standard"} className={classesCustom.formControl}>
+                               <InputLabel id="Filterlabel">Filteroptionen</InputLabel>
+                               <Select
+                                   labelId="filterSelect-label"
+                                   id="filterSelect"
+                                   value={selectedFilterOption}
+                                   onChange={handleFilterOptionChange}
+                               >
+                                   {props.filterOptionArray.map((filterOption) => {
+                                       return (
+                                           <MenuItem value={filterOption.value}>{filterOption.displayedString}</MenuItem>
+                                       )
+                                   })}
+                               </Select>
+                           </FormControl>
+                       </View>
+                       :null
+                   }
                </Container>
                {buildTable(searchList, false, true)}
            </ScrollView>
@@ -368,4 +375,4 @@ function SearchListComponent(props) {
     )
 }
 
-export default connect ((state) => ({request_token: state.loginReducer.request_token}), {switchContent, setIsUserBeingEdited})(SearchListComponent)
+export default connect ((state) => ({request_token: state.loginReducer.request_token}), {switchContent, setIsUserBeingEdited, setUserInCurrentCourse})(SearchListComponent)
