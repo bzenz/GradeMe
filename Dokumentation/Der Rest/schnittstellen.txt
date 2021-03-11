@@ -36,6 +36,8 @@
 -   -   /create POST (year, subjectId, request_token) => [{courseId, courseName}]
 -   -   /getAll
 -   -   -   /forUser POST (userId, request_token) => [{courseId, courseName, year, subjectId, subjectName}]
+-   -   /users
+-   -   -   /add POST {users: [{userId}], courseId, request_token} => courseId
 
 -   /subject
 -   -   /create POST (name, request_token) => subjectId
