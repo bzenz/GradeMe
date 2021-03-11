@@ -30,3 +30,9 @@ export const subjectMockArray = [
     {Id: 5, name: "Zaubertränke"},
     {Id: 6, name: "Geschichte der Zauberei"},
 ]
+
+export const courseMockArray = [
+    {courseId: 1, subjectName: "Mathe",year: 2020, courseName: "Mathe2020_1"},
+    {courseId: 2, subjectName: "Deutsch", year: 2019, courseName: "Deutsch2019_1"},
+    {courseId: 3, subjectName: "Deutsch", year: 2019, courseName: "Deutsch2019_2"},
+]

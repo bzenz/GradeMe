@@ -30,9 +30,9 @@ import ErrorContentPaper from "./ErrorContentPaper";
 import {setDrawerOpenState} from "../../actions/generalNavigationActions";
 import {
     ACTIONS_FOR_COURSE_IDENTIFIER,
-    COMMUNICATION_DASHBOARD_IDENTIFIER,
+    COMMUNICATION_DASHBOARD_IDENTIFIER, COURSE_ADMINISTRATION_IDENTIFIER,
     COURSE_VIEW_IDENTIFIER,
-    COURSES_FOR_SUBJECT_IDENTIFIER, CREATE_OR_EDIT_USER_IDENTIFIER,
+    COURSES_FOR_SUBJECT_IDENTIFIER, CREATE_OR_EDIT_COURSE_IDENTIFIER, CREATE_OR_EDIT_USER_IDENTIFIER,
     GRADES_OVERVIEW_IDENTIFIER,
     SCHEDULE_IDENTIFIER,
     STUDENTS_FOR_COURSE_IDENTIFIER, SUBJECT_ADMINISTRATION_IDENTIFIER,
@@ -46,6 +46,8 @@ import CreateOrEditTaskForm from "../teacher/CreateOrEditTaskForm";
 import UserAdministration from "../admin/UserAdministration";
 import CreateUserForm from "../admin/CreateOrEditUserForm";
 import SubjectAdministration from "../admin/SubjectAdministration";
+import CourseAdministration from "../admin/CourseAdministration";
+import CreateOrEditCourseForm from "../admin/CreateOrEditCourseForm";
 
 function Dashboard(props) {
     const classes = useStyles();
@@ -87,6 +89,10 @@ function Dashboard(props) {
                 return <CreateUserForm/>
             case SUBJECT_ADMINISTRATION_IDENTIFIER:
                 return <SubjectAdministration/>
+            case COURSE_ADMINISTRATION_IDENTIFIER:
+                return <CourseAdministration/>
+            case CREATE_OR_EDIT_COURSE_IDENTIFIER:
+                return <CreateOrEditCourseForm/>
             default:
                 return <div>{props.activeContent}</div>
         }

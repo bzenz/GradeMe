@@ -54,6 +54,7 @@ function userAdministration(props) {
                 tableHeadWords={["Id", "Benutzername", "Vorname", "Name", "Rolle"]}
                 searchOptionArray={[{value: "loginName", displayedString: "Benutzername"}, {value: "vorname", displayedString: "Vorname"}, {value: "name", displayedString: "Nachname"}]}
                 defaultSelectedSearchOption={"loginName"}
+                componentHasFilter={true}
                 filterOptionArray={[{value: "all", displayedString: "Alle"}, {value: "student", displayedString: "Schüler"}, {value: "teacher", displayedString: "Lehrer"}, {value: "admin", displayedString: "Administrator"}]}
                 filterParameter={"rolle"}
                 componentDataRecordType={"user"}
