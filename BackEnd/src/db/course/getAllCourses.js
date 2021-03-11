@@ -21,4 +21,23 @@ const getAllCoursesForUser = userId =>
     });
 };
 
+const getAllCourses = () => {
+    return new Promise(async (resolve, reject)=> {
+        const sql = `
+        SELECT c.Id AS CourseId, c.Year AS Year, s.Id AS SubjectId, s.Name AS SubjectName 
+        FROM Courses c, Subjects s
+        WHERE c.SubjectId = s.Id
+        ORDER BY c.Year DESC, s.Name;
+        `;
+
+        await executeOnDB(db => {
+            db.all(sql,[],(err,row)=> {
+                if (err) throw err;
+                resolve(row);
+            })
+        })
+    })
+}
+
 exports.getAllCoursesForUser = getAllCoursesForUser;
+exports.getAllCourses = getAllCourses;
