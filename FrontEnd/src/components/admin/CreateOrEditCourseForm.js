@@ -38,6 +38,7 @@ function CreateOrEditCourseForm(props) {
     const [year, setYear] = useState();
     const [subjectList, setSubjectList] = useState([]);
     const [allUser, setAllUser] = useState([]);
+    const [createdCourseId, setCreatedCourseId] = useState();
 
     useEffect(() => {
         fetch(SERVER + "/api/subject/getAll",
@@ -86,22 +87,33 @@ function CreateOrEditCourseForm(props) {
             request_token: props.request_token,
         };
 
+        let cci;
+        const useFetchResponse = (data) => {
+           setCreatedCourseId(data.courseId)
+             cci = data.courseId;
+            }
+
         fetch(SERVER + "/api/course/create", {
                 "method": "POST",
                 "headers": {'Content-Type': 'application/json'},
                 "body": JSON.stringify(requestBody)
-            })
+            }).then(response => response.json())
+            .then(data => useFetchResponse(data))
+           .then( () => {
+                fetch(SERVER + "/api/course/users/add", {
+                    "method": "POST",
+                    "headers": {'Content-Type': 'application/json'},
+                    "body": JSON.stringify({
+                        request_token: props.request_token,
+                        courseId: cci,
+                        users: props.userInCurrentCourse,
+                    })
+                })
+            }
+        )
 
 
-        let requestBodyUserAdd = {
-            request_token: props.request_token,
-            userList: props.userInCurrentCourse,
-        }
-        fetch(SERVER + "/api/course/user/add", {
-            "method": "POST",
-            "headers": {'Content-Type': 'application/json'},
-            "body": JSON.stringify(requestBodyUserAdd)
-        })
+
             alert("Kurs erstellt.");
 
         props.switchContent(COURSE_ADMINISTRATION_IDENTIFIER)
