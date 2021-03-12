@@ -1,0 +1,39 @@
+Was war gut?
+
+    wöchentliche Standups inkl. Protokolle dieser
+
+    Verantwortungsbereiche/
+
+    Aufgabenteilung
+
+    Aufgabenverwaltung über Kanban
+
+    Dokumentationsbearbeitung im Team statt verteilt
+
+    Codereviews
+
+
+Was kann verbessert werden?
+
+    interne Dokumentation besser stukturieren
+
+    Codedokumentationen
+
+
+Neue Ideen?
+
+    Feature/Technologieeinführung bei Neuerungen
+
+    MS-Teams statt Discord für Standups/Teamarbeit
+
+
+
+Mögliche Aktionen?
+
+    Redux-Datenstore dokumentieren
+
+    bei Einführung neuer Technologien --> Rest des Teams fragen, ob einführung gewünscht
+
+    Für neuen Code ab jetzt: direkt Codedoku in Form von Kommentaren
+
+    MS-Teams auf Entwicklerrechnern installieren
