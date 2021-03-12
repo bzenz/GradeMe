@@ -13,6 +13,13 @@ import {SERVER} from "../../../index";
 function courseAdministration(props) {
     const [allCourses, setAllCourses] = useState([]);
 
+    function filterOutSubjectIdInAllCourses(list){
+        list.forEach((courseDataRecord) => {
+            delete courseDataRecord.subjectId;
+        })
+        return list;
+    }
+
     useEffect(() => {
         fetch(SERVER + "/api/course/getAll",
             {
@@ -22,7 +29,8 @@ function courseAdministration(props) {
                     request_token: props.request_token,
                 })
             }).then(response => response.json())
-            .then(data => setAllCourses(data))
+            .then(data => setAllCourses(filterOutSubjectIdInAllCourses(data)))
+
     }, [])
 
     const handleCreateCourseClick = () => {
@@ -46,7 +54,7 @@ function courseAdministration(props) {
                 isTwoListComponent={false}
                 searchListHeading={"Kurse"}
                 searchList={allCourses}
-                tableHeadWords={["Id", "Fach", "Jahr", "Name"]}
+                tableHeadWords={["Id", "Kurs-Name", "Jahr", "Name"]}
                 searchOptionArray={[{value: "courseId", displayedString: "Kurs-Id"}, {value: "subjectName", displayedString: "Fachname"}]}
                 defaultSelectedSearchOption={"subjectName"}
                 componentHasFilter={false}
