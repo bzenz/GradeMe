@@ -79,8 +79,8 @@ function Dashboard(props) {
                 return <StudentsInCourseOverview/>;
             case ERROR_CONTENT_IDENTIFIER:
                 return <ErrorContentPaper errorMessageToUser={props.errorMessageToUser}/>
-            case COMMUNICATION_DASHBOARD_IDENTIFIER:
-                return <CommunicationDashboard/>;
+            //case COMMUNICATION_DASHBOARD_IDENTIFIER:
+            //    return <CommunicationDashboard/>;
             case GRADES_OVERVIEW_IDENTIFIER:
                 return <GradesAccordions/>
             case USER_ADMINISTRATION_IDENTIFIER:
@@ -94,7 +94,7 @@ function Dashboard(props) {
             case CREATE_OR_EDIT_COURSE_IDENTIFIER:
                 return <CreateOrEditCourseForm/>
             default:
-                return <div>{props.activeContent}</div>
+                return <div>ACHTUNG! {props.activeContent} ist noch nicht implementiert. <br/> Sie befinden sich auf einer Baustelle, ich muss Sie bitten Ihren Helm aufzusetzen!</div>
         }
     }
 
