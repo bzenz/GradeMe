@@ -1,0 +1,15 @@
+Was kam gut an:
+	* unsere Idee
+		* Farbschema
+    
+Was war nicht so gut?
+	* Zeitmanagment der Betatestvorbereitung
+	* Übersichtlichkeit für Neurodiverse
+
+Was fehlt?
+	* Dateiupload für Aufgaben/Abgaben
+	* Statistiken
+	* Bilder für Fachwiedererkennung
+
+Was sollte weg?
+	* Buttondiversität
