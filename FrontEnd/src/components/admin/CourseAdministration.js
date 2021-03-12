@@ -54,7 +54,7 @@ function courseAdministration(props) {
                 isTwoListComponent={false}
                 searchListHeading={"Kurse"}
                 searchList={allCourses}
-                tableHeadWords={["Id", "Kurs-Name", "Jahr", "Name"]}
+                tableHeadWords={["Id", "Kurs-Name", "Jahr", "Fach"]}
                 searchOptionArray={[{value: "courseId", displayedString: "Kurs-Id"}, {value: "subjectName", displayedString: "Fachname"}]}
                 defaultSelectedSearchOption={"subjectName"}
                 componentHasFilter={false}
