@@ -4,6 +4,7 @@ teacherNavigationReducer (ACHTUNG nicht verwechseln mit courseNavigationReducer)
     taskId: (nur für bewertung von Aufgaben verwendet) gibt die Id von dem task, der gerade bewertet wird an
     taskTitle: (nur für bewertung von Aufgaben verwendet) gibt den Titel von dem task, der gerade bewertet wird an
     errorMessageToUser: Fehlermeldung, die dem Nutzer angezeigt wird, wenn die App bzw. eine einzelne Komponente "crasht"
+    isTaskBeeingEdited: gibt an, ob das CreateOrEditTask Formular im Editierungsmodus oder Erstellungsmodus für die jeweilige Task aufgerufen werden soll
 
 loginReducer
     attemptingLogin: true solange versucht wird den Nutzer anzumelden
@@ -22,3 +23,7 @@ courseNavigationReducer (ACHTUNG nicht verwechseln mit teacherNavigationReducer)
 
 generalNavigationReducer (Reducer, der für alle Ansichten, also Admin, Lehrer, Schüler, gedacht ist)
     isDrawerOpen: gibt an, ob das ausklappbare Navigationsmenü offen oder eingeklappt ist
+
+adminReducer
+    isUserBeeingEdited: gibt an, ob das CreateOrEditUser Formular im Editierungsmodus oder Erstellungsmodus für den jeweiligen User aufgerufen werden soll
+    editedUserId: die Id des Users, wenn ein Nutzer editiert wird
